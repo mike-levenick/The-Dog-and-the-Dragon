@@ -14,7 +14,6 @@ echo """
 | (_>  <  / / / __  //__    / /_// _  \/  _  \/ /_\\\\/ \_// /\  /
  \___/\/  \/  \/ /_/\__/   /___,'\/ \_/\_/ \_/\____/\___/\_\ \/
 
-
                                 +-----------+
                                 | Main Menu |
                                 +-----------+
@@ -25,7 +24,6 @@ Enter the number for your opion, and press enter.
 2. Load Game
 3. Credits
 4. Exit
-
 """
 }
 
@@ -43,11 +41,9 @@ echo """
 | (_>  <  / / / __  //__    / /_// _  \/  _  \/ /_\\\\/ \_// /\  /
  \___/\/  \/  \/ /_/\__/   /___,'\/ \_/\_/ \_/\____/\___/\_\ \/
 
-
                                 +-----------+
                                 | Main Menu |
                                 +-----------+
-
 I'm sorry, that's not a valid option. Please try again.
 Enter the number for your opion, and press enter.
 
