@@ -5,8 +5,6 @@ name=""
 bash ./0-prologue/IntroCutscene.bash
 bash ./0-prologue/MainMenu.bash
 
-
-
 case $? in
     1)
         # Commands to execute if expression matches pattern1
