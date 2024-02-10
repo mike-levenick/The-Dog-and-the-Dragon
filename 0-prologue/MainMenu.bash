@@ -11,7 +11,6 @@ Main Menu. Enter the number for your opion, and press enter.
 """
 }
 
-clear
 printmenu
 read option
 
