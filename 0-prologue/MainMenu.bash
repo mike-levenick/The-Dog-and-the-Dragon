@@ -18,7 +18,7 @@ echo """
                                 | Main Menu |
                                 +-----------+
 
-Enter the number for your opion, and press enter.
+Enter the number for your option, and press enter.
 
 1. New Game
 2. Load Game
@@ -45,7 +45,7 @@ echo """
                                 | Main Menu |
                                 +-----------+
 I'm sorry, that's not a valid option. Please try again.
-Enter the number for your opion, and press enter.
+Enter the number for your option, and press enter.
 
 1. New Game
 2. Load Game
