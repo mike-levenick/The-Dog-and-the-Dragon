@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# A simple function to print the main menu with no retry text
 printmainmenu() {
 echo """
                        _____ _                _
@@ -27,6 +28,7 @@ Enter the number for your option, and press enter.
 """
 }
 
+# A simple function to print the main menu with the retry text. 
 printretrymenu() {
 echo """
                        _____ _                _
@@ -54,11 +56,13 @@ Enter the number for your option, and press enter.
 """
 }
 
-
+# Upon initially loading the menu, clear the screen and print the main menu.
 clear
 printmainmenu
 read option
 
+# If we get an unexpected option, print the retry menu and ask again. 
+# Continue until we get an expected option.
 while ! [[ $option =~ ^[1-4]+$ ]]; do
     clear
     printretrymenu
