@@ -37,7 +37,7 @@ elif [[ "$3" == "print" ]]; then
             echo -n "${line:i:1}"
             sleep 0.03
         done
-        sleep 1.5
+        sleep $2
         echo
     done < "$1"
 
