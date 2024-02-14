@@ -12,8 +12,11 @@ saves=-1
 
 # MARK - Cutscene
 
-# Play the intro cutscene. This is a separate script to keep things tidy.
-bash ./0-prologue/IntroCutscene.bash
+# Allow the cutscene to be skipped, for testing and for veteran players
+if [[ "$1" != "skip" ]]; then
+    # Play the intro cutscene. This is a separate script to keep things tidy.
+    bash ./0-prologue/IntroCutscene.bash
+fi
 
 # MARK - Menu
 
