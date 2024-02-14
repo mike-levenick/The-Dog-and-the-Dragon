@@ -33,11 +33,13 @@ do
                     name=""
                 fi
             fi
+
             # Set all our character information and create the save file
             chapter=0
             seeds=0
             words=0
             machines=0
+
             echo """Current chapter - 0
 Number of Seeds - 0
 Number of Words Known - 0
@@ -46,17 +48,52 @@ Number of Machines Understood - 0""" > "gamesaves/$name"
             ;;
         2)
             # If we are loading a game save, list out the save files and ask which one to choose
-            echo "Load Game"
-            name="good boi"
+            echo
+            echo "What game save would you like to load? Type the name exactly."
+            echo "Existing saves:"
+            echo
+            ls -1 gamesaves
+            echo
+            read savename
+
+            # Check to be sure a save with that name actually exists. If it doesn't, back to main menu.
+            if [ -f "gamesaves/$savename" ]; then
+                echo "Loading $savename..."
+                name=$savename
+
+                # This is a bit inelegant, but it felt like a good time to introduce `awk`, which is
+                # a requirement of the assignment.
+
+                # Set the field separator to '-' and parse the file, populating variables as we go.
+                # Read the file using awk and assign values to variables
+                read_chapter=$(awk -F ' - ' '/Current chapter/ {print $2}' "gamesaves/$savename")
+                read_seeds=$(awk -F ' - ' '/Number of Seeds/ {print $2}' "gamesaves/$savename")
+                read_words=$(awk -F ' - ' '/Number of Words Known/ {print $2}' "gamesaves/$savename")
+                read_machines=$(awk -F ' - ' '/Number of Machines Understood/ {print $2}' "gamesaves/$savename")
+
+                # Assign values to Bash variables, removing leading/trailing whitespace
+                chapter=$(echo "$read_chapter" | tr -d '[:space:]')
+                seeds=$(echo "$read_seeds" | tr -d '[:space:]')
+                words=$(echo "$read_words" | tr -d '[:space:]')
+                machines=$(echo "$read_machines" | tr -d '[:space:]')
+            else
+                echo
+                echo "Sorry, no save with that name exists."
+                echo
+                echo "Try again."
+                sleep 1.5
+            fi
             ;;
         3)
             # Play the credits
-            echo "Credits"
+            bash ./animate.bash ascii/credits.anim .3 scroll
             ;;
         *)
             # Quit
+            echo "See you again soon!"
             exit 0
             ;;
     esac
 done
 echo $name
+echo $seeds

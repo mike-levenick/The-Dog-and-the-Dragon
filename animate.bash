@@ -11,16 +11,37 @@ if [[ ! -r "$1" ]]; then
     exit 1
 fi
 
-# Read the file line by line
-while IFS= read -r line; do
+# This allows us to use the same "class" for credit scrolling as cutscenes by specifying "scroll" in $3
+if [[ "$3" == "scroll" ]]; then
+    # Enter 24 linebreaks to get the cursor to the bottom of the screen
+    for i in {1..24}
+    do
+        echo " "
+    done
 
-    # Check if the line contains the frame marker
-    if [[ $line == "FRAME"* ]]; then
-        # If it's a frame marker, sleep the required time and clear the screen
+    # Read the file line by line and just print the lines consecutively.
+    while IFS= read -r line; do
+
+        # Print the content of the frame and pause
+        echo "$line"
         sleep $2
-        clear
-        continue
-    fi
-    # Print the content of the frame
-    echo "$line"
-done < "$1"
+    done < "$1"
+
+# Regular cutscenes are here.
+else
+    # Read the file line by line
+    while IFS= read -r line; do
+
+        # Check if the line contains the frame marker
+        if [[ $line == "FRAME"* ]]; then
+            # If it's a frame marker, sleep the required time and clear the screen
+            sleep $2
+            clear
+            continue
+        fi
+        # Print the content of the frame
+        echo "$line"
+    done < "$1"
+fi
+
+
