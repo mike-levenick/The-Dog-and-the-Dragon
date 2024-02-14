@@ -5,6 +5,14 @@
 # Takes 2 parameters, $1 is the location of a file containing frames, separated by the substring "FRAME"
 # $2 is the time that should be slept between frames (smaller number is higher framerate)
 
+clearScreen() {
+    # Enter 24 linebreaks to get the cursor to the bottom of the screen
+    for i in {1..24}
+    do
+        echo " "
+    done
+}
+
 # Check if file exists and is readable
 if [[ ! -r "$1" ]]; then
     echo "Error: File not found or not readable"
@@ -13,11 +21,7 @@ fi
 
 # This allows us to use the same "class" for credit scrolling as cutscenes by specifying "scroll" in $3
 if [[ "$3" == "scroll" ]]; then
-    # Enter 24 linebreaks to get the cursor to the bottom of the screen
-    for i in {1..24}
-    do
-        echo " "
-    done
+    clearScreen
 
     # Read the file line by line and just print the lines consecutively.
     while IFS= read -r line; do
@@ -28,17 +32,27 @@ if [[ "$3" == "scroll" ]]; then
     done < "$1"
 
 elif [[ "$3" == "print" ]]; then
+    clearScreen
 
     # Read the file line by line
     while IFS= read -r line; do
+        
+        # Sleep before linebreak lines, 
+        #if [[ ${#line} -lt 2 ]]; then
+            #sleep "$(($2))"
+        #fi
 
+        # Give us linebreaks, since we're doing echo -n below
+        echo
+        
         # Iterate over each character in the line
         for (( i=0; i<${#line}; i++ )); do
             echo -n "${line:i:1}"
             sleep 0.03
         done
-        sleep $2
-        echo
+        if [[ ${#line} -gt 1 ]]; then
+            sleep $2
+        fi
     done < "$1"
 
 # Regular cutscenes are here.

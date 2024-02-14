@@ -10,12 +10,15 @@ words=-1
 machines=-1
 saves=-1
 
+# Using an int intead of bool here, because I just think they work better in Bash.
+newgame=0
+
 # MARK - Cutscene
 
 # Allow the cutscene to be skipped, for testing and for veteran players
 if [[ "$1" != "skip" ]]; then
     # Play the intro cutscene. This is a separate script to keep things tidy.
-    bash ./0-prologue/IntroCutscene.bash
+    bash ./IntroCutscene.bash
 fi
 
 # MARK - Menu
@@ -23,7 +26,7 @@ fi
 # Load the menu, and hang out on it until we get a name from loading or new game
 while [ "$name" == "" ]
 do
-    bash ./0-prologue/MainMenu.bash
+    bash ./MainMenu.bash
     case $? in
 
     # MARK - New Game
@@ -53,6 +56,7 @@ do
             seeds=0
             words=0
             machines=0
+            newgame=1
 
             echo """Current chapter - 0
 Number of Seeds - 0
@@ -115,6 +119,13 @@ Number of Machines Understood - 0""" > "gamesaves/$name"
             ;;
     esac
 done
+
+# If it's a new game, play the opening dialogue
+if [[ $newgame == 1 ]]; then
+    bash ./animate.bash art/dialogue/dialogue1.dia 1 print
+    sleep 1.5
+fi
+
 
 # MARK - Game Start
 
