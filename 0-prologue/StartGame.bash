@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# MARK - Variables
+
 # Character information initialized with defaults
 name=""
 chapter=-1
@@ -8,18 +10,27 @@ words=-1
 machines=-1
 saves=-1
 
+# MARK - Cutscene
+
 # Play the intro cutscene
 #bash ./0-prologue/IntroCutscene.bash
+
+# MARK - Menu
 
 # Load the menu, and hang out on it until we get a name from loading or new game
 while [ "$name" == "" ]
 do
     bash ./0-prologue/MainMenu.bash
     case $? in
+
+    # MARK - New Game
         1)
             # Case 1 is new game. Here we ask for a name, and create a save file
+            echo
             echo "New Game!"
+            echo
             echo "What do you want your name to be?"
+            echo
             read name
             
             # If we already have a save with that name, as about overwriting
@@ -46,6 +57,8 @@ Number of Words Known - 0
 Number of Machines Understood - 0""" > "gamesaves/$name"
             saves=$(ls -1 gamesaves | wc -l)
             ;;
+
+    # MARK - Load Game
         2)
             # If we are loading a game save, list out the save files and ask which one to choose
             echo
@@ -84,10 +97,14 @@ Number of Machines Understood - 0""" > "gamesaves/$name"
                 sleep 1.5
             fi
             ;;
+    
+    # MARK - Credits
         3)
             # Play the credits
             bash ./animate.bash ascii/credits.anim .3 scroll
             ;;
+
+    # MARK - Exit game
         *)
             # Quit
             echo "See you again soon!"
@@ -95,5 +112,14 @@ Number of Machines Understood - 0""" > "gamesaves/$name"
             ;;
     esac
 done
-echo $name
-echo $seeds
+
+# MARK - Game Start
+
+# At this point, we should have all the information we require to dive into the game.
+echo "Game start!"
+echo "Name: $name"
+echo "Current chapter: $chapter"
+echo "Number of seeds owned: $seeds"
+echo "Number of words known: $words"
+echo "Number of machines understood: $machines"
+
