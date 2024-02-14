@@ -104,7 +104,7 @@ Number of Machines Understood - 0""" > "gamesaves/$name"
     # MARK - Credits
         3)
             # Play the credits
-            bash ./animate.bash ascii/credits.anim .3 scroll
+            bash ./animate.bash art/cutscenes/credits.anim .3 scroll
             ;;
 
     # MARK - Exit game

@@ -27,6 +27,20 @@ if [[ "$3" == "scroll" ]]; then
         sleep $2
     done < "$1"
 
+elif [[ "$3" == "print" ]]; then
+
+    # Read the file line by line
+    while IFS= read -r line; do
+
+        # Iterate over each character in the line
+        for (( i=0; i<${#line}; i++ )); do
+            echo -n "${line:i:1}"
+            sleep 0.03
+        done
+        sleep 1.5
+        echo
+    done < "$1"
+
 # Regular cutscenes are here.
 else
     # Read the file line by line
