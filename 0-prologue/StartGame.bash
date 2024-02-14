@@ -12,8 +12,8 @@ saves=-1
 
 # MARK - Cutscene
 
-# Play the intro cutscene
-#bash ./0-prologue/IntroCutscene.bash
+# Play the intro cutscene. This is a separate script to keep things tidy.
+bash ./0-prologue/IntroCutscene.bash
 
 # MARK - Menu
 
