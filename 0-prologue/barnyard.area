@@ -1,0 +1,76 @@
+#!/bin/bash
+
+name=$1
+seeds=$2
+words=$3
+machines=$4
+
+use() {
+
+    case $1 in
+        wateringcan)
+            echo "You used the wateringcan."
+            ;;
+
+        hoe)
+           echo "You used the hoe." 
+            ;;
+
+        seedpouch)
+            echo "You used the seedpouch."
+            ;;
+
+        *)
+            echo "You don't know how to use that."
+            ;;
+    esac   
+}
+
+action() {
+    case $1 in
+        help)
+            echo "Available actions include:"
+            echo "use"
+            echo "look"
+            echo "go" 
+            ;;
+        use)
+            use $2
+            ;;
+
+        look)
+           echo "You looked $2." 
+            ;;
+
+        go)
+            echo "You went $2."
+            bash Launcher.bash skip
+            ;;
+        inventory)
+            echo "Here is your inventory"
+            echo "seeds $seeds"
+            echo "words $words"
+            echo "machines $machines"
+            ;;
+        questlog)
+            echo "Here is your quest log"
+            ;;
+        whoami)
+            echo "Your name is $name"
+            ;;
+        exit)
+            echo "Are you sure you want to quit?"
+            exit 0
+            ;;
+        *)
+            echo "I'm not sure what you mean."
+            ;;
+    esac   
+}
+
+while (( 1 == 1 )); do
+    echo -n "> "
+    read action
+
+    action $action
+done 

@@ -122,7 +122,7 @@ done
 
 # If it's a new game, play the opening dialogue
 if [[ $newgame == 1 ]]; then
-    bash ./animate.bash art/dialogue/dialogue1.dia 1 print
+    bash ./animate.bash art/dialogue/dialogue1-storyopen.dia 1 print
     sleep 1.5
 fi
 
@@ -137,3 +137,9 @@ echo "Number of seeds owned: $seeds"
 echo "Number of words known: $words"
 echo "Number of machines understood: $machines"
 
+bash ./0-prologue/barnyard.area $name $seeds $words $machines
+#name=$1
+#seeds=$2
+#words=$3
+#machines=$4
+echo "more stuff"
