@@ -1,7 +1,9 @@
 #!/bin/bash
 
-# MARK - Variables
+# Store our directory name so we can launch from anywhere
+script_dir="$(dirname "$0")"
 
+# MARK - Variables
 # Character information initialized with defaults
 name=""
 chapter=-1
@@ -18,7 +20,7 @@ newgame=0
 # Allow the cutscene to be skipped, for testing and for veteran players
 if [[ "$1" != "skip" ]]; then
     # Play the intro cutscene. This is a separate script to keep things tidy.
-    bash ./IntroCutscene.bash
+    bash $script_dir/IntroCutscene.bash
 fi
 
 # MARK - Menu
@@ -26,7 +28,7 @@ fi
 # Load the menu, and hang out on it until we get a name from loading or new game
 while [ "$name" == "" ]
 do
-    bash ./MainMenu.bash
+    bash $script_dir/MainMenu.bash
     case $? in
 
     # MARK - New Game
@@ -40,7 +42,7 @@ do
             read name
             
             # If we already have a save with that name, as about overwriting
-            if [ -f "gamesaves/$name" ]; then
+            if [ -f "$script_dir/gamesaves/$name" ]; then
                 echo "A game with that name already exists. Overwrite? [y/n]"
                 read yn
                 if [[ "$yn" == "y" || "$yn" == "Y" ]]; then
@@ -61,8 +63,8 @@ do
             echo """Current chapter - 0
 Number of Seeds - 0
 Number of Words Known - 0
-Number of Machines Understood - 0""" > "gamesaves/$name"
-            saves=$(ls -1 gamesaves | wc -l)
+Number of Machines Understood - 0""" > "$script_dir/gamesaves/$name"
+            saves=$(ls -1 $script_dir/gamesaves | wc -l)
             ;;
 
     # MARK - Load Game
@@ -72,12 +74,12 @@ Number of Machines Understood - 0""" > "gamesaves/$name"
             echo "What game save would you like to load? Type the name exactly."
             echo "Existing saves:"
             echo
-            ls -1 gamesaves
+            ls -1 $script_dir/gamesaves
             echo
             read savename
 
             # Check to be sure a save with that name actually exists. If it doesn't, back to main menu.
-            if [ -f "gamesaves/$savename" ]; then
+            if [ -f "$script_dir/gamesaves/$savename" ]; then
                 echo "Loading $savename..."
                 name=$savename
 
@@ -86,10 +88,10 @@ Number of Machines Understood - 0""" > "gamesaves/$name"
 
                 # Set the field separator to '-' and parse the file, populating variables as we go.
                 # Read the file using awk and assign values to variables
-                read_chapter=$(awk -F ' - ' '/Current chapter/ {print $2}' "gamesaves/$savename")
-                read_seeds=$(awk -F ' - ' '/Number of Seeds/ {print $2}' "gamesaves/$savename")
-                read_words=$(awk -F ' - ' '/Number of Words Known/ {print $2}' "gamesaves/$savename")
-                read_machines=$(awk -F ' - ' '/Number of Machines Understood/ {print $2}' "gamesaves/$savename")
+                read_chapter=$(awk -F ' - ' '/Current chapter/ {print $2}' "$script_dir/gamesaves/$savename")
+                read_seeds=$(awk -F ' - ' '/Number of Seeds/ {print $2}' "$script_dir/gamesaves/$savename")
+                read_words=$(awk -F ' - ' '/Number of Words Known/ {print $2}' "$script_dir/gamesaves/$savename")
+                read_machines=$(awk -F ' - ' '/Number of Machines Understood/ {print $2}' "$script_dir/gamesaves/$savename")
 
                 # Assign values to Bash variables, removing leading/trailing whitespace
                 chapter=$(echo "$read_chapter" | tr -d '[:space:]')
@@ -108,7 +110,7 @@ Number of Machines Understood - 0""" > "gamesaves/$name"
     # MARK - Credits
         3)
             # Play the credits
-            bash ./animate.bash art/cutscenes/credits.anim .3 scroll
+            bash $script_dir/animate.bash $script_dir/art/cutscenes/credits.anim .3 scroll
             ;;
 
     # MARK - Exit game
@@ -122,7 +124,7 @@ done
 
 # If it's a new game, play the opening dialogue
 if [[ $newgame == 1 ]]; then
-    bash ./animate.bash art/dialogue/dialogue1-storyopen.dia 1 print
+    bash $script_dir/animate.bash $script_dir/art/dialogue/dialogue1-storyopen.dia 1 print
     sleep 1.5
 fi
 
@@ -137,7 +139,7 @@ echo "Number of seeds owned: $seeds"
 echo "Number of words known: $words"
 echo "Number of machines understood: $machines"
 
-bash ./0-prologue/barnyard.area $name $seeds $words $machines
+bash $script_dir/0-prologue/barnyard.area $name $seeds $words $machines
 #name=$1
 #seeds=$2
 #words=$3

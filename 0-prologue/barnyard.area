@@ -1,13 +1,70 @@
 #!/bin/bash
 
+# Save our "parameters" as easy-to-find variables
 name=$1
 seeds=$2
 words=$3
 machines=$4
 
+# Get the directory of the current script
+script_dir="$(dirname "$0")"
+
+# Get the save file location
+savelocation="$script_dir/../gamesaves/$name"
+
+# TODO - MOVE THESE FUNCTIONS TO THEIR OWN "CLASS"
+
+# List out all the items in the save file
+listitems() {
+    # Read lines from file starting from line 4 and put them into an array
+    IFS=$'\n' read -r -d '' -a items < <(tail -n +5 "$savelocation" && printf '\0')
+
+    # Sort the array alphabetically
+    sorted_items=($(printf "%s\n" "${items[@]}" | sort))
+
+    # Print the sorted array
+    printf '%s\n' "${sorted_items[@]}"
+}
+
+# Check if a certain item exists in the save file
+itemcheck() {
+    # Set a variable to a grep for the item
+    itemsearch="$(cat $savelocation | grep $1)"
+
+    # If that variable doesn't contain stuff, we dont have the item
+    # I'm using a return of 0 to say "we have 0 of the item" here, even though technically 
+    # 0 is a non-error return value, and I probably should use something else.
+    if [[ "$itemsearch" == "" ]]; then
+        echo "There is no $1 here."
+        echo
+        return 0
+    else
+        echo "You tried the $1."
+        return 1
+    fi
+}
+
 use() {
 
+    itemcheck $1
+
+    if (( "$?" == "0" )); then
+        return 0
+    fi
+
     case $1 in
+        help)
+            echo
+            echo "***** \`USE\` COMMAND HELP *****"
+            echo "Allows you to use objects in your inventory or in the environment."
+            echo "For example, if you see a lever, you could do the command" 
+            echo "> use lever"
+            ;;
+
+        lever)
+            echo "You do not see a lever here."
+            ;;
+
         wateringcan)
             echo "You used the wateringcan."
             ;;
@@ -23,16 +80,28 @@ use() {
         *)
             echo "You don't know how to use that."
             ;;
-    esac   
+    esac
+    echo
 }
 
 action() {
     case $1 in
+        take)
+            echo "Got an item!"
+            echo "banana" >> $savelocation
+            ;;
         help)
             echo "Available actions include:"
-            echo "use"
-            echo "look"
-            echo "go" 
+            echo "  go" 
+            echo "  inventory"
+            echo "  look"
+            echo "  questlog"
+            echo "  use"
+            echo "  whoami"
+            echo "  exit"
+            echo
+            echo "You can also ask for help on any specific command, for example:"
+            echo "> look help"
             ;;
         use)
             use $2
@@ -44,13 +113,13 @@ action() {
 
         go)
             echo "You went $2."
-            bash Launcher.bash skip
             ;;
         inventory)
             echo "Here is your inventory"
             echo "seeds $seeds"
             echo "words $words"
             echo "machines $machines"
+            listitems
             ;;
         questlog)
             echo "Here is your quest log"
