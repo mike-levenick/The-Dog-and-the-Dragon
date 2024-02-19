@@ -12,46 +12,44 @@ script_dir="$(dirname "$0")"
 # Get the save file location
 savelocation="$script_dir/../gamesaves/$name"
 
-# TODO - MOVE THESE FUNCTIONS TO THEIR OWN "CLASS"
-
-# List out all the items in the save file
-listitems() {
-    # Read lines from file starting from line 4 and put them into an array
-    IFS=$'\n' read -r -d '' -a items < <(tail -n +5 "$savelocation" && printf '\0')
-
-    # Sort the array alphabetically
-    sorted_items=($(printf "%s\n" "${items[@]}" | sort))
-
-    # Print the sorted array
-    printf '%s\n' "${sorted_items[@]}"
+take() {
+    echo
+    echo "You now have a $1."
+    echo
+    bash $script_dir/../inventory/AddInventory.sh $name $1
 }
 
-# Check if a certain item exists in the save file
-itemcheck() {
-    # Set a variable to a grep for the item
-    itemsearch="$(cat $savelocation | grep $1)"
-
-    # If that variable doesn't contain stuff, we dont have the item
-    # I'm using a return of 0 to say "we have 0 of the item" here, even though technically 
-    # 0 is a non-error return value, and I probably should use something else.
-    if [[ "$itemsearch" == "" ]]; then
-        echo "There is no $1 here."
+help() {
+    echo
+    if [[ "$1" == "help" ]]; then
+        echo "+----------------------------------------------------------------+"
+        echo "| Achievement unlocked: Tried to break the space-time continuum. |"
+        echo "+----------------------------------------------------------------+"
         echo
         return 0
-    else
-        echo "You tried the $1."
-        return 1
     fi
+    echo "Available actions include:"
+    echo "  - \`go\` (Move to the specified location)" 
+    echo "  - \`inventory\` (Check your current inventory)"
+    echo "  - \`look\` (See what there is to see)"
+    echo "  - \`questlog\` (Check on your current Quest progress)"
+    echo "  - \`use\` (Use an item from your inventory or the environment)"
+    echo "  - \`whoami\` (In case of existential crisis)"
+    echo "  - \`exit\` (Quits the game)"
+    echo
+    echo "You can also ask for help on any specific command, for example:"
+    echo "> look help"
+    echo
 }
 
 use() {
-
-    itemcheck $1
-
+    # Check if we even have the item in inventory, and if we don't, return early.
+    bash $script_dir/../inventory/CheckInventory.sh $name $1
     if (( "$?" == "0" )); then
         return 0
     fi
 
+    # Switch case for the various items that can be used in this area, including a help section.
     case $1 in
         help)
             echo
@@ -84,24 +82,30 @@ use() {
     echo
 }
 
+inventory() {
+    if [[ "$1" == "help" ]]; then
+        echo "Not much to know about this one. Just run \`inventory\` to see what you have."
+        echo
+        return 0
+    fi
+    echo
+    echo "Here is your inventory. (Knowledge is a tool!)"
+    echo "You have $seeds seeds."
+    echo "You know $words words."
+    echo "You understand $machines machines."
+    echo
+    echo "Here are the items you have seen or carry:"
+    bash $script_dir/../inventory/PrintInventory.sh $name
+}
+
+
 action() {
     case $1 in
         take)
-            echo "Got an item!"
-            echo "banana" >> $savelocation
+            take $2
             ;;
         help)
-            echo "Available actions include:"
-            echo "  go" 
-            echo "  inventory"
-            echo "  look"
-            echo "  questlog"
-            echo "  use"
-            echo "  whoami"
-            echo "  exit"
-            echo
-            echo "You can also ask for help on any specific command, for example:"
-            echo "> look help"
+            help $2
             ;;
         use)
             use $2
@@ -115,11 +119,7 @@ action() {
             echo "You went $2."
             ;;
         inventory)
-            echo "Here is your inventory"
-            echo "seeds $seeds"
-            echo "words $words"
-            echo "machines $machines"
-            listitems
+            inventory $2
             ;;
         questlog)
             echo "Here is your quest log"
