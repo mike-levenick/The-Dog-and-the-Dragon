@@ -138,10 +138,10 @@ echo "Current chapter: $chapter"
 echo "Number of seeds owned: $seeds"
 echo "Number of words known: $words"
 echo "Number of machines understood: $machines"
+echo
 
 bash $script_dir/0-prologue/barnyard.area $name $seeds $words $machines
 #name=$1
 #seeds=$2
 #words=$3
 #machines=$4
-echo "more stuff"
