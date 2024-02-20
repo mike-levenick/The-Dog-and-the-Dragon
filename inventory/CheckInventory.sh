@@ -19,7 +19,6 @@ savelocation="$script_dir/../gamesaves/$name"
 
 # Set a variable to a grep for the item
 itemsearch="$(cat $savelocation | grep $itemname)"
-echo $itemsearch
 
 # If that variable doesn't contain stuff, we dont have the item.
 if [[ "$itemsearch" == "" ]]; then

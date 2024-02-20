@@ -29,16 +29,19 @@ help() {
         return 0
     fi
     echo "Available actions include:"
-    echo "  - \`go\` (Move to the specified location)" 
     echo "  - \`inventory\` (Check your current inventory)"
-    echo "  - \`look\` (See what there is to see)"
     echo "  - \`questlog\` (Check on your current Quest progress)"
-    echo "  - \`use\` (Use an item from your inventory or the environment)"
     echo "  - \`whoami\` (In case of existential crisis)"
+    echo "  - \`look\` (Look around generally/see what there is to see)"
+    echo
+    echo "  - \`go <place>\` (Move to the specified place)" 
+    echo "  - \`inspect <thing>\` (Inspect something closely to learn about it)"
+    echo "  - \`use <thing>\` (Use an item from your inventory or the environment)"
+    echo
     echo "  - \`exit\` (Quits the game)"
     echo
     echo "You can also ask for help on any specific command, for example:"
-    echo "> look help"
+    echo "\`look help\` to get help specific to the \`look\` command."
     echo
 }
 
@@ -82,6 +85,18 @@ use() {
     echo
 }
 
+look() {
+    echo "Finish me."
+}
+
+inspect() {
+    echo "Finish me"
+}
+
+go() {
+    echo "Finish me."
+}
+
 inventory() {
     if [[ "$1" == "help" ]]; then
         echo "Not much to know about this one. Just run \`inventory\` to see what you have."
@@ -98,6 +113,13 @@ inventory() {
     bash $script_dir/../inventory/PrintInventory.sh $name
 }
 
+questlog() {
+    bash $script_dir/../inventory/PrintQuestlog.sh $name
+}
+
+whoami() {
+    echo "Finish me."
+}
 
 action() {
     case $1 in
@@ -110,11 +132,12 @@ action() {
         use)
             use $2
             ;;
-
         look)
            echo "You looked $2." 
             ;;
-
+        inspect)
+            echo "Finish me"
+            ;;
         go)
             echo "You went $2."
             ;;
@@ -122,14 +145,17 @@ action() {
             inventory $2
             ;;
         questlog)
-            echo "Here is your quest log"
+            questlog
             ;;
         whoami)
             echo "Your name is $name"
             ;;
         exit)
-            echo "Are you sure you want to quit?"
-            exit 0
+            echo "Are you sure you want to quit? (y/n)"
+            read choice
+            if [[ "$choice" == "y" || "$choice" == "Y" ]]; then
+                exit 0
+            fi
             ;;
         *)
             echo "I'm not sure what you mean."
