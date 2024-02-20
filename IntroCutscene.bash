@@ -7,4 +7,5 @@ bash $script_dir/animate.bash $script_dir/art/cutscenes/title-slide2-dogwalk.ani
 bash $script_dir/animate.bash $script_dir/art/cutscenes/title-slide3-dogwag.anim .1
 sleep 1
 bash $script_dir/animate.bash $script_dir/art/cutscenes/title-slide4-andthedragon.anim .25
+bash $script_dir/animate.bash $script_dir/art/cutscenes/title-slide5-dogwag.anim .1
 sleep 1
