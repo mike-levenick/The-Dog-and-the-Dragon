@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "*.area": "shellscript",
+        "*.anim": "plaintext",
+        "*.dia": "plaintext"
+    }
+}

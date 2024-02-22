@@ -86,7 +86,47 @@ use() {
 }
 
 look() {
-    echo "Finish me."
+
+    # Switch case for the various directions pupper can look.
+    case $1 in
+        help)
+            echo
+            echo "***** \`LOOK\` COMMAND HELP *****"
+            echo "Allows you to look around and see what there is to see."
+            echo "For example, to look to the north, you could do the command" 
+            echo "> look north"
+            ;;
+
+        north)
+            echo "You see the barn to the north of you. The farmer's older son is lifting"
+            echo "some haybales into the loft using interesting machines. Maybe those machines"
+            echo "could help you fly?"
+            ;;
+
+        south)
+            echo "You see the farmhouse to the south. The farmer's wife is cooking a meal."
+            echo "It smells absolutely delicious, but you know you're not normally allowed"
+            echo "into the house with the family."
+            ;;
+
+        east)
+           echo "You see the field where the farmer grows his crops. The farmer is standing"
+           echo "in his field, planting seeds. The seeds catch the sunlight and glitter brightly"
+           echo "like the scales of the dragon."
+            ;;
+
+        west)
+            echo "You see the river to the west, where the farmer's younger son is sitting"
+            echo "on a rock studying. He appears to be trying to sound out letters and their"
+            echo "sounds. Perhaps he could help you learn to talk."
+            ;;
+
+        *)
+            echo "You look around you in wonder. Isn't the world an amazing place?"
+            ;;
+    esac
+    echo
+    
 }
 
 inspect() {
@@ -94,7 +134,48 @@ inspect() {
 }
 
 go() {
-    echo "Finish me."
+    # Switch case for the various directions pupper can look.
+    case $1 in
+        help)
+            echo
+            echo "***** \`GO\` COMMAND HELP *****"
+            echo "Allows you to go to a specific direction."
+            echo "For example, to go north, you could do the command" 
+            echo "> go north"
+            echo "You can also always return to the barnyard with the command"
+            echo "> go home"
+            ;;
+
+        north)
+            echo "You see the barn to the north of you. The farmer's older son is lifting"
+            echo "some haybales into the loft using interesting machines. Maybe those machines"
+            echo "could help you fly?"
+            ;;
+
+        south)
+            echo "You see the farmhouse to the south. The farmer's wife is cooking a meal."
+            echo "It smells absolutely delicious, but you know you're not normally allowed"
+            echo "into the house with the family."
+            ;;
+
+        east)
+           echo "You see the field where the farmer grows his crops. The farmer is standing"
+           echo "in his field, planting seeds. The seeds catch the sunlight and glitter brightly"
+           echo "like the scales of the dragon."
+            ;;
+
+        west)
+            echo "You see the river to the west, where the farmer's younger son is sitting"
+            echo "on a rock studying. He appears to be trying to sound out letters and their"
+            echo "sounds. Perhaps he could help you learn to talk."
+            ;;
+        home)
+            echo "You are already in the barnyard."
+            ;;
+        *)
+            echo "I'm not sure how to go there."
+            ;;
+    esac
 }
 
 inventory() {
@@ -104,12 +185,6 @@ inventory() {
         return 0
     fi
     echo
-    echo "Here is your inventory. (Knowledge is a tool!)"
-    echo "You have $seeds seeds."
-    echo "You know $words words."
-    echo "You understand $machines machines."
-    echo
-    echo "Here are the items you have seen or carry:"
     bash $script_dir/../inventory/PrintInventory.sh $name
 }
 
@@ -133,7 +208,7 @@ action() {
             use $2
             ;;
         look)
-           echo "You looked $2." 
+           look $2
             ;;
         inspect)
             echo "Finish me"
