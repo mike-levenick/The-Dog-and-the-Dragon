@@ -81,6 +81,7 @@ paws""" > "$script_dir/gamesaves/$name"
                 echo "Loading $savename..."
                 name=$savename
 
+                # Get the current chapter to load
                 chapter=$(bash $script_dir/inventory/CheckChapter.sh $name)
             else
                 echo

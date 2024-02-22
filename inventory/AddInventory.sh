@@ -15,3 +15,6 @@ script_dir="$(dirname "$0")"
 savelocation="$script_dir/../gamesaves/$name"
 
 echo "$itemname" >> $savelocation
+
+echo "⭒Progress saved!⭒"
+echo
