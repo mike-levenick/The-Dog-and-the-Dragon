@@ -20,7 +20,7 @@ newgame=0
 # Allow the cutscene to be skipped, for testing and for veteran players
 if [[ "$1" != "skip" ]]; then
     # Play the intro cutscene. This is a separate script to keep things tidy.
-    bash $script_dir/IntroCutscene.bash
+    bash $script_dir/art/IntroCutscene.sh
 fi
 
 # MARK - Menu
@@ -28,7 +28,7 @@ fi
 # Load the menu, and hang out on it until we get a name from loading or new game
 while [ "$name" == "" ]
 do
-    bash $script_dir/MainMenu.bash
+    bash $script_dir/MainMenu.sh
     case $? in
 
     # MARK - New Game
@@ -110,7 +110,7 @@ Number of Machines Understood - 0""" > "$script_dir/gamesaves/$name"
     # MARK - Credits
         3)
             # Play the credits
-            bash $script_dir/animate.bash $script_dir/art/cutscenes/credits.anim .3 scroll
+            bash $script_dir/art/animate.sh $script_dir/art/cutscenes/credits.anim .3 scroll
             ;;
 
     # MARK - Exit game
@@ -124,7 +124,7 @@ done
 
 # If it's a new game, play the opening dialogue
 if [[ $newgame == 1 ]]; then
-    bash $script_dir/animate.bash $script_dir/art/dialogue/dialogue1-storyopen.dia 1 print
+    bash $script_dir/art/animate.sh $script_dir/art/dialogue/dialogue1-storyopen.dia 1 print
     sleep 1.5
 fi
 
