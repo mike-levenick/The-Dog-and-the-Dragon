@@ -17,15 +17,9 @@ savelocation="$script_dir/../gamesaves/$name"
 # Set the field separator to '-' and parse the file, populating variables as we go.
 # Read the file using awk and assign values to variables
 read_chapter=$(awk -F ' - ' '/Current chapter/ {print $2}' "$savelocation")
-read_seeds=$(awk -F ' - ' '/Number of Seeds/ {print $2}' "$savelocation")
-read_words=$(awk -F ' - ' '/Number of Words Known/ {print $2}' "$savelocation")
-read_machines=$(awk -F ' - ' '/Number of Machines Understood/ {print $2}' "$savelocation")
 
 # Assign values to Bash variables, removing leading/trailing whitespace
 chapter=$(echo "$read_chapter" | tr -d '[:space:]')
-seeds=$(echo "$read_seeds" | tr -d '[:space:]')
-words=$(echo "$read_words" | tr -d '[:space:]')
-machines=$(echo "$read_machines" | tr -d '[:space:]')
 
 # Print header
 echo

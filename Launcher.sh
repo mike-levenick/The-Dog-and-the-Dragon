@@ -7,10 +7,6 @@ script_dir="$(dirname "$0")"
 # Character information initialized with defaults
 name=""
 chapter=-1
-seeds=-1
-words=-1
-machines=-1
-saves=-1
 
 # Using an int intead of bool here, because I just think they work better in Bash.
 newgame=0
@@ -55,20 +51,22 @@ do
 
             # Set all our character information and create the save file
             chapter=0
-            seeds=0
-            words=0
-            machines=0
             newgame=1
 
             echo """Current chapter - 0
-Number of Seeds - 0
-Number of Words Known - 0
-Number of Machines Understood - 0""" > "$script_dir/gamesaves/$name"
+paws""" > "$script_dir/gamesaves/$name"
             saves=$(ls -1 $script_dir/gamesaves | wc -l)
             ;;
 
     # MARK - Load Game
         2)
+            # Check if any gamesaves exist. If they do not, inform and break early.
+            if [[ -z $(find "$script_dir/gamesaves" -mindepth 1 -type f -not -name ".*") ]]; then
+                echo "Sorry. No gamesaves found. Returning to main menu."
+                sleep 1.5
+                continue
+            fi
+
             # If we are loading a game save, list out the save files and ask which one to choose
             echo
             echo "What game save would you like to load? Type the name exactly."
@@ -89,15 +87,9 @@ Number of Machines Understood - 0""" > "$script_dir/gamesaves/$name"
                 # Set the field separator to '-' and parse the file, populating variables as we go.
                 # Read the file using awk and assign values to variables
                 read_chapter=$(awk -F ' - ' '/Current chapter/ {print $2}' "$script_dir/gamesaves/$savename")
-                read_seeds=$(awk -F ' - ' '/Number of Seeds/ {print $2}' "$script_dir/gamesaves/$savename")
-                read_words=$(awk -F ' - ' '/Number of Words Known/ {print $2}' "$script_dir/gamesaves/$savename")
-                read_machines=$(awk -F ' - ' '/Number of Machines Understood/ {print $2}' "$script_dir/gamesaves/$savename")
 
                 # Assign values to Bash variables, removing leading/trailing whitespace
                 chapter=$(echo "$read_chapter" | tr -d '[:space:]')
-                seeds=$(echo "$read_seeds" | tr -d '[:space:]')
-                words=$(echo "$read_words" | tr -d '[:space:]')
-                machines=$(echo "$read_machines" | tr -d '[:space:]')
             else
                 echo
                 echo "Sorry, no save with that name exists."
@@ -132,16 +124,10 @@ fi
 # MARK - Game Start
 
 # At this point, we should have all the information we require to dive into the game.
-echo "Game start!"
-echo "Name: $name"
-echo "Current chapter: $chapter"
-echo "Number of seeds owned: $seeds"
-echo "Number of words known: $words"
-echo "Number of machines understood: $machines"
+echo
+echo
+echo "Hello $name. You are in chapter $chapter."
+echo "You find yourself in the barnyard. What would you like to do?"
 echo
 
-bash $script_dir/0-prologue/barnyard.area $name $seeds $words $machines
-#name=$1
-#seeds=$2
-#words=$3
-#machines=$4
+bash $script_dir/0-prologue/barnyard.area $name
