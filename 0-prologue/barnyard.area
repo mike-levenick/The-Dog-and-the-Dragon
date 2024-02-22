@@ -40,6 +40,8 @@ help() {
     echo "You can also ask for help on any specific command, for example:"
     echo "\`look help\` to get help specific to the \`look\` command."
     echo
+    echo "If you're ever wondering what to do next, check your \`questlog\` for ideas."
+    echo
 }
 
 use() {

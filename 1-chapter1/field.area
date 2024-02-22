@@ -1,1 +1,10 @@
 #!/bin/bash
+
+# Save our "parameters" as easy-to-find variables
+name=$1
+
+# Get the directory of the current script
+script_dir="$(dirname "$0")"
+
+# Get the save file location
+savelocation="$script_dir/../gamesaves/$name"

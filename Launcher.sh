@@ -81,15 +81,7 @@ paws""" > "$script_dir/gamesaves/$name"
                 echo "Loading $savename..."
                 name=$savename
 
-                # This is a bit inelegant, but it felt like a good time to introduce `awk`, which is
-                # a requirement of the assignment.
-
-                # Set the field separator to '-' and parse the file, populating variables as we go.
-                # Read the file using awk and assign values to variables
-                read_chapter=$(awk -F ' - ' '/Current chapter/ {print $2}' "$script_dir/gamesaves/$savename")
-
-                # Assign values to Bash variables, removing leading/trailing whitespace
-                chapter=$(echo "$read_chapter" | tr -d '[:space:]')
+                chapter=$(bash $script_dir/inventory/CheckChapter.sh $name)
             else
                 echo
                 echo "Sorry, no save with that name exists."
