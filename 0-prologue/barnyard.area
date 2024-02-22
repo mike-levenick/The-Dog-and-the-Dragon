@@ -59,6 +59,13 @@ use() {
             echo "> use lever"
             ;;
 
+        # Using paws will always "work" to give the player a way to explore their options a bit
+        # but it won't always actually "do" anything, unless they're at the field
+        paws)
+            echo "You dug a little hole in the ground. It may not accomplish much here in"
+            echo "the barnyard, but it's honest work."
+            ;;
+
         lever)
             echo "You do not see a lever here."
             ;;
@@ -223,6 +230,12 @@ action() {
             echo "Your name is $name"
             ;;
         exit)
+            # Allow confirmation bypass
+            if [[ "$2" == "y" || "$2" == "Y" ]]; then
+                exit 0
+            fi
+
+            # Otherwise, confirm
             echo "Are you sure you want to quit? (y/n)"
             read choice
             if [[ "$choice" == "y" || "$choice" == "Y" ]]; then

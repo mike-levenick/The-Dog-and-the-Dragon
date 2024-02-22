@@ -18,6 +18,8 @@ IFS=$'\n' read -r -d '' -a items < <(tail -n +2 "$savelocation" && printf '\0')
 # Sort the array alphabetically
 sorted_items=($(printf "%s\n" "${items[@]}" | sort))
 
+# Print the header:
+echo "Items that you have seen or that you currently carry:"
 # Print the sorted array as a bulleted list
 for item in "${sorted_items[@]}"; do
     echo "  - $item"
