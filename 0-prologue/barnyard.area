@@ -11,9 +11,8 @@ savelocation="$script_dir/../gamesaves/$name"
 
 take() {
     echo
-    echo "You now have a $1."
+    echo "There's nothing for you to take from the barnyard."
     echo
-    bash $script_dir/../inventory/AddInventory.sh $name $1
 }
 
 help() {
@@ -32,7 +31,6 @@ help() {
     echo "  - \`look\` (Look around generally/see what there is to see)"
     echo
     echo "  - \`go <place>\` (Move to the specified place)" 
-    echo "  - \`inspect <thing>\` (Inspect something closely to learn about it)"
     echo "  - \`use <thing>\` (Use an item from your inventory or the environment)"
     echo
     echo "  - \`exit\` (Quits the game)"
@@ -135,10 +133,6 @@ look() {
     
 }
 
-inspect() {
-    echo "Finish me"
-}
-
 go() {
     # Switch case for the various directions pupper can look.
     case $1 in
@@ -148,7 +142,10 @@ go() {
             echo "Allows you to go to a specific direction."
             echo "For example, to go north, you could do the command" 
             echo "> go north"
-            echo "You can also always return to the barnyard with the command"
+            echo "You can also approach a specific person or object that you see near you"
+            echo "with the go command such as"
+            echo "> go farmer"
+            echo "Finally, you can also always return to the barnyard with the command"
             echo "> go home"
             ;;
 
@@ -165,15 +162,11 @@ go() {
             ;;
 
         east)
-           echo "You see the field where the farmer grows his crops. The farmer is standing"
-           echo "in his field, planting seeds. The seeds catch the sunlight and glitter brightly"
-           echo "like the scales of the dragon."
+           bash $script_dir/../1-chapter1/field.area
             ;;
 
         west)
-            echo "You see the river to the west, where the farmer's younger son is sitting"
-            echo "on a rock studying. He appears to be trying to sound out letters and their"
-            echo "sounds. Perhaps he could help you learn to talk."
+            bash $script_dir/../2-chapter2/river.area
             ;;
         home)
             echo "You are already in the barnyard."
@@ -198,10 +191,6 @@ questlog() {
     bash $script_dir/../inventory/PrintQuestlog.sh $name
 }
 
-whoami() {
-    echo "Finish me."
-}
-
 action() {
     case $1 in
         take)
@@ -216,11 +205,8 @@ action() {
         look)
            look $2
             ;;
-        inspect)
-            echo "Finish me"
-            ;;
         go)
-            echo "You went $2."
+            go $2
             ;;
         inventory)
             inventory $2
@@ -250,9 +236,16 @@ action() {
     esac   
 }
 
+# This is the loop we actually stay in for the gameplay. If we do the "secret command" correctly, we move on to the next chapter. Otherwise, stay in the loop.
 while (( 1 == 1 )); do
+    # Check our current chapter in case we care
+    chapter=$(bash $script_dir/../inventory/CheckChapter.sh $name)
+    chapter_number=$(bash $script_dir/../inventory/CheckChapter.sh $name number)
+
+    # Prompt for an action
     echo -n "> "
     read action
 
+    # Do the action
     action $action
 done 

@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Welcome message
+echo "You have arrived in the barn. It is full of haybales and machinery for lifting."
+
 # Save our "parameters" as easy-to-find variables
 name=$1
 

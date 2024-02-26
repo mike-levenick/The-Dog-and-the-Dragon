@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Welcome message
+echo "You have arrived at the field where the farmer grows his crops."
+
 # Save our "parameters" as easy-to-find variables
 name=$1
 
@@ -8,3 +11,4 @@ script_dir="$(dirname "$0")"
 
 # Get the save file location
 savelocation="$script_dir/../gamesaves/$name"
+

@@ -11,15 +11,8 @@ script_dir="$(dirname "$0")"
 # Get the save file location
 savelocation="$script_dir/../gamesaves/$name"
 
-# This is a bit inelegant, but it felt like a good time to introduce `awk`, which is
-# a requirement of the assignment.
-
-# Set the field separator to '-' and parse the file, populating variables as we go.
-# Read the file using awk and assign values to variables
-read_chapter=$(awk -F ' - ' '/Current chapter/ {print $2}' "$savelocation")
-
-# Assign values to Bash variables, removing leading/trailing whitespace
-chapter=$(echo "$read_chapter" | tr -d '[:space:]')
+chapter=$(bash $script_dir/CheckChapter.sh $name)
+chapter_number=$(bash $script_dir/CheckChapter.sh $name)
 
 # Print header
 echo
@@ -28,15 +21,24 @@ echo "| QUEST LOG |"
 echo "+-----------+"
 echo
 
-# MARK - Chapter 5
-# If it's chapter 5, we can exit early.
-if [[ "$chapter" == "5" ]]; then
-    echo "[X] Become a Dragon"
-    echo "[ ] Snooze by the fireplace"
+# Mark - Chapter 4
+# If it's chapter 4 we can exit early.
+if [[ "$chapter" == "4" ]]; then
+    echo "   [ ] Save the farmer's son!"
     echo
     exit 0
 fi
 
+# MARK - Chapter 5
+# If it's chapter 5, we can exit early.
+if [[ "$chapter" == "5" ]]; then
+    echo "[X] Become a Dragon"
+    echo "[ ] Rest by the fireplace"
+    echo
+    exit 0
+fi
+
+# Display main quest here
 echo "[ ] Become a Dragon"
 
 # MARK - Chapter 0
@@ -112,17 +114,17 @@ if [[ "$chapter" == "3a" || "$chapter" == "3b" || "$chapter" == "3c" ]]; then
     echo "   [X] Learn to talk"
     echo "   [ ] Learn to fly"
     if [[ "$chapter" == "3a" ]]; then
-        echo "      [ ] Find a language book"
-        echo "      [ ] Study the book with the farmer's son"
-        echo "      [ ] Learn to say \"hello world\""
+        echo "      [ ] Study pulley system"
+        echo "      [ ] Hook up harness"
+        echo "      [ ] Fly!"
     elif [[ "$chapter" == "3b" ]]; then
-        echo "      [X] Find a language book"
-        echo "      [ ] Study the book with the farmer's son"
-        echo "      [ ] Learn to say \"hello world\""
+        echo "      [X] Study pulley system"
+        echo "      [ ] Hook up harness"
+        echo "      [ ] Fly!"
     elif [[ "$chapter" == "3c" ]]; then
-        echo "      [X] Find a language book"
-        echo "      [X] Study the book with the farmer's son"
-        echo "      [ ] Learn to say \"hello world\""
+        echo "      [X] Study pulley system"
+        echo "      [X] Hook up harness"
+        echo "      [ ] Fly!"
     fi
 elif [[ "$chapter" == "3d" ]]; then
     echo "   [X] Get scales"
@@ -131,4 +133,3 @@ elif [[ "$chapter" == "3d" ]]; then
     echo
     exit 0
 fi
-

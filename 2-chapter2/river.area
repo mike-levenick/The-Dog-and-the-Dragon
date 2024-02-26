@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Welcome message
+echo "You have arrived at the river where the farmer's son likes to sit and study."
+
 # Save our "parameters" as easy-to-find variables
 name=$1
 

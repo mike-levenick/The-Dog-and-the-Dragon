@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Welcome message
+echo "You have arrived inside the farmhouse."
+
 # Save our "parameters" as easy-to-find variables
 name=$1
 
