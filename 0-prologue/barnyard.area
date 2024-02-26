@@ -162,11 +162,11 @@ go() {
             ;;
 
         east)
-           bash $script_dir/../1-chapter1/field.area
+            bash $script_dir/../1-chapter1/field.area $name
             ;;
 
         west)
-            bash $script_dir/../2-chapter2/river.area
+            bash $script_dir/../2-chapter2/river.area $name
             ;;
         home)
             echo "You are already in the barnyard."

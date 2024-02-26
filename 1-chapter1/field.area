@@ -12,3 +12,247 @@ script_dir="$(dirname "$0")"
 # Get the save file location
 savelocation="$script_dir/../gamesaves/$name"
 
+holedug=0
+seedsplanted=0
+seedswatered=0
+
+take() {
+    echo
+    echo "There's nothing for you to take from the barnyard."
+    echo
+}
+
+help() {
+    echo
+    if [[ "$1" == "help" ]]; then
+        echo "+----------------------------------------------------------------+"
+        echo "| Achievement unlocked: Tried to break the space-time continuum. |"
+        echo "+----------------------------------------------------------------+"
+        echo
+        return 0
+    fi
+    echo "Available actions include:"
+    echo "  - \`inventory\` (Check your current inventory)"
+    echo "  - \`questlog\` (Check on your current Quest progress)"
+    echo "  - \`whoami\` (In case of existential crisis)"
+    echo "  - \`look\` (Look around generally/see what there is to see)"
+    echo
+    echo "  - \`go <place>\` (Move to the specified place)" 
+    echo "  - \`use <thing>\` (Use an item from your inventory or the environment)"
+    echo
+    echo "  - \`exit\` (Quits the game)"
+    echo
+    echo "You can also ask for help on any specific command, for example:"
+    echo "\`look help\` to get help specific to the \`look\` command."
+    echo
+    echo "If you're ever wondering what to do next, check your \`questlog\` for ideas."
+    echo
+}
+
+use() {
+    # Check if we even have the item in inventory, and if we don't, return early.
+    bash $script_dir/../inventory/CheckInventory.sh $name $1
+    if (( "$?" == "0" )); then
+        return 0
+    fi
+
+    # Switch case for the various items that can be used in this area, including a help section.
+    case $1 in
+        help)
+            echo
+            echo "***** \`USE\` COMMAND HELP *****"
+            echo "Allows you to use objects in your inventory or in the environment."
+            echo "For example, if you see a lever, you could do the command" 
+            echo "> use lever"
+            ;;
+
+        # Using paws will always "work" to give the player a way to explore their options a bit
+        # but it won't always actually "do" anything, unless they're at the field
+        paws)
+            echo "You dug a little hole in the ground. The soil is fertile and looks"
+            echo "like your seeds could grow really well here."
+            ;;
+
+        lever)
+            echo "You do not see a lever here."
+            ;;
+
+        wateringcan)
+            echo "You used the wateringcan."
+            ;;
+
+        hoe)
+           echo "You used the hoe." 
+            ;;
+
+        seedpouch)
+            echo "You used the seedpouch."
+            ;;
+
+        *)
+            echo "You don't know how to use that."
+            ;;
+    esac
+    echo
+}
+
+look() {
+
+    # Switch case for the various directions pupper can look.
+    case $1 in
+        help)
+            echo
+            echo "***** \`LOOK\` COMMAND HELP *****"
+            echo "Allows you to look around and see what there is to see."
+            echo "For example, to look to the north, you could do the command" 
+            echo "> look north"
+            ;;
+
+        north)
+            echo "You see the barn to the north of you. The farmer's older son is lifting"
+            echo "some haybales into the loft using interesting machines. Maybe those machines"
+            echo "could help you fly?"
+            ;;
+
+        south)
+            echo "You see the farmhouse to the south. The farmer's wife is cooking a meal."
+            echo "It smells absolutely delicious, but you know you're not normally allowed"
+            echo "into the house with the family."
+            ;;
+
+        east)
+           echo "You see the field where the farmer grows his crops. The farmer is standing"
+           echo "in his field, planting seeds. The seeds catch the sunlight and glitter brightly"
+           echo "like the scales of the dragon."
+            ;;
+
+        west)
+            echo "You see the river to the west, where the farmer's younger son is sitting"
+            echo "on a rock studying. He appears to be trying to sound out letters and their"
+            echo "sounds. Perhaps he could help you learn to talk."
+            ;;
+
+        *)
+            echo "You look around you in wonder. Isn't the world an amazing place?"
+            ;;
+    esac
+    echo
+    
+}
+
+go() {
+    # Switch case for the various directions pupper can look.
+    case $1 in
+        help)
+            echo
+            echo "***** \`GO\` COMMAND HELP *****"
+            echo "Allows you to go to a specific direction."
+            echo "For example, to go north, you could do the command" 
+            echo "> go north"
+            echo "You can also approach a specific person or object that you see near you"
+            echo "with the go command such as"
+            echo "> go farmer"
+            echo "Finally, you can also always return to the barnyard with the command"
+            echo "> go home"
+            ;;
+
+        north)
+            echo "You see the barn to the north of you. The farmer's older son is lifting"
+            echo "some haybales into the loft using interesting machines. Maybe those machines"
+            echo "could help you fly?"
+            ;;
+
+        south)
+            echo "You see the farmhouse to the south. The farmer's wife is cooking a meal."
+            echo "It smells absolutely delicious, but you know you're not normally allowed"
+            echo "into the house with the family."
+            ;;
+
+        east)
+           bash $script_dir/../1-chapter1/field.area
+            ;;
+
+        west)
+            bash $script_dir/../2-chapter2/river.area
+            ;;
+        home)
+            echo "You are already in the barnyard."
+            ;;
+        *)
+            echo "I'm not sure how to go there."
+            ;;
+    esac
+}
+
+inventory() {
+    if [[ "$1" == "help" ]]; then
+        echo "Not much to know about this one. Just run \`inventory\` to see what you have."
+        echo
+        return 0
+    fi
+    echo
+    bash $script_dir/../inventory/PrintInventory.sh $name
+}
+
+questlog() {
+    bash $script_dir/../inventory/PrintQuestlog.sh $name
+}
+
+action() {
+    case $1 in
+        take)
+            take $2
+            ;;
+        help)
+            help $2
+            ;;
+        use)
+            use $2
+            ;;
+        look)
+           look $2
+            ;;
+        go)
+            go $2
+            ;;
+        inventory)
+            inventory $2
+            ;;
+        questlog)
+            questlog
+            ;;
+        whoami)
+            echo "Your name is $name"
+            ;;
+        exit)
+            # Allow confirmation bypass
+            if [[ "$2" == "y" || "$2" == "Y" ]]; then
+                exit 3
+            fi
+
+            # Otherwise, confirm
+            echo "Are you sure you want to quit? (y/n)"
+            read choice
+            if [[ "$choice" == "y" || "$choice" == "Y" ]]; then
+                exit 3
+            fi
+            ;;
+        *)
+            echo "I'm not sure what you mean."
+            ;;
+    esac   
+}
+
+# This is the loop we actually stay in for the gameplay. If we do the "secret command" correctly, we move on to the next chapter. Otherwise, stay in the loop.
+while (( 1 == 1 )); do
+    # Check our current chapter in case we care
+    chapter=$(bash $script_dir/../inventory/CheckChapter.sh $name)
+    chapter_number=$(bash $script_dir/../inventory/CheckChapter.sh $name number)
+
+    # Prompt for an action
+    echo -n "> "
+    read action
+
+    # Do the action
+    action $action
+done 

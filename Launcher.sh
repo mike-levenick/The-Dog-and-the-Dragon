@@ -109,10 +109,9 @@ done
 
 # If it's a new game, play the opening dialogue
 if [[ $newgame == 1 ]]; then
-    bash $script_dir/art/animate.sh $script_dir/art/dialogue/dialogue1-storyopen.dia 1 print
-    sleep 1.5
+    bash $script_dir/art/StoryOpenCutscene.sh
+    sleep 1
 fi
-
 
 # MARK - Game Start
 

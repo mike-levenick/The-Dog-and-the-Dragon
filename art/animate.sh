@@ -37,11 +37,6 @@ elif [[ "$3" == "print" ]]; then
     # Read the file line by line
     while IFS= read -r line; do
         
-        # Sleep before linebreak lines, 
-        #if [[ ${#line} -lt 2 ]]; then
-            #sleep "$(($2))"
-        #fi
-
         # Give us linebreaks, since we're doing echo -n below
         echo
         
@@ -64,7 +59,7 @@ else
         if [[ $line == "FRAME"* ]]; then
             # If it's a frame marker, sleep the required time and clear the screen
             sleep $2
-            clear
+            clearScreen
             continue
         fi
         # Print the content of the frame
