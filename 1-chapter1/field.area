@@ -257,7 +257,9 @@ while (( 1 == 1 )); do
     if [[ "$chapter" == "1" ]]; then
         bash $script_dir/../art/animate.sh $script_dir/../art/dialogue/dialogue3-fieldintro.dia 1 print
         sleep 1
+        echo
         bash $script_dir/../inventory/UpdateChapter.sh $name "1a"
+        echo
     fi
 
     # Prompt for an action
