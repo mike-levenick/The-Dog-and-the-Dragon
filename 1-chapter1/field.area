@@ -78,7 +78,13 @@ use() {
             ;;
 
         wateringcan)
-            echo "You used the wateringcan."
+            echo "The wateringcan is empty. You'll need to find a place to fill it."
+            echo "Perhaps the river?"
+            ;;
+
+        wateringcan-filled)
+            echo "You used the wateringcan, and watered the crops!"
+            echo "They sprout up before you with shocking speed."
             ;;
 
         hoe)
@@ -157,26 +163,25 @@ go() {
             ;;
 
         north)
-            echo "You see the barn to the north of you. The farmer's older son is lifting"
-            echo "some haybales into the loft using interesting machines. Maybe those machines"
-            echo "could help you fly?"
+            echo "The field stretches far to the north, and is surrounded by a fence."
+            echo "There is no where for you to go from here but west."
             ;;
 
         south)
-            echo "You see the farmhouse to the south. The farmer's wife is cooking a meal."
-            echo "It smells absolutely delicious, but you know you're not normally allowed"
-            echo "into the house with the family."
+            echo "The field stretches far to the south, and is surrounded by a fence."
+            echo "There is no where for you to go from here but west."
             ;;
 
         east)
-           bash $script_dir/../1-chapter1/field.area
+            echo "The field is surrounded to the east by a fence."
+            echo "There is no where for you to go from here but west."
             ;;
 
         west)
-            bash $script_dir/../2-chapter2/river.area
+            exit 0
             ;;
         home)
-            echo "You are already in the barnyard."
+            exit 0
             ;;
         *)
             echo "I'm not sure how to go there."
@@ -248,6 +253,12 @@ while (( 1 == 1 )); do
     # Check our current chapter in case we care
     chapter=$(bash $script_dir/../inventory/CheckChapter.sh $name)
     chapter_number=$(bash $script_dir/../inventory/CheckChapter.sh $name number)
+
+    if [[ "$chapter" == "1" ]]; then
+        bash $script_dir/../art/animate.sh $script_dir/../art/dialogue/dialogue3-fieldintro.dia 1 print
+        sleep 1
+        bash $script_dir/../inventory/UpdateChapter.sh $name "1a"
+    fi
 
     # Prompt for an action
     echo -n "> "

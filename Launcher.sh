@@ -50,7 +50,7 @@ do
             fi
 
             # Set all our character information and create the save file
-            chapter=0
+            chapter=1
             newgame=1
 
             echo """Current chapter - 0

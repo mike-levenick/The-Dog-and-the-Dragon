@@ -66,20 +66,17 @@ use() {
             echo "the barnyard, but it's honest work."
             ;;
 
-        lever)
-            echo "You do not see a lever here."
-            ;;
-
         wateringcan)
-            echo "You used the wateringcan."
+            echo "The wateringcan is empty. You'll need to find a place to fill it."
+            echo "Perhaps the river?"
             ;;
 
-        hoe)
-           echo "You used the hoe." 
+        wateringcan-filled)
+            echo "You probably don't want to waste the water here. Head back to the field."
             ;;
 
         seedpouch)
-            echo "You used the seedpouch."
+            echo "You probably don't want to spill the seeds here in the barnyard, they won't grow!"
             ;;
 
         *)
@@ -163,10 +160,18 @@ go() {
 
         east)
             bash $script_dir/../1-chapter1/field.area $name
+            # Quit all the way if we get exit code 3
+            if [[ "$?" == "3" ]]; then
+                exit 0
+            fi
             ;;
 
         west)
             bash $script_dir/../2-chapter2/river.area $name
+            # Quit all the way if we get exit code 3
+            if [[ "$?" == "3" ]]; then
+                exit 0
+            fi
             ;;
         home)
             echo "You are already in the barnyard."
