@@ -74,11 +74,10 @@ use() {
     if (( "$?" == "0" )); then
         return 0
     fi
-
+    echo
     # Switch case for the various items that can be used in this area, including a help section.
     case $1 in
         help)
-            echo
             echo "***** \`USE\` COMMAND HELP *****"
             echo "Allows you to use objects in your inventory or in the environment."
             echo "For example, if you see a lever, you could do the command" 
@@ -93,11 +92,8 @@ use() {
             bash $script_dir/../inventory/CheckInventory.sh $name "seedpouch" "silent"
 
             if [[ "$?" == "1" ]]; then
-                echo
                 echo "You can \`use seedpouch\` to plant your seeds in the hole."
-                echo
             else 
-                echo
                 echo "Maybe you should look for a \`seedpouch\` you can \`take\`."
             fi
             
@@ -107,8 +103,16 @@ use() {
             ;;
 
         wateringcan)
+            bash $script_dir/../inventory/CheckInventory.sh $name "wateringcan-filled" "silent"
+
+            if [[ "$?" == "1" ]]; then
+                echo "Your wateringcan is filled now. \`use\` it with the command"
+                echo "\`use wateringcan-filled\` now."
+            else 
             echo "The wateringcan is empty. You'll need to find a place to fill it."
             echo "Perhaps the river?"
+            fi
+
             ;;
 
         wateringcan-filled)
@@ -117,11 +121,10 @@ use() {
             if [[ "$chapter" == "1b" ]]; then
                 echo "You carefullly pour water on the seeds, just as you've seen the farmer do."
                 echo "The seeds sprout incredibly quickly right before your eyes!"
-                echo "There is a bountiful harvest of seeds in front of you, ripe for the \`take\`ing."
+                echo "There is a \`bountiful harvest\` of seeds in front of you, ripe for the \`take\`ing."
                 echo
                 echo "Questlog Updated."
                 bash $script_dir/../inventory/UpdateChapter.sh $name "1c"
-                echo
             else
                 echo "Now does not seem to be the right time to do that."
             fi
