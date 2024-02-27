@@ -2,6 +2,7 @@
 
 # Welcome message
 echo "You have arrived at the field where the farmer grows his crops."
+echo
 
 # Save our "parameters" as easy-to-find variables
 name=$1
@@ -17,9 +18,30 @@ seedsplanted=0
 seedswatered=0
 
 take() {
-    echo
-    echo "There's nothing for you to take from the barnyard."
-    echo
+    bash $script_dir/../inventory/CheckInventory.sh $name $1 silent
+    if (( "$?" == "1" )); then
+        echo "Silly puppy, you already have a $1."
+        echo
+        return 0
+    fi
+    case $1 in
+        wateringcan)
+            echo "The farmer is happy to let you borrow a wateringcan, but it is empty."
+            echo "You'll need to find a place to fill it before it will be useful."
+            echo
+            bash $script_dir/../inventory/AddInventory.sh $name $1
+
+            ;;
+        seedpouch)
+            echo "The farmer is happy to let you borrow the seedpouch of spare seeds."
+            echo "Find a place to plant them and \`use seedpouch\` to plant them."
+            echo
+            bash $script_dir/../inventory/AddInventory.sh $name $1
+            ;;
+        *)
+            echo "There's no $1 here"
+            ;;
+    esac
 }
 
 help() {
@@ -66,15 +88,20 @@ use() {
             echo "> use lever"
             ;;
 
-        # Using paws will always "work" to give the player a way to explore their options a bit
-        # but it won't always actually "do" anything, unless they're at the field
+        # Now that we're at the field, we can use our paws for real.
         paws)
             echo "You dug a little hole in the ground. The soil is fertile and looks"
-            echo "like your seeds could grow really well here."
-            ;;
+            echo "like seeds could grow really well here."
+            bash $script_dir/../inventory/CheckInventory.sh $name "seedpouch" "silent"
 
-        lever)
-            echo "You do not see a lever here."
+            if [[ "$?" == "1" ]]; then
+                echo
+                echo "You can \`use seedpouch\` to plant your seeds in the hole."
+                echo
+            else 
+                echo
+                echo "Maybe you should look for a \`seedpouch\` you can \`take\`."
+            fi
             ;;
 
         wateringcan)
@@ -160,31 +187,41 @@ go() {
             echo "> go farmer"
             echo "Finally, you can also always return to the barnyard with the command"
             echo "> go home"
+            echo
             ;;
 
         north)
             echo "The field stretches far to the north, and is surrounded by a fence."
             echo "There is no where for you to go from here but west."
+            echo
             ;;
 
         south)
             echo "The field stretches far to the south, and is surrounded by a fence."
             echo "There is no where for you to go from here but west."
+            echo
             ;;
 
         east)
             echo "The field is surrounded to the east by a fence."
             echo "There is no where for you to go from here but west."
+            echo
             ;;
 
         west)
             exit 0
+            ;;
+        farmer)
+            echo "As you approach the farmer, he gestures kindly towards a nearby"
+            echo "\`wateringcan\` and \`seedpouch\`. He seems like he wants you to \`take\` them."
+            echo
             ;;
         home)
             exit 0
             ;;
         *)
             echo "I'm not sure how to go there."
+            echo
             ;;
     esac
 }
@@ -258,7 +295,19 @@ while (( 1 == 1 )); do
         bash $script_dir/../art/animate.sh $script_dir/../art/dialogue/dialogue3-fieldintro.dia 1 print
         sleep 1
         echo
+        echo
+        echo "Questlog Updated."
         bash $script_dir/../inventory/UpdateChapter.sh $name "1a"
+        echo
+    fi
+
+    if [[ "$action" == "roll in bountiful harvest" ]]; then
+        bash $script_dir/../art/animate.sh $script_dir/../art/dialogue/dialogue4-bountifulharvest.dia 1 print
+        sleep 1
+        echo
+        echo
+        echo "Questlog Updated."
+        bash $script_dir/../inventory/UpdateChapter.sh $name "2a"
         echo
     fi
 
