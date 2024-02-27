@@ -14,8 +14,6 @@ script_dir="$(dirname "$0")"
 savelocation="$script_dir/../gamesaves/$name"
 
 holedug=0
-seedsplanted=0
-seedswatered=0
 
 take() {
     bash $script_dir/../inventory/CheckInventory.sh $name $1 silent
@@ -35,7 +33,6 @@ take() {
         seedpouch)
             echo "The farmer is happy to let you borrow the seedpouch of spare seeds."
             echo "Find a place to plant them and \`use seedpouch\` to plant them."
-            echo
             bash $script_dir/../inventory/AddInventory.sh $name $1
             ;;
         *)
@@ -92,6 +89,7 @@ use() {
         paws)
             echo "You dug a little hole in the ground. The soil is fertile and looks"
             echo "like seeds could grow really well here."
+            echo "And it sure was fun!!"
             bash $script_dir/../inventory/CheckInventory.sh $name "seedpouch" "silent"
 
             if [[ "$?" == "1" ]]; then
@@ -102,6 +100,10 @@ use() {
                 echo
                 echo "Maybe you should look for a \`seedpouch\` you can \`take\`."
             fi
+            
+            # Technically by doing it this way, someone could dig a hole, leave, and come back
+            # and need to dig a new hole. But I think that's ok. Digging holes is fun for dogs.
+            holedug=1
             ;;
 
         wateringcan)
@@ -110,8 +112,19 @@ use() {
             ;;
 
         wateringcan-filled)
-            echo "You used the wateringcan, and watered the crops!"
-            echo "They sprout up before you with shocking speed."
+            chapter=$(bash $script_dir/../inventory/CheckChapter.sh $name)
+
+            if [[ "$chapter" == "1b" ]]; then
+                echo "You carefullly pour water on the seeds, just as you've seen the farmer do."
+                echo "The seeds sprout incredibly quickly right before your eyes!"
+                echo "There is a bountiful harvest of seeds in front of you, ripe for the \`take\`ing."
+                echo
+                echo "Questlog Updated."
+                bash $script_dir/../inventory/UpdateChapter.sh $name "1c"
+                echo
+            else
+                echo "Now does not seem to be the right time to do that."
+            fi
             ;;
 
         hoe)
@@ -119,7 +132,17 @@ use() {
             ;;
 
         seedpouch)
-            echo "You used the seedpouch."
+            if [[ "$holedug" == "0" ]]; then
+                echo "You may have a hard time planting the seeds without digging a hole first."
+                echo "Do you have any way of digging a hole to plant the seeds in?"
+                echo "Check your inventory, and \`use\` something that could dig holes."
+            else
+                echo "You used the seedpouch, and planted the seeds in the ground."
+                echo "Now you need to find a way to water them."
+                echo
+                echo "Questlog Updated."
+                bash $script_dir/../inventory/UpdateChapter.sh $name "1b"
+            fi
             ;;
 
         *)
