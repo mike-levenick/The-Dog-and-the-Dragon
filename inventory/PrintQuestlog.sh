@@ -55,26 +55,28 @@ fi
 if [[ "$chapter" == "1a" || "$chapter" == "1b" || "$chapter" == "1c" || "$chapter" == "1d" ]]; then
     echo "   [ ] Get scales"
     if [[ "$chapter" == "1a" ]]; then
-        echo "      [ ] Plant crops"
-        echo "      [ ] Water crops"
-        echo "      [ ] Harvest crops"
+        echo "      [ ] Plant seeds"
+        echo "      [ ] Water seeds"
+        echo "      [ ] Harvest seeds"
         echo "      [ ] Roll in seeds"
     elif [[ "$chapter" == "1b" ]]; then
-        echo "      [X] Plant crops"
-        echo "      [ ] Water crops"
-        echo "      [ ] Harvest crops"
+        echo "      [X] Plant seeds"
+        echo "      [ ] Water seeds"
+        echo "      [ ] Harvest seeds"
         echo "      [ ] Roll in seeds"
     elif [[ "$chapter" == "1c" ]]; then
-        echo "      [X] Plant crops"
-        echo "      [X] Water crops"
-        echo "      [ ] Harvest crops"
+        echo "      [X] Plant seeds"
+        echo "      [X] Water seeds"
+        echo "      [ ] Harvest seeds"
         echo "      [ ] Roll in seeds"
     elif [[ "$chapter" == "1d" ]]; then
-        echo "      [X] Plant crops"
-        echo "      [X] Water crops"
-        echo "      [X] Harvest crops"
+        echo "      [X] Plant seeds"
+        echo "      [X] Water seeds"
+        echo "      [X] Harvest seeds"
         echo "      [ ] Roll in seeds"
     fi
+    echo "   [ ] Learn to talk"
+    echo "   [ ] Learn to fly"
 elif [[ "$chapter" == "1e" ]]; then
     echo "   [X] Get scales"
     echo "   [ ] Learn to talk"
@@ -100,6 +102,7 @@ if [[ "$chapter" == "2a" || "$chapter" == "2b" || "$chapter" == "2c" ]]; then
         echo "      [X] Study the book with the farmer's son"
         echo "      [ ] Learn to say \"hello world\""
     fi
+    echo "   [ ] Learn to fly"
 elif [[ "$chapter" == "2d" ]]; then
     echo "   [X] Get scales"
     echo "   [X] Learn to talk"
