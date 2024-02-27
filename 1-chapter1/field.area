@@ -16,6 +16,9 @@ savelocation="$script_dir/../gamesaves/$name"
 holedug=0
 
 take() {
+    # Get chapter
+    chapter=$(bash $script_dir/../inventory/CheckChapter.sh $name)
+    
     bash $script_dir/../inventory/CheckInventory.sh $name $1 silent
     if (( "$?" == "1" )); then
         echo "Silly puppy, you already have a $1."
@@ -35,10 +38,23 @@ take() {
             echo "Find a place to plant them and \`use seedpouch\` to plant them."
             bash $script_dir/../inventory/AddInventory.sh $name $1
             ;;
+        bountiful)
+            if [[ "$chapter" == "1c" ]]; then
+                echo "Great work! You've collected a beautiful, bountiful harvest."
+                echo "It will not appear in your inventory, but you can use the secret command"
+                echo "> roll in bountiful harvest"
+                echo "to get your scales."
+                echo
+                bash $script_dir/../inventory/UpdateChapter.sh $name "1d"
+            else
+                echo "Now does not seem to be the right time to harvest."
+            fi
+            ;;
         *)
             echo "There's no $1 here"
             ;;
     esac
+    echo
 }
 
 help() {
@@ -69,6 +85,9 @@ help() {
 }
 
 use() {
+    # Get chapter
+    chapter=$(bash $script_dir/../inventory/CheckChapter.sh $name)
+
     # Check if we even have the item in inventory, and if we don't, return early.
     bash $script_dir/../inventory/CheckInventory.sh $name $1
     if (( "$?" == "0" )); then
@@ -94,7 +113,7 @@ use() {
             if [[ "$?" == "1" ]]; then
                 echo "You can \`use seedpouch\` to plant your seeds in the hole."
             else 
-                echo "Maybe you should look for a \`seedpouch\` you can \`take\`."
+                echo "Maybe there is a \`seedpouch\` you can \`take\`."
             fi
             
             # Technically by doing it this way, someone could dig a hole, leave, and come back
@@ -116,7 +135,6 @@ use() {
             ;;
 
         wateringcan-filled)
-            chapter=$(bash $script_dir/../inventory/CheckChapter.sh $name)
 
             if [[ "$chapter" == "1b" ]]; then
                 echo "You carefullly pour water on the seeds, just as you've seen the farmer do."
