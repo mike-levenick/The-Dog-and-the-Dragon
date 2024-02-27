@@ -47,7 +47,6 @@ if [[ "$chapter" == "0" ]]; then
     echo "   [ ] Get scales"
     echo "   [ ] Learn to talk"
     echo "   [ ] Learn to fly"
-    echo
     exit 0
 fi
 
@@ -81,7 +80,6 @@ elif [[ "$chapter" == "1e" ]]; then
     echo "   [X] Get scales"
     echo "   [ ] Learn to talk"
     echo "   [ ] Learn to fly"
-    echo
     exit 0
 fi
 
@@ -107,7 +105,6 @@ elif [[ "$chapter" == "2d" ]]; then
     echo "   [X] Get scales"
     echo "   [X] Learn to talk"
     echo "   [ ] Learn to fly"
-    echo
     exit 0
 fi
 
@@ -133,6 +130,6 @@ elif [[ "$chapter" == "3d" ]]; then
     echo "   [X] Get scales"
     echo "   [X] Learn to talk"
     echo "   [X] Learn to fly"
-    echo
     exit 0
 fi
+echo
