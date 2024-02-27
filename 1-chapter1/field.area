@@ -186,26 +186,21 @@ look() {
             ;;
 
         north)
-            echo "You see the barn to the north of you. The farmer's older son is lifting"
-            echo "some haybales into the loft using interesting machines. Maybe those machines"
-            echo "could help you fly?"
+            echo "The farmer's field stretches far and wide to the north."
             ;;
 
         south)
-            echo "You see the farmhouse to the south. The farmer's wife is cooking a meal."
-            echo "It smells absolutely delicious, but you know you're not normally allowed"
-            echo "into the house with the family."
+            echo "The farmer's field stretches far and wide to the south."
             ;;
 
         east)
-           echo "You see the field where the farmer grows his crops. The farmer is standing"
-           echo "in his field, planting seeds. The seeds catch the sunlight and glitter brightly"
-           echo "like the scales of the dragon."
+            echo "The farmer's field stretches far and wide to the east."
             ;;
 
         west)
-            echo "You see the river to the west, where the farmer's younger son is sitting"
-            echo "on a rock studying. He appears to be trying to sound out letters and their"
+            echo "You see the barnyard which you call home to the west. Beyond that,"
+            echo "you see the river where the farmer's younger son is sitting"
+            echo "on a rock reading. He appears to be trying to sound out letters and their"
             echo "sounds. Perhaps he could help you learn to talk."
             ;;
 
