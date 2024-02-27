@@ -18,46 +18,25 @@
                                         `
 
 
+The Dog and the Dragon is a text-based RPG, created by Mike Levenick,
+and based on the short story The Dog and the Dragon, which is contained
+within chapter 80 of the novel Rhythm of War, by Brandon Sanderson.
 
-Story inspiration:
-Brandon Sanderson
+Much of the text used in the cutscenes was taken verbatim from the Dog and
+the Dragon Worldsinger Edit, by u/ArtyWhy8. A hyperlink to their post is
+contained within the ReadMe of this project.
 
-Game Design:
-Michael Levenick
+This game is created in accordance with the Dragonsteel Entertainment fan-art
+policy, which can be found on the Dragonsteel website. A hyperlink is contained
+within the ReadMe of this project.
 
-Lead Programmer:
-Michael Levenick
+The animate.sh animation engine was inspired by the asciimation project by 
+octobanana. asciimation can be found on GitHub, and a hyperlink is contained
+within the ReadMe of this project.
 
-2D Animations:
-Michael Levenick
+All of the ASCII art used in this project can be found https://www.asciiart.eu/
+Some of the art has been slightly modified by me in order to fit the project.
 
-Quality Assurance:
-Michael Levenick
-
-Key Grip:
-Michael Levenick
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+The code for this project is released under the GNU AGPL v3 license, although
+it is important to note that commercial use of Brandon Sanderson's literary
+works are not allowed without permission of Dragonsteel Entertainment.

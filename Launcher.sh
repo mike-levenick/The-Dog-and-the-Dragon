@@ -95,7 +95,10 @@ paws""" > "$script_dir/gamesaves/$name"
     # MARK - Credits
         3)
             # Play the credits
-            bash $script_dir/art/animate.sh $script_dir/art/cutscenes/credits.anim .3 scroll
+            bash $script_dir/art/animate.sh $script_dir/art/cutscenes/credits.anim .1 scroll
+            echo
+            printf "%s" "Press enter to return to Main Menu."
+            read
             ;;
 
     # MARK - Exit game
