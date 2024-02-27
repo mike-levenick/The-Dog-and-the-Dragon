@@ -11,6 +11,8 @@ name=$1
 # Pass the item name as $2, so we can check for existence of the item
 itemname=$2
 
+silent=$3
+
 # Get the directory of the current script
 script_dir="$(dirname "$0")"
 
@@ -22,10 +24,15 @@ itemsearch="$(cat $savelocation | grep $itemname)"
 
 # If that variable doesn't contain stuff, we dont have the item.
 if [[ "$itemsearch" == "" ]]; then
-    echo "There is no $itemname here."
-    echo
+    if [[ "$3" == "" ]]; then
+        echo "There is no $itemname here."
+        echo
+    fi
     exit 0
 else
-    echo "You tried the $itemname."
+    if [[ "$3" == "" ]]; then
+        echo "You tried the $itemname."
+        echo
+    fi
     exit 1
 fi
