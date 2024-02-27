@@ -89,15 +89,15 @@ if [[ "$chapter" == "2a" || "$chapter" == "2b" || "$chapter" == "2c" ]]; then
     echo "   [ ] Learn to talk"
     if [[ "$chapter" == "2a" ]]; then
         echo "      [ ] Find a language book"
-        echo "      [ ] Study the book with the farmer's son"
+        echo "      [ ] Read the book with the farmer's son"
         echo "      [ ] Learn to say \"hello world\""
     elif [[ "$chapter" == "2b" ]]; then
         echo "      [X] Find a language book"
-        echo "      [ ] Study the book with the farmer's son"
+        echo "      [ ] Read the book with the farmer's son"
         echo "      [ ] Learn to say \"hello world\""
     elif [[ "$chapter" == "2c" ]]; then
         echo "      [X] Find a language book"
-        echo "      [X] Study the book with the farmer's son"
+        echo "      [X] Read the book with the farmer's son"
         echo "      [ ] Learn to say \"hello world\""
     fi
     echo "   [ ] Learn to fly"
