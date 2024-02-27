@@ -193,6 +193,11 @@ inventory() {
 }
 
 questlog() {
+    if [[ "$1" == "help" ]]; then
+        echo "Not much to know about this one. Just run \`questlog\` to see what's next."
+        echo
+        return 0
+    fi
     bash $script_dir/../inventory/PrintQuestlog.sh $name
 }
 
