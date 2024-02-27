@@ -25,7 +25,6 @@ echo
 # If it's chapter 4 we can exit early.
 if [[ "$chapter" == "4" ]]; then
     echo "   [ ] Save the farmer's son!"
-    echo
     exit 0
 fi
 
@@ -34,7 +33,6 @@ fi
 if [[ "$chapter" == "5" ]]; then
     echo "[X] Become a Dragon"
     echo "[ ] Rest by the fireplace"
-    echo
     exit 0
 fi
 
@@ -132,4 +130,3 @@ elif [[ "$chapter" == "3d" ]]; then
     echo "   [X] Learn to fly"
     exit 0
 fi
-echo

@@ -24,4 +24,3 @@ echo "Items that you have seen or that you currently carry:"
 for item in "${sorted_items[@]}"; do
     echo "  - $item"
 done
-echo

@@ -37,12 +37,12 @@ elif [[ "$3" == "print" ]]; then
     # Read the file line by line
     while IFS= read -r line; do
         
-        # Give us linebreaks, since we're doing echo -n below
+        # Give us linebreaks, since we're doing printf %s below
         echo
         
         # Iterate over each character in the line
         for (( i=0; i<${#line}; i++ )); do
-            echo -n "${line:i:1}"
+            printf "%s" "${line:i:1}"
             sleep 0.03
         done
         if [[ ${#line} -gt 1 ]]; then

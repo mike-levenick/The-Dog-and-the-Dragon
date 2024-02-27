@@ -2,7 +2,6 @@
 
 # Welcome message
 echo "You have arrived at the field where the farmer grows his crops."
-echo
 
 # Save our "parameters" as easy-to-find variables
 name=$1
@@ -22,7 +21,6 @@ take() {
     bash $script_dir/../inventory/CheckInventory.sh $name $1 silent
     if (( "$?" == "1" )); then
         echo "Silly puppy, you already have a $1."
-        echo
         return 0
     fi
     case $1 in
@@ -36,6 +34,7 @@ take() {
         seedpouch)
             echo "The farmer is happy to let you borrow the seedpouch of spare seeds."
             echo "Find a place to plant them and \`use seedpouch\` to plant them."
+            echo
             bash $script_dir/../inventory/AddInventory.sh $name $1
             ;;
         bountiful)
@@ -54,7 +53,6 @@ take() {
             echo "There's no $1 here"
             ;;
     esac
-    echo
 }
 
 help() {
@@ -81,7 +79,6 @@ help() {
     echo "\`look help\` to get help specific to the \`look\` command."
     echo
     echo "If you're ever wondering what to do next, check your \`questlog\` for ideas."
-    echo
 }
 
 use() {
@@ -170,7 +167,6 @@ use() {
             echo "You don't know how to use that."
             ;;
     esac
-    echo
 }
 
 look() {
@@ -207,16 +203,13 @@ look() {
         *)
             echo "You look around you in wonder. Isn't the world an amazing place?"
             ;;
-    esac
-    echo
-    
+    esac    
 }
 
 go() {
-    # Switch case for the various directions pupper can look.
+    # Switch case for the various directions pupper can go.
     case $1 in
         help)
-            echo
             echo "***** \`GO\` COMMAND HELP *****"
             echo "Allows you to go to a specific direction."
             echo "For example, to go north, you could do the command" 
@@ -226,25 +219,21 @@ go() {
             echo "> go farmer"
             echo "Finally, you can also always return to the barnyard with the command"
             echo "> go home"
-            echo
             ;;
 
         north)
             echo "The field stretches far to the north, and is surrounded by a fence."
             echo "There is no where for you to go from here but west."
-            echo
             ;;
 
         south)
             echo "The field stretches far to the south, and is surrounded by a fence."
             echo "There is no where for you to go from here but west."
-            echo
             ;;
 
         east)
             echo "The field is surrounded to the east by a fence."
             echo "There is no where for you to go from here but west."
-            echo
             ;;
 
         west)
@@ -253,14 +242,12 @@ go() {
         farmer)
             echo "As you approach the farmer, he gestures kindly towards a nearby"
             echo "\`wateringcan\` and \`seedpouch\`. He seems like he wants you to \`take\` them."
-            echo
             ;;
         home)
             exit 0
             ;;
         *)
             echo "I'm not sure how to go there."
-            echo
             ;;
     esac
 }
@@ -268,17 +255,14 @@ go() {
 inventory() {
     if [[ "$1" == "help" ]]; then
         echo "Not much to know about this one. Just run \`inventory\` to see what you have."
-        echo
         return 0
     fi
-    echo
     bash $script_dir/../inventory/PrintInventory.sh $name
 }
 
 questlog() {
     if [[ "$1" == "help" ]]; then
         echo "Not much to know about this one. Just run \`questlog\` to see what's next."
-        echo
         return 0
     fi
     bash $script_dir/../inventory/PrintQuestlog.sh $name
@@ -342,7 +326,6 @@ while (( 1 == 1 )); do
         echo
         echo "Questlog Updated."
         bash $script_dir/../inventory/UpdateChapter.sh $name "1a"
-        echo
     fi
 
     if [[ "$action" == "roll in bountiful harvest" ]]; then
@@ -351,12 +334,12 @@ while (( 1 == 1 )); do
         echo
         echo
         echo "Questlog Updated."
-        bash $script_dir/../inventory/UpdateChapter.sh $name "2a"
-        echo
+        bash $script_dir/../inventory/UpdateChapter.sh $name "2"
     fi
 
     # Prompt for an action
-    echo -n "> "
+    echo
+    printf "%s" "> "
     read action
 
     # Do the action

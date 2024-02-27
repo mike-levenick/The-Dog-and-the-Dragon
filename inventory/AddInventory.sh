@@ -18,4 +18,3 @@ echo "$itemname" >> $savelocation
 
 echo "$itemname added to inventory."
 echo "⭒Progress saved!⭒"
-echo

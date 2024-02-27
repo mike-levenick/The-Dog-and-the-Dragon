@@ -26,13 +26,11 @@ itemsearch="$(cat $savelocation | grep $itemname)"
 if [[ "$itemsearch" == "" ]]; then
     if [[ "$3" == "" ]]; then
         echo "There is no $itemname here."
-        echo
     fi
     exit 0
 else
     if [[ "$3" == "" ]]; then
         echo "You tried the $itemname."
-        echo
     fi
     exit 1
 fi

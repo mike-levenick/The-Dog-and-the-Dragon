@@ -9,6 +9,9 @@ script_dir="$(dirname "$0")"
 # Get the save file location
 savelocation="$script_dir/../gamesaves/$name"
 
+echo "You find yourself in the barnyard which you call home."
+echo
+
 take() {
     echo
     echo "There's nothing for you to take from the barnyard."
@@ -126,12 +129,10 @@ look() {
             echo "You look around you in wonder. Isn't the world an amazing place?"
             ;;
     esac
-    echo
-    
 }
 
 go() {
-    # Switch case for the various directions pupper can look.
+    # Switch case for the various directions pupper can go.
     case $1 in
         help)
             echo
@@ -185,17 +186,14 @@ go() {
 inventory() {
     if [[ "$1" == "help" ]]; then
         echo "Not much to know about this one. Just run \`inventory\` to see what you have."
-        echo
         return 0
     fi
-    echo
     bash $script_dir/../inventory/PrintInventory.sh $name
 }
 
 questlog() {
     if [[ "$1" == "help" ]]; then
         echo "Not much to know about this one. Just run \`questlog\` to see what's next."
-        echo
         return 0
     fi
     bash $script_dir/../inventory/PrintQuestlog.sh $name
@@ -253,7 +251,8 @@ while (( 1 == 1 )); do
     chapter_number=$(bash $script_dir/../inventory/CheckChapter.sh $name number)
 
     # Prompt for an action
-    echo -n "> "
+    echo
+    printf "%s" "> "
     read action
 
     # Do the action
