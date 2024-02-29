@@ -47,3 +47,45 @@ Any time you collect new inventory or progress through the story, your progress 
 ### How to Load your Gamesave
 When it's time to take a break, simply exit the game, knowing your progress will be saved. Upon re-launching the game, you can select the `Load Game` option from the Main Menu, and then type the name of your gamesave file to load your progress.
 
+## Credits
+Credits can be viewed in-game from the main menu, but their contents are posted here as well.
+
+                                     /   \
+           _                 )      ((   ))     (
+          (@)               /|\      ))_((     /|\                 _
+          |-|`\            / | \    (/\|/\)   / | \               (@)
+          | | ------------/--|-voV---\`|'/--Vov-|--\--------------|-|
+          |-|                  '^`   (o o)  '^`                   | |
+          | |             _____      `\Y/'   _ _ _                |-|
+          |-|            / __  \            | (_) |               | |
+          | |           | /   \/_ ___ __   _| |_| |__ __          |-|
+          |-|           | |    | '__/ _ \/ _` | | __/ __|         | |
+          | |           | \___/\| ||  __/ (_| | | |_\__ \         |-|
+          |-|            \_____/|_| \___|\__,_|_|\__|___/         | |
+          |_|_____________________________________________________| |
+          (@)       l   /\ /         ( (       \ /\   l         `\|-|
+                    l /   V           \ \       V   \ l           (@)
+                    l/                _) )_          \I
+                                      `\ /'
+                                        `
+
+
+The Dog and the Dragon is a text-based RPG, created by Mike Levenick,
+and based on the short story The Dog and the Dragon, which is contained
+within chapter 80 of the novel Rhythm of War, by Brandon Sanderson.
+
+Much of the text used in the cutscenes was taken verbatim from the Dog and
+the Dragon Worldsinger Edit, by u/ArtyWhy8, which can be found on Reddit [here](https://old.reddit.com/r/Stormlight_Archive/comments/k3rc44/the_dog_and_the_dragon_worldsinger_edit/).
+
+This game is created in accordance with the Dragonsteel Entertainment fan-art
+policy, which can be found on the Dragonsteel website [here](https://faq.brandonsanderson.com/knowledge-base/can-i-make-fan-art-or-write-fan-fiction/). 
+
+The animate.sh animation engine was inspired by the asciimation project by 
+octobanana. asciimation can be found on GitHub [here](https://github.com/octobanana/asciimation).
+
+The ASCII art used in this project can be found at [https://www.asciiart.eu/](https://www.asciiart.eu/)
+Some of the art has been slightly modified by me in order to fit the project.
+
+The code for this project is released under the [GNU AGPL v3 license](https://www.gnu.org/licenses/agpl-3.0.en.html), although
+it is important to note that commercial use of Brandon Sanderson's literary
+works are not allowed without permission of Dragonsteel Entertainment.
