@@ -111,7 +111,7 @@ use() {
                 echo "\`use wateringcan-filled\` now."
             else 
                 echo "You approach the river, and fill your wateringcan there."
-                fillcan
+                fillCan
             fi
 
             ;;
@@ -325,9 +325,13 @@ action() {
     esac   
 }
 
-fillcan() {
+fillCan() {
     sed -i '' "s/wateringcan/wateringcan-filled/g" "$savelocation"
     echo "⭒Progress saved!⭒"
+}
+
+checkHomework() {
+
 }
 
 # This is the loop we actually stay in for the gameplay. If we do the "secret command" correctly, we move on to the next chapter. Otherwise, stay in the loop.
@@ -355,6 +359,10 @@ while (( 1 == 1 )); do
         echo
         echo "Questlog Updated."
         bash $script_dir/../inventory/UpdateChapter.sh $name "2b"
+    fi
+
+    if [[ "$action" == "check homework" ]]; then
+        checkHomework
     fi
 
     # Prompt for an action
