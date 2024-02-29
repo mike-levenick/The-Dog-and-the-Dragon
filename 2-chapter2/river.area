@@ -117,7 +117,6 @@ use() {
             ;;
 
         wateringcan-filled)
-
             if [[ "$chapter" == "1b" ]]; then
                 echo "You carefullly pour water on the seeds, just as you've seen the farmer do."
                 echo "The seeds sprout incredibly quickly right before your eyes!"
@@ -331,7 +330,34 @@ fillCan() {
 }
 
 checkHomework() {
+    # Check if Homework exists or end
+    if [[ -z $(find "$script_dir/../homework" -mindepth 1 -type f \( ! -name "readme.txt" \) \( ! -name ".*" \)) ]]; then
+        echo "Sorry, I did not find any homework to check!"
+        echo
+        echo "Please be sure to put your homework in the \`homework\`"
+        echo "directory in the project root."
+        return 0
+    fi
 
+    # Check to be sure homework that name actually exists.
+    if [ ! -f "$script_dir/../homework/$name.sh" ]; then
+        echo "Sorry, I found homework to check, but none with the correct name."
+        echo "Please be sure to label your homework correctly so I can find it."
+        echo
+        echo "Your homework should be titled \`$name.sh\`."
+        return 0
+    fi
+
+    # If we got this far, we must have homework and it must have the right name.
+    homeworkContents=$(bash "$script_dir/../homework/$name.sh")
+
+    # Check the output of the script, case-insensitive.
+    if [[ "${homeworkContents,,}" =~ "hello world" ]]; then
+        echo "Homework is correct!"
+    else
+        echo "Hmm, that's not quite right. Your homework says:"
+        echo $homeworkContents
+    fi
 }
 
 # This is the loop we actually stay in for the gameplay. If we do the "secret command" correctly, we move on to the next chapter. Otherwise, stay in the loop.
@@ -351,24 +377,27 @@ while (( 1 == 1 )); do
         bash $script_dir/../inventory/UpdateChapter.sh $name "2a"
     fi
 
-    if [[ "$action" == "look for book" ]]; then
-        echo "You find the book under a small pile of leaves. You gently pick it up."
-        echo "Be sure to take the book back to the son by \`go\`ing to him with it."
-        bash $script_dir/../inventory/AddInventory.sh $name "storybook"
-        echo
-        echo
-        echo "Questlog Updated."
-        bash $script_dir/../inventory/UpdateChapter.sh $name "2b"
-    fi
-
-    if [[ "$action" == "check homework" ]]; then
-        checkHomework
-    fi
-
     # Prompt for an action
     echo # Give us a linebreak
     printf "%s" "> "
     read action
+
+    if [[ "$action" == "look for book" ]]; then
+        echo
+        echo "You find the book under a small pile of leaves. You gently pick it up."
+        echo "Be sure to take the book back to the son by \`go\`ing to him with it."
+        echo
+        bash $script_dir/../inventory/AddInventory.sh $name "storybook"
+        echo
+        echo "Questlog Updated."
+        bash $script_dir/../inventory/UpdateChapter.sh $name "2b"
+        continue
+    fi
+
+    if [[ "$action" == "check homework" ]]; then
+        checkHomework
+        continue
+    fi
 
     # Do the action
     action $action
