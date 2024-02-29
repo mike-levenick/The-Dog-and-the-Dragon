@@ -227,7 +227,7 @@ go() {
             echo "The river blocks your path from heading any further west from here."
             ;;
         son)
-            if [[ "$chapter" == "2b" ]]; then
+            if [[ "$chapter" == "2b" || "$chapter" == "2c" ]]; then
                 echo "The farmer's son takes the book from your mouth, a look of joy on his face."
                 echo "He sits down and pats the ground next to him, encouraging you to sit."
                 echo "Then, he opens the cover, and tells you about the story."
@@ -243,6 +243,10 @@ go() {
                 echo "Don't worry, your progress is saved, so you can exit"
                 echo "the game with the \`exit\` command, and then come back to the river, and use"
                 echo "the secret command \`check homework\` when it's done.\""
+
+                # Update chapter to 2c so we can check homework
+                bash $script_dir/../inventory/UpdateChapter.sh $name "2c"
+
             elif [[ "$chapter" == "2a" ]]; then
                 echo "As you approach the farmer's son, he appears concerned. He seems to be"
                 echo "looking for his storybook which he misplaced. Maybe you can search with him?"
@@ -329,7 +333,40 @@ fillCan() {
     echo "⭒Progress saved!⭒"
 }
 
+lookForBook() {
+    # Check to make sure we're in the right chapter, and provide advice if we aren't.
+    chapter=$(bash $script_dir/../inventory/CheckChapter.sh $name)
+
+    # Stop duplicate inventory
+    if [[ "$chapter" == "2b" ]]; then
+        echo "You already have the book. It's time to take it to the son."
+        return 0
+    fi
+
+    # Stop the cheaters
+    if [[ "$chapter" != "2" && "$chapter" != "2a" ]]; then
+        echo "Now is not the right time to do that."
+        return 0
+    fi
+
+    echo
+    echo "You find the book under a small pile of leaves. You gently pick it up."
+    echo "Be sure to take the book back to the son by \`go\`ing to him with it."
+    echo
+    bash $script_dir/../inventory/AddInventory.sh $name "storybook"
+    echo
+    echo "Questlog Updated."
+    bash $script_dir/../inventory/UpdateChapter.sh $name "2b"
+}
+
 checkHomework() {
+    # Check to make sure we're in the right chapter.
+    chapter=$(bash $script_dir/../inventory/CheckChapter.sh $name)
+    if [[ "$chapter" != "2b" && "$chapter" != "2c" ]]; then
+        echo "Now is not the right time to do that."
+        return 0
+    fi
+
     # Check if Homework exists or end
     if [[ -z $(find "$script_dir/../homework" -mindepth 1 -type f \( ! -name "readme.txt" \) \( ! -name ".*" \)) ]]; then
         echo "Sorry, I did not find any homework to check!"
@@ -354,6 +391,7 @@ checkHomework() {
     # Check the output of the script, case-insensitive.
     if [[ "${homeworkContents,,}" =~ "hello world" ]]; then
         echo "Homework is correct!"
+        bash $script_dir/../art/animate.sh $script_dir/../art/dialogue/dialogue6-goodhomework.dia 1 print
     else
         echo "Hmm, that's not quite right. Your homework says:"
         echo $homeworkContents
@@ -383,14 +421,7 @@ while (( 1 == 1 )); do
     read action
 
     if [[ "$action" == "look for book" ]]; then
-        echo
-        echo "You find the book under a small pile of leaves. You gently pick it up."
-        echo "Be sure to take the book back to the son by \`go\`ing to him with it."
-        echo
-        bash $script_dir/../inventory/AddInventory.sh $name "storybook"
-        echo
-        echo "Questlog Updated."
-        bash $script_dir/../inventory/UpdateChapter.sh $name "2b"
+        lookForBook
         continue
     fi
 
