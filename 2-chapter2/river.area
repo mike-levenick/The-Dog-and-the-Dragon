@@ -392,6 +392,8 @@ checkHomework() {
     if [[ "${homeworkContents,,}" =~ "hello world" ]]; then
         echo "Homework is correct!"
         bash $script_dir/../art/animate.sh $script_dir/../art/dialogue/dialogue6-goodhomework.dia 1 print
+        echo
+        bash $script_dir/../inventory/UpdateChapter.sh $name "2d"
     else
         echo "Hmm, that's not quite right. Your homework says:"
         echo $homeworkContents
