@@ -14,9 +14,9 @@ savelocation="$script_dir/../gamesaves/$name"
 
 take() {
     # Get chapter
-    chapter=$(bash $script_dir/../inventory/CheckChapter.sh $name)
+    chapter=$(bash $script_dir/../inventory/CheckChapter.sh "$name")
     
-    bash $script_dir/../inventory/CheckInventory.sh $name $1 silent
+    bash $script_dir/../inventory/CheckInventory.sh "$name" $1 silent
     if (( "$?" == "1" )); then
         echo "Silly puppy, you already have a $1."
         return 0
@@ -29,7 +29,7 @@ take() {
                 echo "> roll in bountiful harvest"
                 echo "to get your scales."
                 echo
-                bash $script_dir/../inventory/UpdateChapter.sh $name "1d"
+                bash $script_dir/../inventory/UpdateChapter.sh "$name" "1d"
             else
                 echo "Now does not seem to be the right time to harvest."
             fi
@@ -69,10 +69,10 @@ help() {
 
 use() {
     # Get chapter
-    chapter=$(bash $script_dir/../inventory/CheckChapter.sh $name)
+    chapter=$(bash $script_dir/../inventory/CheckChapter.sh "$name")
 
     # Check if we even have the item in inventory, and if we don't, return early.
-    bash $script_dir/../inventory/CheckInventory.sh $name $1
+    bash $script_dir/../inventory/CheckInventory.sh "$name" $1
     if (( "$?" == "0" )); then
         return 0
     fi
@@ -91,7 +91,7 @@ use() {
             echo "You dug a little hole in the ground. The soil is fertile and looks"
             echo "like seeds could grow really well here."
             echo "And it sure was fun!!"
-            bash $script_dir/../inventory/CheckInventory.sh $name "seedpouch" "silent"
+            bash $script_dir/../inventory/CheckInventory.sh "$name" "seedpouch" "silent"
 
             if [[ "$?" == "1" ]]; then
                 echo "You can \`use seedpouch\` to plant your seeds in the hole."
@@ -105,7 +105,7 @@ use() {
             ;;
 
         wateringcan)
-            bash $script_dir/../inventory/CheckInventory.sh $name "wateringcan-filled" "silent"
+            bash $script_dir/../inventory/CheckInventory.sh "$name" "wateringcan-filled" "silent"
             if [[ "$?" == "1" ]]; then
                 echo "Your wateringcan is filled now. \`use\` it with the command"
                 echo "\`use wateringcan-filled\` now."
@@ -123,7 +123,7 @@ use() {
                 echo "There is a \`bountiful harvest\` of seeds in front of you, ripe for the \`take\`ing."
                 echo
                 echo "Questlog Updated."
-                bash $script_dir/../inventory/UpdateChapter.sh $name "1c"
+                bash $script_dir/../inventory/UpdateChapter.sh "$name" "1c"
             else
                 echo "Now does not seem to be the right time to do that."
             fi
@@ -143,7 +143,7 @@ use() {
                 echo "Now you need to find a way to water them."
                 echo
                 echo "Questlog Updated."
-                bash $script_dir/../inventory/UpdateChapter.sh $name "1b"
+                bash $script_dir/../inventory/UpdateChapter.sh "$name" "1b"
             fi
             ;;
 
@@ -192,7 +192,7 @@ look() {
 
 go() {
     # Get chapter
-    chapter=$(bash $script_dir/../inventory/CheckChapter.sh $name)
+    chapter=$(bash $script_dir/../inventory/CheckChapter.sh "$name")
 
     # Switch case for the various directions pupper can go.
     case $1 in
@@ -245,7 +245,7 @@ go() {
                 echo "the secret command \`check homework\` when it's done.\""
 
                 # Update chapter to 2c so we can check homework
-                bash $script_dir/../inventory/UpdateChapter.sh $name "2c"
+                bash $script_dir/../inventory/UpdateChapter.sh "$name" "2c"
 
             elif [[ "$chapter" == "2a" ]]; then
                 echo "As you approach the farmer's son, he appears concerned. He seems to be"
@@ -271,7 +271,7 @@ inventory() {
         return 0
     fi
     echo
-    bash $script_dir/../inventory/PrintInventory.sh $name
+    bash $script_dir/../inventory/PrintInventory.sh "$name"
 }
 
 questlog() {
@@ -280,7 +280,7 @@ questlog() {
         echo
         return 0
     fi
-    bash $script_dir/../inventory/PrintQuestlog.sh $name
+    bash $script_dir/../inventory/PrintQuestlog.sh "$name"
 }
 
 action() {
@@ -329,13 +329,13 @@ action() {
 }
 
 fillCan() {
-    sed -i '' "s/wateringcan/wateringcan-filled/g" "$savelocation"
+    sed -i "s/wateringcan/wateringcan-filled/g" "$savelocation"
     echo "⭒Progress saved!⭒"
 }
 
 lookForBook() {
     # Check to make sure we're in the right chapter, and provide advice if we aren't.
-    chapter=$(bash $script_dir/../inventory/CheckChapter.sh $name)
+    chapter=$(bash $script_dir/../inventory/CheckChapter.sh "$name")
 
     # Stop duplicate inventory
     if [[ "$chapter" == "2b" ]]; then
@@ -353,15 +353,15 @@ lookForBook() {
     echo "You find the book under a small pile of leaves. You gently pick it up."
     echo "Be sure to take the book back to the son by \`go\`ing to him with it."
     echo
-    bash $script_dir/../inventory/AddInventory.sh $name "storybook"
+    bash $script_dir/../inventory/AddInventory.sh "$name" "storybook"
     echo
     echo "Questlog Updated."
-    bash $script_dir/../inventory/UpdateChapter.sh $name "2b"
+    bash $script_dir/../inventory/UpdateChapter.sh "$name" "2b"
 }
 
 checkHomework() {
     # Check to make sure we're in the right chapter.
-    chapter=$(bash $script_dir/../inventory/CheckChapter.sh $name)
+    chapter=$(bash $script_dir/../inventory/CheckChapter.sh "$name")
     if [[ "$chapter" != "2b" && "$chapter" != "2c" ]]; then
         echo "Now is not the right time to do that."
         return 0
@@ -393,7 +393,7 @@ checkHomework() {
         echo "Homework is correct!"
         bash $script_dir/../art/animate.sh $script_dir/../art/dialogue/dialogue6-goodhomework.dia 1 print
         echo
-        bash $script_dir/../inventory/UpdateChapter.sh $name "2d"
+        bash $script_dir/../inventory/UpdateChapter.sh "$name" "2d"
     else
         echo "Hmm, that's not quite right. Your homework says:"
         echo $homeworkContents
@@ -403,8 +403,8 @@ checkHomework() {
 # This is the loop we actually stay in for the gameplay. If we do the "secret command" correctly, we move on to the next chapter. Otherwise, stay in the loop.
 while (( 1 == 1 )); do
     # Check our current chapter in case we care
-    chapter=$(bash $script_dir/../inventory/CheckChapter.sh $name)
-    chapter_number=$(bash $script_dir/../inventory/CheckChapter.sh $name number)
+    chapter=$(bash $script_dir/../inventory/CheckChapter.sh "$name")
+    chapter_number=$(bash $script_dir/../inventory/CheckChapter.sh "$name" number)
 
     if [[ "$chapter" == "2" ]]; then
         bash $script_dir/../art/animate.sh $script_dir/../art/dialogue/dialogue5-riverintro.dia 1 print
@@ -414,7 +414,7 @@ while (( 1 == 1 )); do
         echo "The son appears to have lost his storybook. perhaps you should \`go\` to him."
         echo
         echo "Questlog Updated."
-        bash $script_dir/../inventory/UpdateChapter.sh $name "2a"
+        bash $script_dir/../inventory/UpdateChapter.sh "$name" "2a"
     fi
 
     # Prompt for an action

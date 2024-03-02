@@ -43,7 +43,7 @@ elif [[ "$3" == "print" ]]; then
         # Iterate over each character in the line
         for (( i=0; i<${#line}; i++ )); do
             printf "%s" "${line:i:1}"
-            sleep 0.03
+            sleep 0.01
         done
         if [[ ${#line} -gt 1 ]]; then
             sleep $2

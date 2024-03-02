@@ -47,7 +47,7 @@ help() {
 
 use() {
     # Check if we even have the item in inventory, and if we don't, return early.
-    bash $script_dir/../inventory/CheckInventory.sh $name $1
+    bash $script_dir/../inventory/CheckInventory.sh "$name" $1
     if (( "$?" == "0" )); then
         return 0
     fi
@@ -160,7 +160,7 @@ go() {
             ;;
 
         east)
-            bash $script_dir/../1-chapter1/field.area $name
+            bash $script_dir/../1-chapter1/field.area "$name"
             # Quit all the way if we get exit code 3
             if [[ "$?" == "3" ]]; then
                 exit 0
@@ -168,7 +168,7 @@ go() {
             ;;
 
         west)
-            bash $script_dir/../2-chapter2/river.area $name
+            bash $script_dir/../2-chapter2/river.area "$name"
             # Quit all the way if we get exit code 3
             if [[ "$?" == "3" ]]; then
                 exit 0
@@ -188,7 +188,7 @@ inventory() {
         echo "Not much to know about this one. Just run \`inventory\` to see what you have."
         return 0
     fi
-    bash $script_dir/../inventory/PrintInventory.sh $name
+    bash $script_dir/../inventory/PrintInventory.sh "$name"
 }
 
 questlog() {
@@ -196,7 +196,7 @@ questlog() {
         echo "Not much to know about this one. Just run \`questlog\` to see what's next."
         return 0
     fi
-    bash $script_dir/../inventory/PrintQuestlog.sh $name
+    bash $script_dir/../inventory/PrintQuestlog.sh "$name"
 }
 
 action() {
@@ -247,8 +247,8 @@ action() {
 # This is the loop we actually stay in for the gameplay. If we do the "secret command" correctly, we move on to the next chapter. Otherwise, stay in the loop.
 while (( 1 == 1 )); do
     # Check our current chapter in case we care
-    chapter=$(bash $script_dir/../inventory/CheckChapter.sh $name)
-    chapter_number=$(bash $script_dir/../inventory/CheckChapter.sh $name number)
+    chapter=$(bash $script_dir/../inventory/CheckChapter.sh "$name")
+    chapter_number=$(bash $script_dir/../inventory/CheckChapter.sh "$name" number)
 
     # Prompt for an action
     echo

@@ -11,8 +11,8 @@ script_dir="$(dirname "$0")"
 # Get the save file location
 savelocation="$script_dir/../gamesaves/$name"
 
-chapter=$(bash $script_dir/CheckChapter.sh $name)
-chapter_number=$(bash $script_dir/CheckChapter.sh $name)
+chapter=$(bash $script_dir/CheckChapter.sh "$name")
+chapter_number=$(bash $script_dir/CheckChapter.sh "$name")
 
 # Print header
 echo
