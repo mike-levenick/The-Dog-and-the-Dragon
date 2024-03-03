@@ -15,6 +15,7 @@ script_dir="$(dirname "$0")"
 # Get the save file location
 savelocation="$script_dir/../gamesaves/$name"
 
+#sed -i '' "1s/-.*$/- $newvalue/" "$savelocation" # Old
 sed -i "s/Current chapter.*/Current Chapter - $newValue/g" "$savelocation"
 
 echo "⭒Progress saved!⭒"
