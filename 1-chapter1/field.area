@@ -44,6 +44,7 @@ take() {
                 echo "> roll in bountiful harvest"
                 echo "to get your scales."
                 echo
+                bash $script_dir/../inventory/AddInventory.sh "$name" "bountiful harvest"
                 bash $script_dir/../inventory/UpdateChapter.sh "$name" "1d"
             else
                 echo "Now does not seem to be the right time to harvest."
@@ -329,6 +330,7 @@ while (( 1 == 1 )); do
     fi
 
     if [[ "$action" == "roll in bountiful harvest" ]]; then
+        bash $script_dir/../inventory/AddInventory.sh "$name" "scales"
         bash $script_dir/../art/animate.sh $script_dir/../art/dialogue/dialogue4-bountifulharvest.dia 1 print
         sleep 1
         echo
