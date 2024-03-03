@@ -22,19 +22,6 @@ take() {
         return 0
     fi
     case $1 in
-        storybook)
-            if [[ "$chapter" == "1c" ]]; then
-                echo "You find the child's storybook ."
-                echo "It will not appear in your inventory, but you can use the secret command"
-                echo "> roll in bountiful harvest"
-                echo "to get your scales."
-                echo
-                bash $script_dir/../inventory/UpdateChapter.sh "$name" "1d"
-            else
-                echo "Now does not seem to be the right time to harvest."
-            fi
-            ;;
-        
         *)
             echo "There's no $1 here"
             ;;
