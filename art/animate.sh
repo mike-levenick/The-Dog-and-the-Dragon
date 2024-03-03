@@ -43,12 +43,18 @@ elif [[ "$3" == "print" ]]; then
         # Iterate over each character in the line
         for (( i=0; i<${#line}; i++ )); do
             printf "%s" "${line:i:1}"
-            sleep 0.01
+            sleep 0.03
         done
         if [[ ${#line} -gt 1 ]]; then
             sleep $2
         fi
     done < "$1"
+
+    sleep 1
+    echo
+    echo
+    echo "Press enter to continue..."
+    read
 
 # Regular cutscenes are here.
 else
