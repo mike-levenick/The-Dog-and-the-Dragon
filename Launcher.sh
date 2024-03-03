@@ -11,6 +11,9 @@ chapter=-1
 # Using an int intead of bool here, because I just think they work better in Bash.
 newgame=0
 
+# Ensure we have the right resolution for cutscenes to work.
+sh $script_dir/CheckResolution.sh
+
 # MARK - Cutscene
 
 # Allow the cutscene to be skipped, for testing and for veteran players
@@ -82,7 +85,7 @@ paws""" > "$script_dir/gamesaves/$name"
                 name=$savename
 
                 # Get the current chapter to load
-                chapter=$(bash $script_dir/inventory/CheckChapter.sh $name)
+                chapter=$(bash $script_dir/inventory/CheckChapter.sh "$name")
             else
                 echo
                 echo "Sorry, no save with that name exists."
@@ -122,7 +125,12 @@ fi
 echo
 echo
 echo "Hello $name. You are in chapter $chapter."
-echo "You find yourself in the barnyard. What would you like to do?"
 echo
+echo "Hint: If you're ever lost, you can try to \`look around\` for clues, or"
+echo "check your \`questlog\` for help."
+echo
+echo "Use the \`help\` command for more information about what you can do."
+echo
+echo "You find yourself in the barnyard which you call home. What do you want to do?"
 
-bash $script_dir/0-prologue/barnyard.area $name
+bash $script_dir/0-prologue/barnyard.area "$name"

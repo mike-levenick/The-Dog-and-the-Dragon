@@ -9,9 +9,6 @@ script_dir="$(dirname "$0")"
 # Get the save file location
 savelocation="$script_dir/../gamesaves/$name"
 
-echo "You find yourself in the barnyard which you call home."
-echo
-
 take() {
     echo
     echo "There's nothing for you to take from the barnyard."
@@ -165,6 +162,7 @@ go() {
             if [[ "$?" == "3" ]]; then
                 exit 0
             fi
+            echo "You find yourself in the barnyard which you call home. What do you want to do?"
             ;;
 
         west)
@@ -173,6 +171,7 @@ go() {
             if [[ "$?" == "3" ]]; then
                 exit 0
             fi
+            echo "You find yourself in the barnyard which you call home. What do you want to do?"
             ;;
         home)
             echo "You are already in the barnyard."
