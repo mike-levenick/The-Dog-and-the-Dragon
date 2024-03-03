@@ -316,7 +316,7 @@ action() {
 }
 
 fillCan() {
-    sed -i "s/wateringcan/wateringcan-filled/g" "$savelocation"
+    sed -i '' "s/wateringcan/wateringcan-filled/g" "$savelocation"
     echo "⭒Progress saved!⭒"
 }
 
@@ -338,7 +338,7 @@ lookForBook() {
 
     echo
     echo "You find the book under a small pile of leaves. You gently pick it up."
-    echo "Be sure to take the book back to the son by \`go\`ing to him with it."
+    echo "Be sure to take the book back to the \`son\` by \`go\`ing to him with it."
     echo
     bash $script_dir/../inventory/AddInventory.sh "$name" "storybook"
     echo
@@ -398,7 +398,7 @@ while (( 1 == 1 )); do
         sleep 1
         echo
         echo
-        echo "The son appears to have lost his storybook. perhaps you should \`go\` to him."
+        echo "The \`son\` appears to have lost his storybook. perhaps you should \`go\` to him."
         echo
         echo "Questlog Updated."
         bash $script_dir/../inventory/UpdateChapter.sh "$name" "2a"
