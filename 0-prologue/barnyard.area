@@ -145,9 +145,17 @@ go() {
             ;;
 
         north)
-            echo "You see the barn to the north of you. The farmer's older son is lifting"
-            echo "some haybales into the loft using interesting machines. Maybe those machines"
-            echo "could help you fly?"
+            bash $script_dir/../3-chapter3/barn.area "$name"
+            # Quit all the way if we get exit code 3
+            if [[ "$?" == "3" ]]; then
+                exit 0
+            elif [[ "$?" == "1" ]]; then
+                go east
+            elif [[ "$?" == "2" ]]; then
+                go west
+            else
+                echo "You find yourself in the barnyard which you call home. What do you want to do?"
+            fi
             ;;
 
         south)
