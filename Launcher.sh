@@ -137,4 +137,4 @@ echo "Use the \`help\` command for more information about what you can do."
 echo
 echo "You find yourself in the barnyard which you call home. What do you want to do?"
 
-bash $script_dir/0-prologue/barnyard.area "$name"
+bash $script_dir/areas/barnyard.area "$name"

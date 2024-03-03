@@ -11,3 +11,4 @@ script_dir="$(dirname "$0")"
 
 # Get the save file location
 savelocation="$script_dir/../gamesaves/$name"
+
