@@ -43,6 +43,7 @@ do
             # If we already have a save with that name, as about overwriting
             if [ -f "$script_dir/gamesaves/$name" ]; then
                 echo "A game with that name already exists. Overwrite? [y/n]"
+                echo
                 read yn
                 if [[ "$yn" == "y" || "$yn" == "Y" ]]; then
                     echo "Erasing save..."
@@ -122,8 +123,11 @@ fi
 # MARK - Game Start
 
 # At this point, we should have all the information we require to dive into the game.
-echo
-echo
+# Clear the screen
+for i in {1..24}; do
+   echo
+done
+
 echo "Hello $name. You are in chapter $chapter."
 echo
 echo "Hint: If you're ever lost, you can try to \`look around\` for clues, or"
