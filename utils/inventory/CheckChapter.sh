@@ -7,7 +7,7 @@ name=$1
 script_dir="$(dirname "$0")"
 
 # Get the save file location
-savelocation="$script_dir/../gamesaves/$name"
+savelocation="$script_dir/../../gamesaves/$name"
 
 # This is a bit inelegant, but it felt like a good time to introduce `awk`, which is
 # a requirement of the assignment.

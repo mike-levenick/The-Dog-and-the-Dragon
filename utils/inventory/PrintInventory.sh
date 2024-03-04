@@ -9,7 +9,7 @@ name=$1
 script_dir="$(dirname "$0")"
 
 # Get the save file location
-savelocation="$script_dir/../gamesaves/$name"
+savelocation="$script_dir/../../gamesaves/$name"
 
 # List out all the items in the save file
 # Read lines from file starting from line 4 and put them into an array

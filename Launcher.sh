@@ -12,14 +12,14 @@ chapter=-1
 newgame=0
 
 # Ensure we have the right resolution for cutscenes to work.
-sh $script_dir/CheckResolution.sh
+sh $script_dir/utils/CheckResolution.sh
 
 # MARK - Cutscene
 
 # Allow the cutscene to be skipped, for testing and for veteran players
 if [[ "$1" != "skip" ]]; then
     # Play the intro cutscene. This is a separate script to keep things tidy.
-    bash $script_dir/art/IntroCutscene.sh
+    bash $script_dir/utils/animation/IntroCutscene.sh
 fi
 
 # MARK - Menu
@@ -27,7 +27,7 @@ fi
 # Load the menu, and hang out on it until we get a name from loading or new game
 while [ "$name" == "" ]
 do
-    bash $script_dir/MainMenu.sh
+    bash $script_dir/utils/MainMenu.sh
     case $? in
 
     # MARK - New Game
@@ -86,7 +86,7 @@ paws""" > "$script_dir/gamesaves/$name"
                 name=$savename
 
                 # Get the current chapter to load
-                chapter=$(bash $script_dir/inventory/CheckChapter.sh "$name")
+                chapter=$(bash $script_dir/utils/inventory/CheckChapter.sh "$name")
             else
                 echo
                 echo "Sorry, no save with that name exists."
@@ -99,7 +99,7 @@ paws""" > "$script_dir/gamesaves/$name"
     # MARK - Credits
         3)
             # Play the credits
-            bash $script_dir/art/animate.sh $script_dir/art/cutscenes/credits.anim .1 scroll
+            bash $script_dir/utils/animation/animate.sh $script_dir/utils/animation/cutscenes/credits.anim .1 scroll
             echo
             printf "%s" "Press enter to return to Main Menu."
             read
@@ -115,8 +115,8 @@ paws""" > "$script_dir/gamesaves/$name"
 done
 
 # If it's a new game, play the opening dialogue
-if [[ $newgame == 1 ]]; then
-    bash $script_dir/art/StoryOpenCutscene.sh
+if [[ "$newgame" == "1" ]]; then
+    bash $script_dir/utils/animation/StoryOpenCutscene.sh
     sleep 1
 fi
 

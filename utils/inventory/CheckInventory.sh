@@ -6,18 +6,18 @@
 # in this case, we are using it as an int representaiton of true/false for if the item is in inventory or not.
 
 # Pass in the name as $1, so we can get the correct save file
-name=$1
+name="$1"
 
 # Pass the item name as $2, so we can check for existence of the item
-itemname=$2
+itemname="$2"
 
-silent=$3
+silent="$3"
 
 # Get the directory of the current script
 script_dir="$(dirname "$0")"
 
 # Get the save file location
-savelocation="$script_dir/../gamesaves/$name"
+savelocation="$script_dir/../../gamesaves/$name"
 
 # Set a variable to a grep for the item
 itemsearch="$(cat $savelocation | grep $itemname)"
