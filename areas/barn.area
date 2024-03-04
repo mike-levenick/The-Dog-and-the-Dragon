@@ -12,3 +12,279 @@ script_dir="$(dirname "$0")"
 # Get the save file location
 savelocation="$script_dir/../gamesaves/$name"
 
+take() {
+    # Get chapter
+    chapter=$(bash $script_dir/../inventory/CheckChapter.sh "$name")
+    
+    bash $script_dir/../inventory/CheckInventory.sh "$name" $1 silent
+    if (( "$?" == "1" )); then
+        echo "Silly puppy, you already have a $1."
+        return 0
+    fi
+    case $1 in
+        *)
+            echo "There's no $1 here"
+            ;;
+    esac
+}
+
+help() {
+    echo
+    if [[ "$1" == "help" ]]; then
+        echo "+----------------------------------------------------------------+"
+        echo "| Achievement unlocked: Tried to break the space-time continuum. |"
+        echo "+----------------------------------------------------------------+"
+        echo
+        return 0
+    fi
+    echo "Available actions include:"
+    echo "  - \`inventory\` (Check your current inventory)"
+    echo "  - \`questlog\` (Check on your current Quest progress)"
+    echo "  - \`whoami\` (In case of existential crisis)"
+    echo "  - \`look\` (Look around generally/see what there is to see)"
+    echo
+    echo "  - \`go <place>\` (Move to the specified place)" 
+    echo "  - \`use <thing>\` (Use an item from your inventory or the environment)"
+    echo
+    echo "  - \`exit\` (Quits the game)"
+    echo
+    echo "You can also ask for help on any specific command, for example:"
+    echo "\`look help\` to get help specific to the \`look\` command."
+    echo
+    echo "If you're ever wondering what to do next, check your \`questlog\` for ideas."
+}
+
+use() {
+    # Get chapter
+    chapter=$(bash $script_dir/../inventory/CheckChapter.sh "$name")
+
+    # Check if we even have the item in inventory, and if we don't, return early.
+    bash $script_dir/../inventory/CheckInventory.sh "$name" $1
+    if (( "$?" == "0" )); then
+        return 0
+    fi
+    echo
+    # Switch case for the various items that can be used in this area, including a help section.
+    case $1 in
+        help)
+            echo "***** \`USE\` COMMAND HELP *****"
+            echo "Allows you to use objects in your inventory or in the environment."
+            echo "For example, if you see a lever, you could do the command" 
+            echo "> use lever"
+            ;;
+
+        # Now that we're at the field, we can use our paws for real.
+        paws)
+            echo "You dig around in the loose hay a bit, but don't find much of interest."
+            ;;
+
+        wateringcan)
+            echo "Your wateringcan is filled now. \`use\` it with the command"
+            echo "\`use wateringcan-filled\` now."
+            ;;
+
+        wateringcan-filled)
+            echo "You pour a bit of water on the floor of the barn. It doesn't do much."
+            ;;
+
+        seedpouch)
+            echo "You spill some seeds on the floor of the barn. They probably won't grow here."
+            ;;
+
+        *)
+            echo "You don't know how to use that."
+            ;;
+    esac
+}
+
+look() {
+
+    # Switch case for the various directions pupper can look.
+    case $1 in
+        help)
+            echo
+            echo "***** \`LOOK\` COMMAND HELP *****"
+            echo "Allows you to look around and see what there is to see."
+            echo "For example, to look to the north, you could do the command" 
+            echo "> look north"
+            ;;
+
+        around)
+            echo "There's no one else here in the barn right now, but you can see"
+            echo "the pulley system that the farmer normally uses to lift haybales"
+            echo "into the loft of the barn."
+            echo
+            echo "You can approach it with \`go pulley\`."
+            ;;
+
+        north)
+            echo "North of the barn is the hilltop where you first saw the dragon."
+            ;;
+
+        south)
+            echo "You see the barnyard which you call home to the south. Beyond that,"
+            echo "you see the farmhouse. The farmer's wife is cooking a meal."
+            echo "It smells absolutely delicious, but you know you're not normally allowed"
+            echo "into the house with the family."
+            ;;
+
+        east)
+           echo "You see the field where the farmer grows his crops. The farmer is standing"
+           echo "in his field, planting seeds. The seeds catch the sunlight and glitter brightly"
+           echo "like the scales of the dragon."
+            ;;
+
+        west)
+            echo "You see the river to the west, where the farmer's younger son is sitting"
+            echo "on a rock reading. He appears to be trying to sound out letters and their"
+            echo "sounds. Perhaps he could help you learn to talk."
+            ;;
+
+        *)
+            echo "You look around you in wonder. Isn't the world an amazing place?"
+            ;;
+    esac    
+}
+
+go() {
+    # Switch case for the various directions pupper can go.
+    case $1 in
+        help)
+            echo "***** \`GO\` COMMAND HELP *****"
+            echo "Allows you to go to a specific direction."
+            echo "For example, to go north, you could do the command" 
+            echo "> go north"
+            echo "You can also approach a specific person or object that you see near you"
+            echo "with the go command such as"
+            echo "> go farmer"
+            echo "Finally, you can also always return to the barnyard with the command"
+            echo "> go home"
+            ;;
+
+        north)
+            echo "North is the hill where you saw the dragon, but it's probably not the right"
+            echo "time to go there right now. You should work on becoming a dragon yourself."
+            ;;
+
+        south)
+            bash $script_dir/../art/animate.sh $script_dir/../art/cutscenes/travel.anim .03
+            exit 0
+            ;;
+
+        east)
+            echo "There's a fence blocking your way to the field from here."
+            echo "You'll have to \`go south\` to the barnyard, then \`go east\` to the field."
+            ;;
+
+        west)
+            echo "There's a fence blocking your way to the river from here."
+            echo "You'll have to \`go south\` to the barnyard, then \`go west\` to the river."
+            ;;
+        farmer)
+            echo "As you approach the farmer, he gestures kindly towards a nearby"
+            echo "\`wateringcan\` and \`seedpouch\`. He seems like he wants you to \`take\` them."
+            ;;
+        home)
+            bash $script_dir/../art/animate.sh $script_dir/../art/cutscenes/travel.anim .03
+            exit 0
+            ;;
+        *)
+            echo "I'm not sure how to go there."
+            ;;
+    esac
+}
+
+inventory() {
+    if [[ "$1" == "help" ]]; then
+        echo "Not much to know about this one. Just run \`inventory\` to see what you have."
+        return 0
+    fi
+    bash $script_dir/../inventory/PrintInventory.sh "$name"
+}
+
+questlog() {
+    if [[ "$1" == "help" ]]; then
+        echo "Not much to know about this one. Just run \`questlog\` to see what's next."
+        return 0
+    fi
+    bash $script_dir/../inventory/PrintQuestlog.sh "$name"
+}
+
+action() {
+    case $1 in
+        take)
+            take $2
+            ;;
+        help)
+            help $2
+            ;;
+        use)
+            use $2
+            ;;
+        look)
+           look $2
+            ;;
+        go)
+            go $2
+            ;;
+        inventory)
+            inventory $2
+            ;;
+        questlog)
+            questlog
+            ;;
+        whoami)
+            echo "Your name is $name"
+            ;;
+        exit)
+            # Allow confirmation bypass
+            if [[ "$2" == "y" || "$2" == "Y" ]]; then
+                exit 3
+            fi
+
+            # Otherwise, confirm
+            echo "Are you sure you want to quit? (y/n)"
+            read choice
+            if [[ "$choice" == "y" || "$choice" == "Y" ]]; then
+                exit 3
+            fi
+            ;;
+        *)
+            echo "I'm not sure what you mean."
+            ;;
+    esac   
+}
+
+# This is the loop we actually stay in for the gameplay. If we do the "secret command" correctly, we move on to the next chapter. Otherwise, stay in the loop.
+while (( 1 == 1 )); do
+    # Check our current chapter in case we care
+    chapter=$(bash $script_dir/../inventory/CheckChapter.sh "$name")
+    chapter_number=$(bash $script_dir/../inventory/CheckChapter.sh "$name" number)
+
+    if [[ "$chapter" == "1" ]]; then
+        bash $script_dir/../art/animate.sh $script_dir/../art/dialogue/dialogue3-fieldintro.dia 1 print
+        sleep 1
+        echo
+        echo
+        echo "Questlog Updated."
+        bash $script_dir/../inventory/UpdateChapter.sh "$name" "1a"
+    fi
+
+    if [[ "$action" == "roll in bountiful harvest" ]]; then
+        bash $script_dir/../inventory/AddInventory.sh "$name" "scales"
+        bash $script_dir/../art/animate.sh $script_dir/../art/dialogue/dialogue4-bountifulharvest.dia 1 print
+        sleep 1
+        echo
+        echo
+        echo "Questlog Updated."
+        bash $script_dir/../inventory/UpdateChapter.sh "$name" "2"
+    fi
+
+    # Prompt for an action
+    echo
+    printf "%s" "> "
+    read action
+
+    # Do the action
+    action $action
+done 

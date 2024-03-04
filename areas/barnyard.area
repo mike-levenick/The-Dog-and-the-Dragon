@@ -145,17 +145,15 @@ go() {
             ;;
 
         north)
+            bash $script_dir/../art/animate.sh $script_dir/../art/cutscenes/travel.anim .03
             bash $script_dir/../areas/barn.area "$name"
+
             # Quit all the way if we get exit code 3
-            if [[ "$?" == "3" ]]; then
+            if (( $? == 3 )); then
                 exit 0
-            elif [[ "$?" == "1" ]]; then
-                go east
-            elif [[ "$?" == "2" ]]; then
-                go west
-            else
-                echo "You find yourself in the barnyard which you call home. What do you want to do?"
             fi
+            
+            echo "You find yourself in the barnyard which you call home. What do you want to do?"
             ;;
 
         south)
@@ -165,28 +163,37 @@ go() {
             ;;
 
         east)
+            bash $script_dir/../art/animate.sh $script_dir/../art/cutscenes/travel.anim .03
             bash $script_dir/../areas/field.area "$name"
+
             # Quit all the way if we get exit code 3
-            if [[ "$?" == "3" ]]; then
+            if (( $? == 3 )); then
                 exit 0
             fi
+
             echo "You find yourself in the barnyard which you call home. What do you want to do?"
             ;;
 
         west)
+            bash $script_dir/../art/animate.sh $script_dir/../art/cutscenes/travel.anim .03
             bash $script_dir/../areas/river.area "$name"
+
             # Quit all the way if we get exit code 3
             if [[ "$?" == "3" ]]; then
                 exit 0
             fi
+
             echo "You find yourself in the barnyard which you call home. What do you want to do?"
             ;;
+
         home)
             echo "You are already in the barnyard."
             ;;
+
         *)
             echo "I'm not sure how to go there."
             ;;
+
     esac
 }
 

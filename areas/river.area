@@ -116,10 +116,6 @@ use() {
             fi
             ;;
 
-        hoe)
-           echo "You used the hoe." 
-            ;;
-
         seedpouch)
             if [[ "$holedug" == "0" ]]; then
                 echo "You may have a hard time planting the seeds without digging a hole first."
@@ -207,6 +203,7 @@ go() {
             ;;
 
         east)
+            bash $script_dir/../art/animate.sh $script_dir/../art/cutscenes/travel.anim .03
             exit 0
             ;;
 
