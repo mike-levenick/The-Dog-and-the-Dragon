@@ -19,7 +19,6 @@ read_chapter=$(awk -F ' - ' '/Current chapter/ {print $2}' "$savelocation")
 # Assign values to Bash variables, removing leading/trailing whitespace
 chapter=$(echo "$read_chapter" | tr -d '[:space:]')
 
-
 if [[ "$2" == "number" ]]; then
     # Strip off non-integer characters
     chapternumber=$(echo "$chapter" | tr -cd '[:digit:]')
