@@ -276,7 +276,10 @@ action() {
     esac   
 }
 
-# This is the loop we actually stay in for the gameplay. If we do the "secret command" correctly, we move on to the next chapter. Otherwise, stay in the loop.
+# This is the loop we actually stay in for the gameplay. 
+# If we do the "secret command" correctly, we move on to the next chapter. 
+# Otherwise, stay in the loop.
+
 while (( 1 == 1 )); do
     # Check our current chapter in case we care
     chapter=$(bash $script_dir/../utils/inventory/CheckChapter.sh "$name")
@@ -313,6 +316,7 @@ while (( 1 == 1 )); do
         echo
         echo "Questlog Updated."
         bash $script_dir/../utils/inventory/UpdateChapter.sh "$name" "4"
+        continue
     fi
 
     # Prompt for an action
@@ -320,6 +324,11 @@ while (( 1 == 1 )); do
     printf "%s" "> "
     read action
 
-    # Do the action
-    action $action
+    # RAILROAD
+    if [[ "$chapter" == "4" && "$action" != "go home" ]]; then
+        echo "You've failed your mission. There is nothing left for you to do but \`go home\`."
+    else
+        # Do the action
+        action $action
+    fi
 done 
