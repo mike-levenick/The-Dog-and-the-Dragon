@@ -21,17 +21,27 @@ echo "| QUEST LOG |"
 echo "+-----------+"
 echo
 
+# Get the easy endgame ones out of the way first.
 # Mark - Chapter 4
-# If it's chapter 4 we can exit early.
 if [[ "$chapter" == "4" ]]; then
-    echo "   [ ] Save the farmer's son!"
+    echo "[-] Become a Dragon (Failed)"
+    echo "[ ] Go home"
     exit 0
 fi
 
-# MARK - Chapter 5
-# If it's chapter 5, we can exit early.
+# Mark - Chapter 5
 if [[ "$chapter" == "5" ]]; then
-    echo "[X] Become a Dragon"
+    echo "[-] Become a Dragon (Failed)"
+    echo "[X] Go home"
+    echo "[ ] Save the farmer's son!"
+    exit 0
+fi
+
+# MARK - Chapter 6
+if [[ "$chapter" == "6" ]]; then
+    echo "[-] Become a Dragon (Failed)"
+    echo "[X] Go home"
+    echo "[X] Save the farmer's son!"
     echo "[ ] Rest by the fireplace"
     exit 0
 fi
@@ -39,17 +49,8 @@ fi
 # Display main quest here
 echo "[ ] Become a Dragon"
 
-# MARK - Chapter 0
-# If it's chapter 0, we don't need to display much, and can exit early.
-if [[ "$chapter" == "0" ]]; then
-    echo "   [ ] Get scales"
-    echo "   [ ] Learn to talk"
-    echo "   [ ] Learn to fly"
-    exit 0
-fi
-
 # Mark - Chapter 1
-if [[ "$chapter" == "1a" || "$chapter" == "1b" || "$chapter" == "1c" || "$chapter" == "1d" ]]; then
+if [[ "$chapter" == "1" || "$chapter" == "1a" || "$chapter" == "1b" || "$chapter" == "1c" || "$chapter" == "1d" ]]; then
     echo "   [ ] Get scales"
     if [[ "$chapter" == "1a" ]]; then
         echo "      [ ] Plant seeds"
@@ -74,15 +75,10 @@ if [[ "$chapter" == "1a" || "$chapter" == "1b" || "$chapter" == "1c" || "$chapte
     fi
     echo "   [ ] Learn to talk"
     echo "   [ ] Learn to fly"
-elif [[ "$chapter" == "1e" ]]; then
-    echo "   [X] Get scales"
-    echo "   [ ] Learn to talk"
-    echo "   [ ] Learn to fly"
-    exit 0
 fi
 
 # Mark - Chapter 2
-if [[ "$chapter" == "2a" || "$chapter" == "2b" || "$chapter" == "2c" ]]; then
+if [[ "$chapter" == "2" || "$chapter" == "2a" || "$chapter" == "2b" || "$chapter" == "2c" ]]; then
     echo "   [X] Get scales"
     echo "   [ ] Learn to talk"
     if [[ "$chapter" == "2a" ]]; then
@@ -99,15 +95,10 @@ if [[ "$chapter" == "2a" || "$chapter" == "2b" || "$chapter" == "2c" ]]; then
         echo "      [ ] Learn to say \"hello world\""
     fi
     echo "   [ ] Learn to fly"
-elif [[ "$chapter" == "2d" ]]; then
-    echo "   [X] Get scales"
-    echo "   [X] Learn to talk"
-    echo "   [ ] Learn to fly"
-    exit 0
 fi
 
 # Mark - Chapter 3
-if [[ "$chapter" == "3a" || "$chapter" == "3b" || "$chapter" == "3c" ]]; then
+if [[ "$chapter" == "3" || "$chapter" == "3a" || "$chapter" == "3b" || "$chapter" == "3c" ]]; then
     echo "   [X] Get scales"
     echo "   [X] Learn to talk"
     echo "   [ ] Learn to fly"
@@ -124,9 +115,4 @@ if [[ "$chapter" == "3a" || "$chapter" == "3b" || "$chapter" == "3c" ]]; then
         echo "      [X] Adjust counterweight"
         echo "      [ ] Fly!"
     fi
-elif [[ "$chapter" == "3d" ]]; then
-    echo "   [X] Get scales"
-    echo "   [X] Learn to talk"
-    echo "   [X] Learn to fly"
-    exit 0
 fi
