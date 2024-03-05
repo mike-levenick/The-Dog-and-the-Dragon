@@ -14,7 +14,7 @@ savelocation="$script_dir/../gamesaves/$name"
 # Otherwise, we'll display it after the cutscene in the loop below.
 chapter=$(bash $script_dir/../utils/inventory/CheckChapter.sh "$name")
 if [[ "$chapter" != "2" ]]; then
-    # Welcome message here for new arrivals
+    # Welcome message here for folks who have been here before
     echo "You have arrived at the river where the farmer's son likes to sit and read."
 fi
 
@@ -383,7 +383,7 @@ checkHomework() {
         echo "Homework is correct!"
         bash $script_dir/../utils/animation/animate.sh $script_dir/../utils/animation/dialogue/dialogue6-goodhomework.dia 1 print
         echo
-        bash $script_dir/../utils/inventory/UpdateChapter.sh "$name" "2d"
+        bash $script_dir/../utils/inventory/UpdateChapter.sh "$name" "3"
     else
         echo "Hmm, that's not quite right. Your homework says:"
         echo $homeworkContents
