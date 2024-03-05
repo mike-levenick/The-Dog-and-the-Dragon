@@ -15,7 +15,7 @@ savelocation="$script_dir/../gamesaves/$name"
 chapter=$(bash $script_dir/../utils/inventory/CheckChapter.sh "$name")
 
 if [[ "$chapter" != "1" ]]; then
-    # Welcome message
+    # Welcome message for folks who have been here before
     echo "You have arrived at the field where the farmer grows his crops."
 fi
 
