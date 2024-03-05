@@ -180,10 +180,24 @@ go() {
             echo "There's a fence blocking your way to the river from here."
             echo "You'll have to \`go south\` to the barnyard, then \`go west\` to the river."
             ;;
-        farmer)
-            echo "As you approach the farmer, he gestures kindly towards a nearby"
-            echo "\`wateringcan\` and \`seedpouch\`. He seems like he wants you to \`take\` them."
+        pulley)
+            bash $script_dir/../utils/animation/animate.sh $script_dir/../utils/animation/dialogue/dialogue8-approachpulley.dia 1 print
+            sleep 1
+            echo
+            echo
+            echo "You must tie a sack to the other end of the pulley to counter your weight."
+            echo "Enter the value of the sack's mass as a base 16 number. This is your next"
+            echo "secret command."
+            echo
+            echo "The mass that you need to counter is represented in base 2 as:"
+            echo "0011 0001 0011 0011 0111 1101 1010 1101"
+            echo
+            echo "Please enter this mass in base 16 to create a counterweight."
+            echo
+            echo "Questlog Updated."
+            bash $script_dir/../utils/inventory/UpdateChapter.sh "$name" "3b"
             ;;
+
         home)
             bash $script_dir/../utils/animation/animate.sh $script_dir/../utils/animation/cutscenes/travel.anim .03
             exit 0
@@ -261,23 +275,34 @@ while (( 1 == 1 )); do
     chapter=$(bash $script_dir/../utils/inventory/CheckChapter.sh "$name")
     chapter_number=$(bash $script_dir/../utils/inventory/CheckChapter.sh "$name" number)
 
-    if [[ "$chapter" == "1" ]]; then
-        bash $script_dir/../utils/animation/animate.sh $script_dir/../utils/animation/dialogue/dialogue3-fieldintro.dia 1 print
+    if [[ "$chapter" == "3" ]]; then
+        bash $script_dir/../utils/animation/animate.sh $script_dir/../utils/animation/dialogue/dialogue7-barnintro.dia 1 print
         sleep 1
         echo
         echo
         echo "Questlog Updated."
-        bash $script_dir/../utils/inventory/UpdateChapter.sh "$name" "1a"
+        bash $script_dir/../utils/inventory/UpdateChapter.sh "$name" "3a"
     fi
 
-    if [[ "$action" == "roll in bountiful harvest" ]]; then
-        bash $script_dir/../utils/inventory/AddInventory.sh "$name" "scales"
-        bash $script_dir/../utils/animation/animate.sh $script_dir/../utils/animation/dialogue/dialogue4-bountifulharvest.dia 1 print
-        sleep 1
+    if [[ "$action" == "31337DAD" ]]; then
+        echo "Excellent work! That counterweight will do nicely."
+        echo "Now it is time for you to go boldly where no dog has gone before."
         echo
+        echo "Use the secret command \`go boldly\` to leap from the loft and fly."
         echo
         echo "Questlog Updated."
-        bash $script_dir/../utils/inventory/UpdateChapter.sh "$name" "2"
+        bash $script_dir/../utils/inventory/UpdateChapter.sh "$name" "3c"
+    fi
+
+    if [[ "$action" == "go boldly" ]]; then
+        bash $script_dir/../utils/animation/animate.sh $script_dir/../utils/animation/dialogue/dialogue9-goboldly.dia 1 print
+        sleep 1
+        echo
+        echo "The rain is pouring down now, as you sadly slink your way out of the barn."
+        echo "You've failed your mission. There is nothing left for you to do but \`go home\`."
+        echo
+        echo "Questlog Updated."
+        bash $script_dir/../utils/inventory/UpdateChapter.sh "$name" "3d"
     fi
 
     # Prompt for an action
