@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# Welcome message
-echo "You have arrived in the barn. It is full of haybales and machinery for lifting."
-
 # Save our "parameters" as easy-to-find variables
 name="$1"
 
@@ -11,6 +8,16 @@ script_dir="$(dirname "$0")"
 
 # Get the save file location
 savelocation="$script_dir/../gamesaves/$name"
+
+# Check our current chapter to see if this is our first time here.
+# If it is not, we display the welcome message. 
+# Otherwise, we'll display it after the cutscene in the loop below.
+chapter=$(bash $script_dir/../utils/inventory/CheckChapter.sh "$name")
+
+if [[ "$chapter" != "3" ]]; then
+    # Welcome message here for folks who have been here before
+    echo "You have arrived in the barn. It is full of haybales and machinery for lifting."
+fi
 
 take() {
     # Get chapter
@@ -282,6 +289,9 @@ while (( 1 == 1 )); do
         echo
         echo "Questlog Updated."
         bash $script_dir/../utils/inventory/UpdateChapter.sh "$name" "3a"
+
+        # Welcome message for new arrivals
+        echo "You have arrived in the barn. It is full of haybales and machinery for lifting."
     fi
 
     if [[ "$action" == "31337DAD" ]]; then
@@ -302,7 +312,7 @@ while (( 1 == 1 )); do
         echo "You've failed your mission. There is nothing left for you to do but \`go home\`."
         echo
         echo "Questlog Updated."
-        bash $script_dir/../utils/inventory/UpdateChapter.sh "$name" "3d"
+        bash $script_dir/../utils/inventory/UpdateChapter.sh "$name" "4"
     fi
 
     # Prompt for an action
