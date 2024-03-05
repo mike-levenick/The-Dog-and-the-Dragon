@@ -113,15 +113,15 @@ if [[ "$chapter" == "3a" || "$chapter" == "3b" || "$chapter" == "3c" ]]; then
     echo "   [ ] Learn to fly"
     if [[ "$chapter" == "3a" ]]; then
         echo "      [ ] Study pulley system"
-        echo "      [ ] Hook up harness"
+        echo "      [ ] Adjust counterweight"
         echo "      [ ] Fly!"
     elif [[ "$chapter" == "3b" ]]; then
         echo "      [X] Study pulley system"
-        echo "      [ ] Hook up harness"
+        echo "      [ ] Adjust counterweight"
         echo "      [ ] Fly!"
     elif [[ "$chapter" == "3c" ]]; then
         echo "      [X] Study pulley system"
-        echo "      [X] Hook up harness"
+        echo "      [X] Adjust counterweight"
         echo "      [ ] Fly!"
     fi
 elif [[ "$chapter" == "3d" ]]; then
