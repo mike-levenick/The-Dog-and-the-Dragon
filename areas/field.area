@@ -273,8 +273,21 @@ questlog() {
     bash $script_dir/../utils/inventory/PrintQuestlog.sh "$name"
 }
 
+rollInBountifulHarvest() {
+    bash $script_dir/../utils/inventory/AddInventory.sh "$name" "scales"
+    bash $script_dir/../utils/animation/animate.sh $script_dir/../utils/animation/dialogue/dialogue4-bountifulharvest.dia 1 print
+    sleep 1
+    echo
+    echo
+    echo "Questlog Updated."
+    bash $script_dir/../utils/inventory/UpdateChapter.sh "$name" "2"
+}
+
 action() {
     case $1 in
+        "roll in bountiful harvest")
+            rollInBountifulHarvest
+            ;;
         take)
             take $2
             ;;
@@ -334,16 +347,6 @@ while (( 1 == 1 )); do
         
         # Welcome message here as well for new arrivals
         echo "You have arrived at the field where the farmer grows his crops."
-    fi
-
-    if [[ "$action" == "roll in bountiful harvest" ]]; then
-        bash $script_dir/../utils/inventory/AddInventory.sh "$name" "scales"
-        bash $script_dir/../utils/animation/animate.sh $script_dir/../utils/animation/dialogue/dialogue4-bountifulharvest.dia 1 print
-        sleep 1
-        echo
-        echo
-        echo "Questlog Updated."
-        bash $script_dir/../utils/inventory/UpdateChapter.sh "$name" "2"
     fi
 
     # Prompt for an action
