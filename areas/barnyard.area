@@ -237,7 +237,9 @@ action() {
             questlog
             ;;
         whoami)
-            echo "Your name is $name"
+            bash $script_dir/../utils/animation/animate.sh $script_dir/../utils/animation/dialogue/dialogueC-dinner.dia 1 print
+            sleep 2
+            bash $script_dir/../utils/animation/animate.sh $script_dir/../utils/animation/dialogue/dialogueD-trueend.dia 1 print
             ;;
         exit)
             # Allow confirmation bypass
@@ -260,20 +262,24 @@ action() {
 
 endGameAction() {
     case $1 in
-        take)
-            take $2
-            ;;
         help)
-            help $2
+            echo "There's no time! If you don't know what to do by now, we're in trouble."
             ;;
-        use)
-            use $2
+        "go well")
+            echo "You approach the well, your scales glistening wet in the rain. It looks like"
+            echo "you could hook the rope from the well to your harness, but you'll need help."
+            echo
+            echo "Perhaps you could \`write in dirt\` to ask the farmer for help?"
             ;;
-        look)
-           look $2
+        "write in dirt")
+            echo "The farmer ties the rope to your harness and gives you a nod."
+            echo "You hop up on the edge of the well, and look down into the dark."
+            echo
+            echo "It is time for you to \`go boldly\` where no dog has gone before."
             ;;
-        go)
-            go $2
+        "go boldly")
+            bash $script_dir/../utils/animation/animate.sh $script_dir/../utils/animation/dialogue/dialogueB-lowerme.dia 1 print
+            bash $script_dir/../utils/inventory/UpdateChapter.sh "$name" "6"
             ;;
         inventory)
             inventory $2
@@ -303,7 +309,9 @@ endGameAction() {
     esac   
 }
 
-# This is the loop we actually stay in for the gameplay. If we do the "secret command" correctly, we move on to the next chapter. Otherwise, stay in the loop.
+# This is the loop we actually stay in for the gameplay. 
+# If we do the "secret command" correctly, we move on to the next chapter. 
+# Otherwise, stay in the loop.
 while (( 1 == 1 )); do
     # Check our current chapter in case we care
     chapter=$(bash $script_dir/../utils/inventory/CheckChapter.sh "$name")
@@ -315,7 +323,9 @@ while (( 1 == 1 )); do
     read action
 
     # Do the action
-    action $action
+    if [[ "$chapter" == "5" ]]; then
+        endGameAction $action
+    else
+        action $action
+    fi
 done 
-
-
