@@ -326,9 +326,9 @@ while (( 1 == 1 )); do
     fi
 
     # RAILROAD
-    if [[ "$chapter" == "4" && "$action" != "go home" ]]; then
+    if [[ "$chapter" == "4" && ( "$action" != "go home" && "$action" != "questlog" && "$action" != "exit"* ) ]]; then
         echo "You've failed your mission. There is nothing left for you to do but \`go home\`."
-    elif [[ "$chapter" == "4" ]]; then
+    elif [[ "$chapter" == "4" && "$action" == "go home" ]]; then
         bash $script_dir/../utils/animation/animate.sh $script_dir/../utils/animation/dialogue/dialogueA-sonintrouble.dia 1 print
         sleep 1
         echo

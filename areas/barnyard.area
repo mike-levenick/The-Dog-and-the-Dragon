@@ -324,7 +324,7 @@ while (( 1 == 1 )); do
 
     # Do the action
     if [[ "$chapter" == "5" ]]; then
-        endGameAction $action
+        endGameAction "$action"
     else
         action $action
     fi
