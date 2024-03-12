@@ -95,9 +95,13 @@ paws""" > "$script_dir/gamesaves/$name"
                 sleep 1.5
             fi
             ;;
+    # MARK - Content Warning
+        3)
+            bash $script_dir/utils/animation/animate.sh $script_dir/utils/animation/dialogue/triggerwarn.dia 1 print
+            ;;
     
     # MARK - Credits
-        3)
+        4)
             # Play the credits
             bash $script_dir/utils/animation/animate.sh $script_dir/utils/animation/cutscenes/credits.anim .1 scroll
             echo
@@ -107,7 +111,7 @@ paws""" > "$script_dir/gamesaves/$name"
 
     # MARK - Exit game
         *)
-            # Quit
+            # Technically this only happens on a 5, but doing it as a default helps us justincase.
             echo "See you again soon!"
             exit 0
             ;;

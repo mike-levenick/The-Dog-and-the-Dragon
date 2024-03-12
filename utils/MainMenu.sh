@@ -23,9 +23,9 @@ Enter the number for your option, and press enter.
 
 1. New Game
 2. Load Game
-3. Credits
-4. Exit
-"""
+3. Content Warning
+4. Credits
+5. Exit"""
 }
 
 # A simple function to print the main menu with the retry text. 
@@ -51,9 +51,9 @@ Enter the number for your option, and press enter.
 
 1. New Game
 2. Load Game
-3. Credits
-4. Exit
-"""
+3. Content Warning
+4. Credits
+5. Exit"""
 }
 
 # Upon initially loading the menu, clear the screen and print the main menu.
@@ -63,7 +63,7 @@ read option
 
 # If we get an unexpected option, print the retry menu and ask again. 
 # Continue until we get an expected option.
-while ! [[ $option =~ ^[1-4]+$ ]]; do
+while ! [[ $option =~ ^[1-5]+$ ]]; do
     clear
     printretrymenu
     read -r option
