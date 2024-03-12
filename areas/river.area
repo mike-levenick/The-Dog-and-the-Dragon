@@ -347,12 +347,6 @@ lookForBook() {
 
 action() {
     case $1 in
-        "look for book")
-            lookForBook
-            ;;
-        "write in dirt")
-            writeInDirt
-            ;;
         take)
             take $2
             ;;
@@ -421,6 +415,12 @@ while (( 1 == 1 )); do
     printf "%s" "> "
     read action
 
-    # Do the action
-    action $action
+    if [[ "$action" == "look for book" ]]; then
+        lookForBook
+    elif [[ "$action" == "write in dirt" ]]; then
+        writeInDirt
+    else
+        # Do the action
+        action $action
+    fi
 done 

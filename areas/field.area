@@ -285,9 +285,6 @@ rollInBountifulHarvest() {
 
 action() {
     case $1 in
-        "roll in bountiful harvest")
-            rollInBountifulHarvest
-            ;;
         take)
             take $2
             ;;
@@ -354,6 +351,11 @@ while (( 1 == 1 )); do
     printf "%s" "> "
     read action
 
-    # Do the action
-    action $action
+    if [[ "$action" == "roll in bountiful harvest" ]]; then
+        rollInBountifulHarvest
+    else
+        # Do the action
+        action $action
+    fi
+
 done 
