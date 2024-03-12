@@ -145,21 +145,46 @@ go() {
             ;;
 
         north)
-            bash $script_dir/../utils/animation/animate.sh $script_dir/../utils/animation/cutscenes/travel.anim .03
-            bash $script_dir/../areas/barn.area "$name"
+            # Check our current chapter to see if it's time to go north
+            chapter=$(bash $script_dir/../utils/inventory/CheckChapter.sh "$name")
 
-            # Quit all the way if we get exit code 3
-            if [[ "$?" == "3" ]]; then
-                exit 0
+            # Do the action
+            if [[ "$chapter" == "1"* || "$chapter" == "2"* ]]; then
+                echo "You see some machines in the barn, but you won't be able to understand them yet."
+                echo "Get some scales and learn to talk before heading north."
+            else
+                bash $script_dir/../utils/animation/animate.sh $script_dir/../utils/animation/cutscenes/travel.anim .03
+                bash $script_dir/../areas/barn.area "$name"
+
+                # Quit all the way if we get exit code 3
+                if [[ "$?" == "3" ]]; then
+                    exit 0
+                fi
+
+                echo "You find yourself in the barnyard which you call home. What do you want to do?"
             fi
-
-            echo "You find yourself in the barnyard which you call home. What do you want to do?"
             ;;
 
         south)
-            echo "You see the farmhouse to the south. The farmer's wife is cooking a meal."
-            echo "It smells absolutely delicious, but you know you're not normally allowed"
-            echo "into the house with the family."
+            # Check our current chapter to see if it's time to go south
+            chapter=$(bash $script_dir/../utils/inventory/CheckChapter.sh "$name")
+
+            # Do the action
+            if [[ "$chapter" != "6"* ]]; then
+                echo "You see the farmhouse to the south. The farmer's wife is cooking a meal."
+                echo "It smells absolutely delicious, but you know you're not normally allowed"
+                echo "into the house with the family."
+            else
+                bash $script_dir/../utils/animation/animate.sh $script_dir/../utils/animation/cutscenes/travel.anim .03
+                bash $script_dir/../areas/house.area "$name"
+
+                # Quit all the way if we get exit code 3
+                if [[ "$?" == "3" ]]; then
+                    exit 0
+                fi
+
+                echo "You find yourself in the barnyard which you call home. What do you want to do?"
+            fi
             ;;
 
         east)
