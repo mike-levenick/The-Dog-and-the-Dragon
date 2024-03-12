@@ -307,6 +307,7 @@ writeInDirt() {
         echo "Homework is correct!"
         bash $script_dir/../utils/animation/animate.sh $script_dir/../utils/animation/dialogue/dialogue6-goodhomework.dia 1 print
         echo
+        echo "Questlog Updated."
         bash $script_dir/../utils/inventory/UpdateChapter.sh "$name" "3"
     else
         echo "Hmm, that's not quite right. Your homework says:"
