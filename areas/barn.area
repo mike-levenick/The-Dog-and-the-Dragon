@@ -297,6 +297,11 @@ while (( 1 == 1 )); do
         echo "You have arrived in the barn. It is full of haybales and machinery for lifting."
     fi
 
+    # Prompt for an action
+    echo
+    printf "%s" "> "
+    read action
+
     if [[ "$action" == "31337DAD" ]]; then
         echo "Excellent work! That counterweight will do nicely."
         echo "Now it is time for you to go boldly where no dog has gone before."
@@ -305,6 +310,7 @@ while (( 1 == 1 )); do
         echo
         echo "Questlog Updated."
         bash $script_dir/../utils/inventory/UpdateChapter.sh "$name" "3c"
+        continue
     fi
 
     if [[ "$action" == "go boldly" ]]; then
@@ -318,11 +324,6 @@ while (( 1 == 1 )); do
         bash $script_dir/../utils/inventory/UpdateChapter.sh "$name" "4"
         continue
     fi
-
-    # Prompt for an action
-    echo
-    printf "%s" "> "
-    read action
 
     # RAILROAD
     if [[ "$chapter" == "4" && "$action" != "go home" ]]; then
