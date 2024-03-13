@@ -332,7 +332,6 @@ action() {
 while (( 1 == 1 )); do
     # Check our current chapter in case we care
     chapter=$(bash $script_dir/../utils/inventory/CheckChapter.sh "$name")
-    chapter_number=$(bash $script_dir/../utils/inventory/CheckChapter.sh "$name" number)
 
     if [[ "$chapter" == "1" ]]; then
         bash $script_dir/../utils/animation/animate.sh $script_dir/../utils/animation/dialogue/dialogue3-fieldintro.dia 1 print

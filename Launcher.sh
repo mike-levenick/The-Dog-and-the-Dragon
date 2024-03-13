@@ -57,7 +57,7 @@ do
             chapter=1
             newgame=1
 
-            echo """Current chapter - 1
+            echo """1
 paws""" > "$script_dir/gamesaves/$name"
             saves=$(ls -1 $script_dir/gamesaves | wc -l)
             ;;

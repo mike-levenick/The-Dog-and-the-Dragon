@@ -340,7 +340,6 @@ endGameAction() {
 while (( 1 == 1 )); do
     # Check our current chapter in case we care
     chapter=$(bash $script_dir/../utils/inventory/CheckChapter.sh "$name")
-    chapter_number=$(bash $script_dir/../utils/inventory/CheckChapter.sh "$name" number)
 
     # Prompt for an action
     echo
