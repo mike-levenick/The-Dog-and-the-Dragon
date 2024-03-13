@@ -13,18 +13,9 @@ newvalue=$2
 script_dir="$(dirname "$0")"
 
 # Get the save file location
-savelocation="$script_dir/../../gamesaves/$name"
-
-# Temp location
-tmplocation="$script_dir/../../gamesaves/.$name-tmp"
+savelocation="$script_dir/../../gamesaves/$name/chapter"
 
 # Write new value to temp file
-echo "$newvalue" > "$tmplocation"
-
-# Write inventory data to temp file
-tail -n +2 "$savelocation" >> "$tmplocation"
-
-# Overwrite gamesave with temp file
-mv "$tmplocation" "$savelocation"
+echo "$newvalue" > "$savelocation"
 
 echo "⭒Progress saved!⭒"

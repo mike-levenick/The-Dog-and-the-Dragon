@@ -9,11 +9,11 @@ name=$1
 script_dir="$(dirname "$0")"
 
 # Get the save file location
-savelocation="$script_dir/../../gamesaves/$name"
+savelocation="$script_dir/../../gamesaves/$name/inventory"
 
 # List out all the items in the save file
-# Read lines from file starting from line 4 and put them into an array
-IFS=$'\n' read -r -d '' -a items < <(tail -n +2 "$savelocation" && printf '\0')
+# Read lines from file and put them into an array
+IFS=$'\n' read -r -d '' -a items < <(cat "$savelocation" && printf '\0')
 
 # Sort the array alphabetically
 sorted_items=($(printf "%s\n" "${items[@]}" | sort))

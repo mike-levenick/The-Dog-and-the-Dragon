@@ -12,7 +12,7 @@ itemname=$2
 script_dir="$(dirname "$0")"
 
 # Get the save file location
-savelocation="$script_dir/../../gamesaves/$name"
+savelocation="$script_dir/../../gamesaves/$name/inventory"
 
 echo "$itemname" >> $savelocation
 

@@ -11,13 +11,14 @@ name="$1"
 # Pass the item name as $2, so we can check for existence of the item
 itemname="$2"
 
+# Allows us to pass in a "silent" parameter which mutes output.
 silent="$3"
 
 # Get the directory of the current script
 script_dir="$(dirname "$0")"
 
 # Get the save file location
-savelocation="$script_dir/../../gamesaves/$name"
+savelocation="$script_dir/../../gamesaves/$name/inventory"
 
 # Set a variable to a grep for the item
 itemsearch="$(cat $savelocation | grep $itemname)"
