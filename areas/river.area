@@ -318,6 +318,7 @@ writeInDirt() {
 
 fillCan() {
     sed -i '' "s/wateringcan/wateringcan-filled/g" "$savelocation"
+    sed -i "s/wateringcan/wateringcan-filled/g" "$savelocation"
     echo "⭒Progress saved!⭒"
 }
 
