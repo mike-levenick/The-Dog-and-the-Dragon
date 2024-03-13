@@ -57,8 +57,14 @@ do
             chapter=1
             newgame=1
 
-            echo """1
-paws""" > "$script_dir/gamesaves/$name"
+            # Make the save directory
+            mkdir "$script_dir/gamesaves/$name"
+
+            # Make the save files
+            echo "1" > "$script_dir/gamesaves/$name/chapter"
+            echo "paws" > "$script_dir/gamesaves/$name/inventory"
+
+            # Make a note of what saves we have
             saves=$(ls -1 $script_dir/gamesaves | wc -l)
             ;;
 
