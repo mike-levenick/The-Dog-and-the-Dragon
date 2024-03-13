@@ -15,16 +15,7 @@ script_dir="$(dirname "$0")"
 # Get the save file location
 savelocation="$script_dir/../../gamesaves/$name"
 
-# Temp location
-tmplocation="$script_dir/../../gamesaves/.$name-tmp"
-
-# Write new value to temp file
-echo "$newvalue" > "$tmplocation"
-
-# Write inventory data to temp file
-tail -n +2 filename >> "$tmplocation"
-
-# Overwrite gamesave with temp file
-mv "$tmplocation" "$savelocation"
+sed -i '' "1s/-.*$/- $newvalue/" "$savelocation" # Old
+#sed -i "s/Current chapter.*/Current Chapter - $newvalue/g" "$savelocation"
 
 echo "⭒Progress saved!⭒"
