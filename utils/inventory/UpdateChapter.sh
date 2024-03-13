@@ -22,7 +22,7 @@ tmplocation="$script_dir/../../gamesaves/.$name-tmp"
 echo "$newvalue" > "$tmplocation"
 
 # Write inventory data to temp file
-tail -n +2 filename >> "$tmplocation"
+tail -n +2 "$savelocation" >> "$tmplocation"
 
 # Overwrite gamesave with temp file
 mv "$tmplocation" "$savelocation"
