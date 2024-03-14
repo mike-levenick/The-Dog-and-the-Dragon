@@ -139,7 +139,6 @@ use() {
             ;;
 
         wateringcan-filled)
-
             if [[ "$chapter" == "1b" ]]; then
                 echo "You carefullly pour water on the seeds, just as you've seen the farmer do."
                 echo "The seeds sprout incredibly quickly right before your eyes!"
@@ -282,14 +281,6 @@ questlog() {
     bash $script_dir/../utils/inventory/PrintQuestlog.sh "$name"
 }
 
-rollInBountifulHarvest() {
-    bash $script_dir/../utils/inventory/AddInventory.sh "$name" "scales"
-    bash $script_dir/../utils/animation/animate.sh $script_dir/../utils/animation/dialogue/dialogue4-bountifulharvest.dia 1 print
-    sleep 1
-    echo "Questlog Updated."
-    bash $script_dir/../utils/inventory/UpdateChapter.sh "$name" "2"
-}
-
 action() {
     case $1 in
         take)
@@ -330,9 +321,24 @@ action() {
             fi
             ;;
         *)
-            echo "I'm not sure what you mean."
+            secretActions "$action"
             ;;
     esac   
+}
+
+secretActions() {
+    case $action in
+        "roll in bountiful harvest")
+            bash $script_dir/../utils/inventory/AddInventory.sh "$name" "scales"
+            bash $script_dir/../utils/animation/animate.sh $script_dir/../utils/animation/dialogue/dialogue4-bountifulharvest.dia 1 print
+            sleep 1
+            echo "Questlog Updated."
+            bash $script_dir/../utils/inventory/UpdateChapter.sh "$name" "2"
+            ;;
+        *)
+            echo "I'm not sure what you mean."
+            ;;
+    esac
 }
 
 # This is the loop we actually stay in for the gameplay. If we do the "secret command" correctly, we move on to the next chapter. Otherwise, stay in the loop.
@@ -355,11 +361,7 @@ while (( 1 == 1 )); do
     printf "%s" "> "
     read action
 
-    if [[ "$action" == "roll in bountiful harvest" ]]; then
-        rollInBountifulHarvest
-    else
-        # Do the action
-        action $action
-    fi
+    # Do the action
+    action $action
 
 done 

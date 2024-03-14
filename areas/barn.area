@@ -167,6 +167,14 @@ go() {
             echo "Finally, you can also always return to the barnyard with the command"
             echo "> go home"
             ;;
+        
+        boldly)
+            if [[ "$chapter" == "3"* ]]; then
+                secretActions "$action"
+            else
+                echo "I'm not sure how to go there."
+            fi
+            ;;
 
         north)
             echo "North is the hill where you saw the dragon, but it's probably not the right"
@@ -269,9 +277,36 @@ action() {
             fi
             ;;
         *)
-            echo "I'm not sure what you mean."
+            secretActions "$action"
             ;;
     esac   
+}
+
+secretActions() {
+    case $action in
+        "31337DAD")
+            echo "Excellent work! That counterweight will do nicely."
+            echo "Now it is time for you to go boldly where no dog has gone before."
+            echo
+            echo "Use the secret command \`go boldly\` to leap from the loft and fly."
+            echo
+            echo "Questlog Updated."
+            bash $script_dir/../utils/inventory/UpdateChapter.sh "$name" "3c"
+            ;;
+
+        "go boldly")
+            bash $script_dir/../utils/animation/animate.sh $script_dir/../utils/animation/dialogue/dialogue9-goboldly.dia 1 print
+            sleep 1
+            echo "The rain is pouring down now, as you sadly slink your way out of the barn."
+            echo "You've failed your mission. There is nothing left for you to do but \`go home\`."
+            echo
+            echo "Questlog Updated."
+            bash $script_dir/../utils/inventory/UpdateChapter.sh "$name" "4"
+            ;;
+        *)
+            echo "I'm not sure what you mean."
+            ;;
+    esac
 }
 
 # This is the loop we actually stay in for the gameplay. 
@@ -296,28 +331,6 @@ while (( 1 == 1 )); do
     echo
     printf "%s" "> "
     read action
-
-    if [[ "$action" == "31337DAD" ]]; then
-        echo "Excellent work! That counterweight will do nicely."
-        echo "Now it is time for you to go boldly where no dog has gone before."
-        echo
-        echo "Use the secret command \`go boldly\` to leap from the loft and fly."
-        echo
-        echo "Questlog Updated."
-        bash $script_dir/../utils/inventory/UpdateChapter.sh "$name" "3c"
-        continue
-    fi
-
-    if [[ "$action" == "go boldly" ]]; then
-        bash $script_dir/../utils/animation/animate.sh $script_dir/../utils/animation/dialogue/dialogue9-goboldly.dia 1 print
-        sleep 1
-        echo "The rain is pouring down now, as you sadly slink your way out of the barn."
-        echo "You've failed your mission. There is nothing left for you to do but \`go home\`."
-        echo
-        echo "Questlog Updated."
-        bash $script_dir/../utils/inventory/UpdateChapter.sh "$name" "4"
-        continue
-    fi
 
     # RAILROAD
     if [[ "$chapter" == "4" && ( "$action" != "go home" && "$action" != "questlog" && "$action" != "exit"* ) ]]; then
