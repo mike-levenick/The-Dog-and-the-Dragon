@@ -175,9 +175,9 @@ go() {
 
         boldly)
             if [[ "$chapter" == "5" ]]; then
-                bash $script_dir/../utils/animation/animate.sh $script_dir/../utils/animation/dialogue/dialogueB-lowerme.dia 1 print
+                bash $script_dir/../utils/animation/animate.sh $script_dir/../utils/animation/dialogue/dialogueC-goboldly.dia 1 print
                 bash $script_dir/../utils/inventory/UpdateChapter.sh "$name" "6"
-                bash $script_dir/../utils/animation/animate.sh $script_dir/../utils/animation/dialogue/dialogueC-homeinvite.dia 1 print
+                bash $script_dir/../utils/animation/animate.sh $script_dir/../utils/animation/dialogue/dialogueD-homeinvite.dia 1 print
             else
                 echo "I'm not sure how to go there."
             fi
@@ -331,12 +331,9 @@ action() {
 secretActions() {
     case $action in
         "write in dirt")
-            echo "You write your idea in the dirt. The farmer, understanding, ties the rope"
-            echo "to the harness you made when you learned to fly, and gives you a nod."
+            bash $script_dir/../utils/animation/animate.sh $script_dir/../utils/animation/dialogue/dialogueB-writeindirt.dia 1 print
             echo
-            echo "You hop up on the edge of the well, and look down into the dark."
-            echo
-            echo "It is time for you to \`go boldly\` where no dog has gone before."
+            echo "It is time for you to once again \`go boldly\` where no dog has gone before."
             ;;
         *)
             echo "I'm not sure what you mean."
@@ -351,8 +348,18 @@ endGamePrompt() {
             bash $script_dir/../utils/inventory/UpdateChapter.sh "$name" "7"
             ;;
 
+        "go south")
+            bash $script_dir/../utils/animation/animate.sh $script_dir/../utils/animation/dialogue/dialogueE-goodending.dia 1 print
+            bash $script_dir/../utils/inventory/UpdateChapter.sh "$name" "7"
+            ;;
+
         "go barn")
-            bash $script_dir/../utils/animation/animate.sh $script_dir/../utils/animation/dialogue/dialogueD-badending.dia 1 print
+            bash $script_dir/../utils/animation/animate.sh $script_dir/../utils/animation/dialogue/dialogueE-badending.dia 1 print
+            bash $script_dir/../utils/inventory/UpdateChapter.sh "$name" "7"
+            ;;
+        
+        "go north")
+            bash $script_dir/../utils/animation/animate.sh $script_dir/../utils/animation/dialogue/dialogueE-badending.dia 1 print
             bash $script_dir/../utils/inventory/UpdateChapter.sh "$name" "7"
             ;;
 
@@ -365,8 +372,15 @@ endGamePrompt() {
 # If we do the "secret command" correctly, we move on to the next chapter. 
 # Otherwise, stay in the loop.
 while (( 1 == 1 )); do
+
     # Check our current chapter in case we care
     chapter=$(bash $script_dir/../utils/inventory/CheckChapter.sh "$name")
+
+    if [[ "$chapter" == "6" ]]; then
+        echo "The rain is pouring down on you. You should find some shelter."
+        echo
+        echo "Where would you like to \`go\`?"
+    fi
 
     # Prompt for an action
     echo
