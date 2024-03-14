@@ -87,7 +87,7 @@ do
             read savename
 
             # Check to be sure a save with that name actually exists. If it doesn't, back to main menu.
-            if [ -f "$script_dir/gamesaves/$savename" ]; then
+            if [ -f "$script_dir/gamesaves/$savename/chapter" ]; then
                 echo "Loading $savename..."
                 name=$savename
 
