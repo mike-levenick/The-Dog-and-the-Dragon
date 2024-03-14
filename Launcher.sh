@@ -41,7 +41,7 @@ do
             read name
             
             # If we already have a save with that name, as about overwriting
-            if [ -f "$script_dir/gamesaves/$name" ]; then
+            if [ -f "$script_dir/gamesaves/$name/chapter" ]; then
                 echo "A game with that name already exists. Overwrite? [y/n]"
                 echo
                 read yn
@@ -57,8 +57,14 @@ do
             chapter=1
             newgame=1
 
-            echo """1
-paws""" > "$script_dir/gamesaves/$name"
+            # Make the save directory
+            mkdir "$script_dir/gamesaves/$name"
+
+            # Make the save files
+            echo "1" > "$script_dir/gamesaves/$name/chapter"
+            echo "paws" > "$script_dir/gamesaves/$name/inventory"
+
+            # Make a note of what saves we have
             saves=$(ls -1 $script_dir/gamesaves | wc -l)
             ;;
 
@@ -81,7 +87,7 @@ paws""" > "$script_dir/gamesaves/$name"
             read savename
 
             # Check to be sure a save with that name actually exists. If it doesn't, back to main menu.
-            if [ -f "$script_dir/gamesaves/$savename" ]; then
+            if [ -f "$script_dir/gamesaves/$savename/chapter" ]; then
                 echo "Loading $savename..."
                 name=$savename
 

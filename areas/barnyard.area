@@ -97,6 +97,14 @@ look() {
             echo "For example, to look to the north, you could do the command" 
             echo "> look north"
             ;;
+        
+        around)
+            echo "This is the barnyard that you call home. There's not a lot here other"
+            echo "than an old well, but you can see all sorts of other interesting places"
+            echo "around that might be worth visiting."
+            echo
+            echo "Try looking in different directions, such as \`look east\`."
+            ;;
 
         north)
             echo "You see the barn to the north of you. The farmer's older son is lifting"
@@ -142,6 +150,11 @@ go() {
             echo "> go farmer"
             echo "Finally, you can also always return to the barnyard with the command"
             echo "> go home"
+            ;;
+        well)
+            echo "There's an old well here in the barnyard. It is deep and dark, with water"
+            echo "at the bottom. There is an old crank to raise and lower the bucket"
+            echo "but you're not sure how to operate it."
             ;;
 
         north)

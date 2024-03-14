@@ -184,6 +184,12 @@ look() {
             echo "> look north"
             ;;
 
+        around)
+            echo "This is the field where the farmer grows his crops. The \`farmer\` stands in"
+            echo "the middle of the field. Perhaps you should try to \`go\` to him and see"
+            echo "what he is up to?"
+            ;;
+
         north)
             echo "The farmer's field stretches far and wide to the north."
             ;;
@@ -243,14 +249,17 @@ go() {
             bash $script_dir/../utils/animation/animate.sh $script_dir/../utils/animation/cutscenes/travel.anim .03
             exit 0
             ;;
+
         farmer)
             echo "As you approach the farmer, he gestures kindly towards a nearby"
             echo "\`wateringcan\` and \`seedpouch\`. He seems like he wants you to \`take\` them."
             ;;
+
         home)
             bash $script_dir/../utils/animation/animate.sh $script_dir/../utils/animation/cutscenes/travel.anim .03
             exit 0
             ;;
+
         *)
             echo "I'm not sure how to go there."
             ;;
@@ -277,8 +286,6 @@ rollInBountifulHarvest() {
     bash $script_dir/../utils/inventory/AddInventory.sh "$name" "scales"
     bash $script_dir/../utils/animation/animate.sh $script_dir/../utils/animation/dialogue/dialogue4-bountifulharvest.dia 1 print
     sleep 1
-    echo
-    echo
     echo "Questlog Updated."
     bash $script_dir/../utils/inventory/UpdateChapter.sh "$name" "2"
 }
@@ -336,8 +343,6 @@ while (( 1 == 1 )); do
     if [[ "$chapter" == "1" ]]; then
         bash $script_dir/../utils/animation/animate.sh $script_dir/../utils/animation/dialogue/dialogue3-fieldintro.dia 1 print
         sleep 1
-        echo
-        echo
         echo "Questlog Updated."
         bash $script_dir/../utils/inventory/UpdateChapter.sh "$name" "1a"
         

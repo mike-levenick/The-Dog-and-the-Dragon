@@ -153,7 +153,16 @@ look() {
             echo "For example, to look to the north, you could do the command" 
             echo "> look north"
             ;;
-
+        around)
+            if [[ "$chapter" == "2b" || "$chapter" == "2c" ]]; then
+                echo "The farmer's son appears to be anxious to get his book back."
+            elif [[ "$chapter" == "2a" ]]; then
+                echo "The farmer's \`son\` appears to be searching for his storybook."
+                echo "He must have misplaced it. Perhaps you could \`go\` to him and help?"
+            else
+                echo "The farmer's son sits quietly, reading his storybook. He smiles at you."
+            fi
+            ;;
         north)
             echo "The river stretches far and wide to the north."
             ;;
@@ -242,7 +251,8 @@ go() {
                 echo "looking for his storybook which he misplaced. Maybe you can search with him?"
                 echo "Use the secret command \`look for book\` to help find the storybook."
             else
-                echo "The farmer's son sits quietly, reading his storybook. He smiles at you."
+                echo "The farmer's son sits quietly, reading his storybook. He smiles at you,"
+                echo "and absentmindedly pats your head before turning the page."
             fi
             ;;
         home)
@@ -307,7 +317,7 @@ writeInDirt() {
     if [[ "${homeworkContents,,}" =~ "hello world" ]]; then
         echo "Homework is correct!"
         bash $script_dir/../utils/animation/animate.sh $script_dir/../utils/animation/dialogue/dialogue6-goodhomework.dia 1 print
-        echo
+        sleep 1
         echo "Questlog Updated."
         bash $script_dir/../utils/inventory/UpdateChapter.sh "$name" "3"
     else
@@ -400,10 +410,6 @@ while (( 1 == 1 )); do
     if [[ "$chapter" == "2" ]]; then
         bash $script_dir/../utils/animation/animate.sh $script_dir/../utils/animation/dialogue/dialogue5-riverintro.dia 1 print
         sleep 1
-        echo
-        echo
-        echo "The \`son\` appears to have lost his storybook. perhaps you should \`go\` to him."
-        echo
         echo "Questlog Updated."
         bash $script_dir/../utils/inventory/UpdateChapter.sh "$name" "2a"
 

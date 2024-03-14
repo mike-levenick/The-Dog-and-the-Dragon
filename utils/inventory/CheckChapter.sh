@@ -7,9 +7,9 @@ name=$1
 script_dir="$(dirname "$0")"
 
 # Get the save file location
-savelocation="$script_dir/../../gamesaves/$name"
+savelocation="$script_dir/../../gamesaves/$name/chapter"
 
 # New version of chapter checker, to work around poseidon issues
-chapter=$(head -n 1 "$savelocation")
+chapter=$(cat "$savelocation")
 
 echo $chapter
