@@ -343,8 +343,6 @@ secretActions() {
 
 # This is the loop we actually stay in for the gameplay. If we do the "secret command" correctly, we move on to the next chapter. Otherwise, stay in the loop.
 while (( 1 == 1 )); do
-    # Check our current chapter in case we care
-    chapter=$(bash $script_dir/../utils/inventory/CheckChapter.sh "$name")
 
     if [[ "$chapter" == "1" ]]; then
         bash $script_dir/../utils/animation/animate.sh $script_dir/../utils/animation/dialogue/dialogue3-fieldintro.dia 1 print
@@ -355,6 +353,9 @@ while (( 1 == 1 )); do
         # Welcome message here as well for new arrivals
         echo "You have arrived at the field where the farmer grows his crops."
     fi
+
+    # Check our current chapter in case we care
+    chapter=$(bash $script_dir/../utils/inventory/CheckChapter.sh "$name")
 
     # Prompt for an action
     echo
