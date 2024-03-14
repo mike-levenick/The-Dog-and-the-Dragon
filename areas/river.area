@@ -153,7 +153,16 @@ look() {
             echo "For example, to look to the north, you could do the command" 
             echo "> look north"
             ;;
-
+        around)
+            if [[ "$chapter" == "2b" || "$chapter" == "2c" ]]; then
+                echo "The farmer's son appears to be anxious to get his book back."
+            elif [[ "$chapter" == "2a" ]]; then
+                echo "The farmer's \`son\` appears to be searching for his storybook."
+                echo "He must have misplaced it. Perhaps you could \`go\` to him and help?"
+            else
+                echo "The farmer's son sits quietly, reading his storybook. He smiles at you."
+            fi
+            ;;
         north)
             echo "The river stretches far and wide to the north."
             ;;
@@ -242,7 +251,8 @@ go() {
                 echo "looking for his storybook which he misplaced. Maybe you can search with him?"
                 echo "Use the secret command \`look for book\` to help find the storybook."
             else
-                echo "The farmer's son sits quietly, reading his storybook. He smiles at you."
+                echo "The farmer's son sits quietly, reading his storybook. He smiles at you,"
+                echo "and absentmindedly pats your head before turning the page."
             fi
             ;;
         home)
