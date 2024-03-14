@@ -137,6 +137,9 @@ look() {
 }
 
 go() {
+    # Get the chapter
+    chapter=$(bash $script_dir/../utils/inventory/CheckChapter.sh "$name")
+
     # Switch case for the various directions pupper can go.
     case $1 in
         help)
@@ -151,16 +154,30 @@ go() {
             echo "Finally, you can also always return to the barnyard with the command"
             echo "> go home"
             ;;
+
         well)
-            echo "There's an old well here in the barnyard. It is deep and dark, with water"
-            echo "at the bottom. There is an old crank to raise and lower the bucket"
-            echo "but you're not sure how to operate it."
+            if [[ "$chapter" == "6" ]]; then
+                echo "You approach the well, your scales glistening wet in the rain. It looks like"
+                echo "you could hook the rope from the well to your harness, but you'll need help."
+                echo
+                echo "Perhaps you could \`write in dirt\` to ask the farmer for help?"
+            else
+                echo "There's an old well here in the barnyard. It is deep and dark, with water"
+                echo "at the bottom. There is an old crank to raise and lower the bucket"
+                echo "but you're not sure how to operate it."
+            fi
+            ;;
+
+        boldly)
+            if [[ "$chapter" == "6" ]]; then
+                bash $script_dir/../utils/animation/animate.sh $script_dir/../utils/animation/dialogue/dialogueB-lowerme.dia 1 print
+                bash $script_dir/../utils/inventory/UpdateChapter.sh "$name" "6"
+            else
+                echo "I'm not sure how to go there."
+            fi
             ;;
 
         north)
-            # Check our current chapter to see if it's time to go north
-            chapter=$(bash $script_dir/../utils/inventory/CheckChapter.sh "$name")
-
             # Do the action
             if [[ "$chapter" == "1"* || "$chapter" == "2"* ]]; then
                 echo "You see some machines in the barn, but you won't be able to understand them yet."
@@ -256,29 +273,37 @@ action() {
         take)
             take $2
             ;;
+            
         help)
             help $2
             ;;
+
         use)
             use $2
             ;;
+
         look)
            look $2
             ;;
+
         go)
             go $2
             ;;
+
         inventory)
             inventory $2
             ;;
+
         questlog)
             questlog
             ;;
+
         whoami)
             bash $script_dir/../utils/animation/animate.sh $script_dir/../utils/animation/dialogue/dialogueC-dinner.dia 1 print
             sleep 2
             bash $script_dir/../utils/animation/animate.sh $script_dir/../utils/animation/dialogue/dialogueD-trueend.dia 1 print
             ;;
+
         exit)
             # Allow confirmation bypass
             if [[ "$2" == "y" || "$2" == "Y" ]]; then
@@ -292,8 +317,10 @@ action() {
                 exit 0
             fi
             ;;
+
         *)
-            echo "I'm not sure what you mean."
+            echo "trigger secret action"
+            secretActions "$action"
             ;;
     esac   
 }
@@ -303,31 +330,19 @@ endGameAction() {
         help)
             echo "There's no time! If you don't know what to do by now, we're in trouble."
             ;;
-        "go well")
-            echo "You approach the well, your scales glistening wet in the rain. It looks like"
-            echo "you could hook the rope from the well to your harness, but you'll need help."
-            echo
-            echo "Perhaps you could \`write in dirt\` to ask the farmer for help?"
-            ;;
-        "write in dirt")
-            echo "The farmer ties the rope to your harness and gives you a nod."
-            echo "You hop up on the edge of the well, and look down into the dark."
-            echo
-            echo "It is time for you to \`go boldly\` where no dog has gone before."
-            ;;
-        "go boldly")
-            bash $script_dir/../utils/animation/animate.sh $script_dir/../utils/animation/dialogue/dialogueB-lowerme.dia 1 print
-            bash $script_dir/../utils/inventory/UpdateChapter.sh "$name" "6"
-            ;;
+
         inventory)
             inventory $2
             ;;
+
         questlog)
             questlog
             ;;
+
         whoami)
             echo "Your name is $name"
             ;;
+
         exit)
             # Allow confirmation bypass
             if [[ "$2" == "y" || "$2" == "Y" ]]; then
@@ -341,10 +356,25 @@ endGameAction() {
                 exit 0
             fi
             ;;
+
+        *)
+            secretActions "$action"
+            ;;
+    esac   
+}
+
+secretActions() {
+    case $action in
+        "write in dirt")
+            echo "The farmer ties the rope to your harness and gives you a nod."
+            echo "You hop up on the edge of the well, and look down into the dark."
+            echo
+            echo "It is time for you to \`go boldly\` where no dog has gone before."
+            ;;
         *)
             echo "I'm not sure what you mean."
             ;;
-    esac   
+    esac
 }
 
 # This is the loop we actually stay in for the gameplay. 
