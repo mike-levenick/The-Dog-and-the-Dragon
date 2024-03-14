@@ -307,7 +307,7 @@ writeInDirt() {
     if [[ "${homeworkContents,,}" =~ "hello world" ]]; then
         echo "Homework is correct!"
         bash $script_dir/../utils/animation/animate.sh $script_dir/../utils/animation/dialogue/dialogue6-goodhomework.dia 1 print
-        echo
+        sleep 1
         echo "Questlog Updated."
         bash $script_dir/../utils/inventory/UpdateChapter.sh "$name" "3"
     else
@@ -400,10 +400,6 @@ while (( 1 == 1 )); do
     if [[ "$chapter" == "2" ]]; then
         bash $script_dir/../utils/animation/animate.sh $script_dir/../utils/animation/dialogue/dialogue5-riverintro.dia 1 print
         sleep 1
-        echo
-        echo
-        echo "The \`son\` appears to have lost his storybook. perhaps you should \`go\` to him."
-        echo
         echo "Questlog Updated."
         bash $script_dir/../utils/inventory/UpdateChapter.sh "$name" "2a"
 

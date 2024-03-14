@@ -190,8 +190,6 @@ go() {
         pulley)
             bash $script_dir/../utils/animation/animate.sh $script_dir/../utils/animation/dialogue/dialogue8-approachpulley.dia 1 print
             sleep 1
-            echo
-            echo
             echo "You must tie a sack to the other end of the pulley to counter your weight."
             echo "Enter the value of the sack's mass as a base 16 number. This is your next"
             echo "secret command."
@@ -287,8 +285,6 @@ while (( 1 == 1 )); do
     if [[ "$chapter" == "3" ]]; then
         bash $script_dir/../utils/animation/animate.sh $script_dir/../utils/animation/dialogue/dialogue7-barnintro.dia 1 print
         sleep 1
-        echo
-        echo
         echo "Questlog Updated."
         bash $script_dir/../utils/inventory/UpdateChapter.sh "$name" "3a"
 
@@ -315,7 +311,6 @@ while (( 1 == 1 )); do
     if [[ "$action" == "go boldly" ]]; then
         bash $script_dir/../utils/animation/animate.sh $script_dir/../utils/animation/dialogue/dialogue9-goboldly.dia 1 print
         sleep 1
-        echo
         echo "The rain is pouring down now, as you sadly slink your way out of the barn."
         echo "You've failed your mission. There is nothing left for you to do but \`go home\`."
         echo
@@ -330,7 +325,6 @@ while (( 1 == 1 )); do
     elif [[ "$chapter" == "4" && "$action" == "go home" ]]; then
         bash $script_dir/../utils/animation/animate.sh $script_dir/../utils/animation/dialogue/dialogueA-sonintrouble.dia 1 print
         sleep 1
-        echo
         echo "Questlog Updated"
         bash $script_dir/../utils/inventory/UpdateChapter.sh "$name" "5"
         exit 0
