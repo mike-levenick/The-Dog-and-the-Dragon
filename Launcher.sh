@@ -41,7 +41,7 @@ do
             read name
             
             # If we already have a save with that name, as about overwriting
-            if [ -f "$script_dir/gamesaves/$name" ]; then
+            if [ -f "$script_dir/gamesaves/$name/chapter" ]; then
                 echo "A game with that name already exists. Overwrite? [y/n]"
                 echo
                 read yn
