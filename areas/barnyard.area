@@ -352,6 +352,7 @@ playCredits() {
     echo
     printf "%s" "Press enter to exit the game."
     read
+    exit 0
 }
 
 # This is the loop we actually stay in for the gameplay. 
