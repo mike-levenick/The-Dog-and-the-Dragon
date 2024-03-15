@@ -360,7 +360,7 @@ action() {
             inventory $2
             ;;
         questlog)
-            questlog
+            questlog $2
             ;;
         whoami)
             echo "Your name is $name"

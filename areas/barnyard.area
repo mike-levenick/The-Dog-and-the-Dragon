@@ -276,7 +276,7 @@ action() {
             ;;
 
         questlog)
-            questlog
+            questlog $2
             ;;
 
         whoami)
