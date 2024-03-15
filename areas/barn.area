@@ -99,7 +99,7 @@ look() {
             echo "the pulley system that the farmer normally uses to lift haybales"
             echo "into the loft of the barn."
             echo
-            echo -e "You can approach it with \e[32mgo \e[34mpulley\e[0m\`."
+            echo -e "You can approach it with \`\e[32mgo \e[34mpulley\e[0m\`."
             ;;
 
         north)
@@ -176,14 +176,14 @@ go() {
         pulley)
             bash $script_dir/../utils/animation/animate.sh $script_dir/../utils/animation/dialogue/dialogue8-approachpulley.dia 1 print
             sleep 1
-            echo "You must tie a sack to the other end of the pulley to counter your weight."
+            echo -e "\e[36mYou must tie a sack to the other end of the pulley to counter your weight.\e[0m"
             echo -e "Enter \e[36mthe value of the sack's mass as a base 16 number\e[0m. This is your next"
             echo "secret command."
             echo
             echo "The mass that you need to counter is represented in base 2 as:"
-            echo "0011 0001 0011 0011 0111 1101 1010 1101"
+            echo -e "\e[36m0011 0001 0011 0011 0111 1101 1010 1101\e[0m"
             echo
-            echo "Please enter this mass in base 16 to create a counterweight."
+            echo -e "\e[36mPlease enter this mass in base 16\e[0m (all caps) to create a counterweight."
             echo
             echo "Questlog Updated."
             bash $script_dir/../utils/inventory/UpdateChapter.sh "$name" "3b"

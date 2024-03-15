@@ -93,7 +93,7 @@ use() {
             bash $script_dir/../utils/inventory/CheckInventory.sh "$name" "seedpouch" "silent"
 
             if [[ "$?" == "1" ]]; then
-                echo "You can \`\e[32muse \e[31mseedpouch\e[0m\` to plant your seeds in the hole."
+                echo -e "You can \`\e[32muse \e[31mseedpouch\e[0m\` to plant your seeds in the hole."
             else 
                 echo -e "Maybe there is a \`\e[31mseedpouch\e[0m\` you can \`\e[32mtake\e[0m\`."
             fi
