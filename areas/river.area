@@ -302,6 +302,9 @@ writeInDirt() {
     else
         echo "Hmm, that's not quite right. Your homework says:"
         echo $homeworkContents
+        echo
+        echo "But it should say:"
+        echo "hello world"
     fi
 }
 
