@@ -64,8 +64,8 @@ use() {
             ;;
 
         wateringcan)
-            echo "Your wateringcan is filled now. \`use\` it with the command"
-            echo "\`use wateringcan-filled\` now."
+            echo -e "Your wateringcan is filled now. \`\e[32muse\e[0m\` it with the command"
+            echo -e "\`\e[32muse \e[31mwateringcan-filled\e[0m\` now."
             ;;
 
         wateringcan-filled)
@@ -99,7 +99,7 @@ look() {
             echo "the pulley system that the farmer normally uses to lift haybales"
             echo "into the loft of the barn."
             echo
-            echo "You can approach it with \`go pulley\`."
+            echo -e "You can approach it with \e[32mgo \e[34mpulley\e[0m\`."
             ;;
 
         north)
@@ -135,15 +135,15 @@ go() {
     # Switch case for the various directions pupper can go.
     case $1 in
         help)
-            echo "***** \`GO\` COMMAND HELP *****"
+            echo -e "\e[1m***** \`\e[32mGO\e[0m\e[1m\` COMMAND HELP *****\e[0m"
             echo "Allows you to go to a specific direction."
             echo "For example, to go north, you could do the command" 
-            echo "> go north"
+            echo -e "> \e[32mgo \e[34mnorth\e[0m"
             echo "You can also approach a specific person or object that you see near you"
             echo "with the go command such as"
-            echo "> go farmer"
+            echo -e "> \e[32mgo \e[34mfarmer\e[0m"
             echo "Finally, you can also always return to the barnyard with the command"
-            echo "> go home"
+            echo -e "> \e[32mgo \e[34mhome\e[0m"
             ;;
         
         boldly)
@@ -166,18 +166,18 @@ go() {
 
         east)
             echo "There's a fence blocking your way to the field from here."
-            echo "You'll have to \`go south\` to the barnyard, then \`go east\` to the field."
+            echo -e "You'll have to \`\e[32mgo \e[34msouth\e[0m\` to the barnyard, then \`\e[32mgo \e[34meast\e[0m\` to the field."
             ;;
 
         west)
             echo "There's a fence blocking your way to the river from here."
-            echo "You'll have to \`go south\` to the barnyard, then \`go west\` to the river."
+            echo -e "You'll have to \`\e[32mgo \e[34msouth\e[0m\` to the barnyard, then \`\e[32mgo \e[34mwest\e[0m\` to the river."
             ;;
         pulley)
             bash $script_dir/../utils/animation/animate.sh $script_dir/../utils/animation/dialogue/dialogue8-approachpulley.dia 1 print
             sleep 1
             echo "You must tie a sack to the other end of the pulley to counter your weight."
-            echo "Enter the value of the sack's mass as a base 16 number. This is your next"
+            echo -e "Enter \e[36mthe value of the sack's mass as a base 16 number\e[0m. This is your next"
             echo "secret command."
             echo
             echo "The mass that you need to counter is represented in base 2 as:"
@@ -201,7 +201,7 @@ go() {
 
 inventory() {
     if [[ "$1" == "help" ]]; then
-        echo "Not much to know about this one. Just run \`inventory\` to see what you have."
+        echo -e "Not much to know about this one. Just run \`\e[32minventory\e[0m\` to see what you have."
         return 0
     fi
     bash $script_dir/../utils/inventory/PrintInventory.sh "$name"
@@ -209,7 +209,7 @@ inventory() {
 
 questlog() {
     if [[ "$1" == "help" ]]; then
-        echo "Not much to know about this one. Just run \`questlog\` to see what's next."
+        echo -e "Not much to know about this one. Just run \`\e[32mquestlog\e[0m\` to see what's next."
         return 0
     fi
     bash $script_dir/../utils/inventory/PrintQuestlog.sh "$name"
@@ -266,7 +266,7 @@ secretActions() {
             echo "Excellent work! That counterweight will do nicely."
             echo "Now it is time for you to go boldly where no dog has gone before."
             echo
-            echo "Use the secret command \`go boldly\` to leap from the loft and fly."
+            echo -e "Use the secret command \`\e[36mgo boldly\e[0m\` to leap from the loft and fly."
             echo
             echo "Questlog Updated."
             bash $script_dir/../utils/inventory/UpdateChapter.sh "$name" "3c"
@@ -276,7 +276,7 @@ secretActions() {
             bash $script_dir/../utils/animation/animate.sh $script_dir/../utils/animation/dialogue/dialogue9-goboldly.dia 1 print
             sleep 1
             echo "The rain is pouring down now, as you sadly slink your way out of the barn."
-            echo "You've failed your mission. There is nothing left for you to do but \`go home\`."
+            echo -e "You've failed your mission. There is nothing left for you to do but \`\e[32mgo \e[34mhome\e[0m\`."
             echo
             echo "Questlog Updated."
             bash $script_dir/../utils/inventory/UpdateChapter.sh "$name" "4"
@@ -313,7 +313,7 @@ while (( 1 == 1 )); do
 
     # RAILROAD
     if [[ "$chapter" == "4" && ( "$action" != "go home" && "$action" != "questlog" && "$action" != "exit"* ) ]]; then
-        echo "You've failed your mission. There is nothing left for you to do but \`go home\`."
+        echo -e "You've failed your mission. There is nothing left for you to do but \`\e[32mgo \e[34mhome\e[0m\`."
     elif [[ "$chapter" == "4" && "$action" == "go home" ]]; then
         bash $script_dir/../utils/animation/animate.sh $script_dir/../utils/animation/dialogue/dialogueA-sonintrouble.dia 1 print
         sleep 1
