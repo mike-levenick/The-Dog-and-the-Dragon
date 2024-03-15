@@ -164,7 +164,6 @@ go() {
                 echo "You see some machines in the barn, but you won't be able to understand them yet."
                 echo "Get some scales and learn to talk before heading north."
             else
-                bash $script_dir/../utils/animation/animate.sh $script_dir/../utils/animation/cutscenes/travel.anim .03
                 bash $script_dir/../areas/barn.area "$name"
 
                 # Quit all the way if we get exit code 3
@@ -186,7 +185,6 @@ go() {
                 echo "It smells absolutely delicious, but you know you're not normally allowed"
                 echo "into the house with the family."
             else
-                bash $script_dir/../utils/animation/animate.sh $script_dir/../utils/animation/cutscenes/travel.anim .03
                 bash $script_dir/../areas/house.area "$name"
 
                 # Quit all the way if we get exit code 3
@@ -199,7 +197,6 @@ go() {
             ;;
 
         east)
-            bash $script_dir/../utils/animation/animate.sh $script_dir/../utils/animation/cutscenes/travel.anim .03
             bash $script_dir/../areas/field.area "$name"
 
             # Quit all the way if we get exit code 3
@@ -211,7 +208,6 @@ go() {
             ;;
 
         west)
-            bash $script_dir/../utils/animation/animate.sh $script_dir/../utils/animation/cutscenes/travel.anim .03
             bash $script_dir/../areas/river.area "$name"
 
             # Quit all the way if we get exit code 3

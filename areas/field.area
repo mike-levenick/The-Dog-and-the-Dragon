@@ -223,7 +223,6 @@ go() {
             ;;
 
         west)
-            bash $script_dir/../utils/animation/animate.sh $script_dir/../utils/animation/cutscenes/travel.anim .03
             exit 0
             ;;
 
@@ -233,7 +232,6 @@ go() {
             ;;
 
         home)
-            bash $script_dir/../utils/animation/animate.sh $script_dir/../utils/animation/cutscenes/travel.anim .03
             exit 0
             ;;
 
