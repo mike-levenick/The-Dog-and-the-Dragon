@@ -36,28 +36,7 @@ take() {
 }
 
 help() {
-    echo
-    if [[ "$1" == "help" ]]; then
-        echo "+----------------------------------------------------------------+"
-        echo "| Achievement unlocked: Tried to break the space-time continuum. |"
-        echo "+----------------------------------------------------------------+"
-        return 0
-    fi
-    echo "Available actions include:"
-    echo "  - \`inventory\` (Check your current inventory)"
-    echo "  - \`questlog\` (Check on your current Quest progress)"
-    echo "  - \`whoami\` (In case of existential crisis)"
-    echo "  - \`look\` (Look around generally/see what there is to see)"
-    echo
-    echo "  - \`go <place>\` (Move to the specified place)" 
-    echo "  - \`use <thing>\` (Use an item from your inventory or the environment)"
-    echo
-    echo "  - \`exit\` (Quits the game)"
-    echo
-    echo "You can also ask for help on any specific command, for example:"
-    echo "\`look help\` to get help specific to the \`look\` command."
-    echo
-    echo "If you're ever wondering what to do next, check your \`questlog\` for ideas."
+    bash $script_dir/../utils/PrintHelp.sh "$1"
 }
 
 use() {
@@ -65,18 +44,18 @@ use() {
     chapter=$(bash $script_dir/../utils/inventory/CheckChapter.sh "$name")
 
     # Check if we even have the item in inventory, and if we don't, return early.
-    bash $script_dir/../utils/inventory/CheckInventory.sh "$name" "$1"
-    if [[ "$?" == "0" ]]; then
+    bash $script_dir/../utils/inventory/CheckInventory.sh "$name" $1
+    if [[ "$?" == "0" && "$1" != "help" ]]; then
         return 0
     fi
-    echo
+
     # Switch case for the various items that can be used in this area, including a help section.
     case $1 in
         help)
-            echo "***** \`USE\` COMMAND HELP *****"
+            echo -e "\e[1m***** \`\e[32mUSE\e[0m\e[1m\` COMMAND HELP *****\e[0m"
             echo "Allows you to use objects in your inventory or in the environment."
             echo "For example, if you see a lever, you could do the command" 
-            echo "> use lever"
+            echo -e "> \e[1;32muse \e[31mlever\e[0m"
             ;;
 
         # Now that we're at the field, we can use our paws for real.
@@ -87,9 +66,9 @@ use() {
             bash $script_dir/../utils/inventory/CheckInventory.sh "$name" "seedpouch" "silent"
 
             if [[ "$?" == "1" ]]; then
-                echo "You can \`use seedpouch\` to plant your seeds in the hole."
+                echo -e "You can \`\e[32muse \e[31mseedpouch\e[0m\` to plant your seeds in the hole."
             else 
-                echo "Maybe there is a \`seedpouch\` you can \`take\`."
+                echo -e "Maybe there is a \`\e[31mseedpouch\e[0m\` you can \`\e[32mtake\e[0m\`."
             fi
             
             # Technically by doing it this way, someone could dig a hole, leave, and come back
@@ -100,8 +79,8 @@ use() {
         wateringcan)
             bash $script_dir/../utils/inventory/CheckInventory.sh "$name" "wateringcan-filled" "silent"
             if [[ "$?" == "1" ]]; then
-                echo "Your wateringcan is filled now. \`use\` it with the command"
-                echo "\`use wateringcan-filled\` now."
+                echo -e "Your wateringcan is filled now. \`\e[32muse\e[0m\` it with the command"
+                echo -e "\`\e[32muse\e[31m wateringcan-filled\e[0m\` now."
             else 
                 echo "You approach the river, and fill your wateringcan there."
                 fillCan
@@ -113,7 +92,7 @@ use() {
             if [[ "$chapter" == "1b" ]]; then
                 echo "You carefullly pour water on the seeds, just as you've seen the farmer do."
                 echo "The seeds sprout incredibly quickly right before your eyes!"
-                echo "There is a \`bountiful harvest\` of seeds in front of you, ripe for the \`take\`ing."
+                echo -e "There is a \`\e[31mbountiful harvest\e[0m\` of seeds in front of you, ripe for the \`\e[32mtake\e[0m\`ing."
                 echo
                 echo "Questlog Updated."
                 bash $script_dir/../utils/inventory/UpdateChapter.sh "$name" "1c"
@@ -126,7 +105,7 @@ use() {
             if [[ "$holedug" == "0" ]]; then
                 echo "You may have a hard time planting the seeds without digging a hole first."
                 echo "Do you have any way of digging a hole to plant the seeds in?"
-                echo "Check your inventory, and \`use\` something that could dig holes."
+                echo -e "Check your inventory, and \`\e[32muse\e[0m\` something that could dig holes."
             else
                 echo "You used the seedpouch, and planted the seeds in the ground."
                 echo "Now you need to find a way to water them."
@@ -148,11 +127,12 @@ look() {
     case $1 in
         help)
             echo
-            echo "***** \`LOOK\` COMMAND HELP *****"
+            echo -e "\e[1m***** \`\e[32mLOOK\e[0m\e[1m\` COMMAND HELP *****\e[0m"
             echo "Allows you to look around and see what there is to see."
             echo "For example, to look to the north, you could do the command" 
-            echo "> look north"
+            echo -e "> \e[32mlook \e[34mnorth\e[0m"
             ;;
+            
         around)
             if [[ "$chapter" == "2b" || "$chapter" == "2c" ]]; then
                 echo "The farmer's son appears to be anxious to get his book back."

@@ -63,48 +63,26 @@ take() {
 }
 
 help() {
-    echo
-    if [[ "$1" == "help" ]]; then
-        echo "+----------------------------------------------------------------+"
-        echo "| Achievement unlocked: Tried to break the space-time continuum. |"
-        echo "+----------------------------------------------------------------+"
-        echo
-        return 0
-    fi
-    echo "Available actions include:"
-    echo "  - \`inventory\` (Check your current inventory)"
-    echo "  - \`questlog\` (Check on your current Quest progress)"
-    echo "  - \`whoami\` (In case of existential crisis)"
-    echo "  - \`look\` (Look around generally/see what there is to see)"
-    echo
-    echo "  - \`go <place>\` (Move to the specified place)" 
-    echo "  - \`use <thing>\` (Use an item from your inventory or the environment)"
-    echo
-    echo "  - \`exit\` (Quits the game)"
-    echo
-    echo "You can also ask for help on any specific command, for example:"
-    echo "\`look help\` to get help specific to the \`look\` command."
-    echo
-    echo "If you're ever wondering what to do next, check your \`questlog\` for ideas."
+    bash $script_dir/../utils/PrintHelp.sh "$1"
 }
 
 use() {
     # Get chapter
     chapter=$(bash $script_dir/../utils/inventory/CheckChapter.sh "$name")
 
-    # Check if we even have the item in inventory, and if we don't, return early.
+# Check if we even have the item in inventory, and if we don't, return early.
     bash $script_dir/../utils/inventory/CheckInventory.sh "$name" $1
-    if [[ "$?" == "0" ]]; then
+    if [[ "$?" == "0" && "$1" != "help" ]]; then
         return 0
     fi
-    echo
+
     # Switch case for the various items that can be used in this area, including a help section.
     case $1 in
         help)
-            echo "***** \`USE\` COMMAND HELP *****"
+            echo -e "\e[1m***** \`\e[32mUSE\e[0m\e[1m\` COMMAND HELP *****\e[0m"
             echo "Allows you to use objects in your inventory or in the environment."
             echo "For example, if you see a lever, you could do the command" 
-            echo "> use lever"
+            echo -e "> \e[1;32muse \e[31mlever\e[0m"
             ;;
 
         # Now that we're at the field, we can use our paws for real.
@@ -177,10 +155,10 @@ look() {
     case $1 in
         help)
             echo
-            echo "***** \`LOOK\` COMMAND HELP *****"
+            echo -e "\e[1m***** \`\e[32mLOOK\e[0m\e[1m\` COMMAND HELP *****\e[0m"
             echo "Allows you to look around and see what there is to see."
             echo "For example, to look to the north, you could do the command" 
-            echo "> look north"
+            echo -e "> \e[32mlook \e[34mnorth\e[0m"
             ;;
 
         around)

@@ -25,13 +25,13 @@ itemsearch="$(cat $savelocation | grep $itemname)"
 
 # If that variable doesn't contain stuff, we dont have the item.
 if [[ "$itemsearch" == "" ]]; then
-    if [[ "$3" == "" ]]; then
-        echo "There is no $itemname here."
+    if [[ "$silent" == "" && "$itemname" != "help" ]]; then
+        echo -e "There is no \e[31m$itemname\e[0m here."
     fi
     exit 0
 else
-    if [[ "$3" == "" ]]; then
-        echo "You tried the $itemname."
+    if [[ "$silent" == "" && "$itemname" != "help" ]]; then
+        echo -e "You tried the \e[31m$itemname\e[0m."
     fi
     exit 1
 fi

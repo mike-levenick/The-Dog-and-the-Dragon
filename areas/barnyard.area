@@ -14,47 +14,23 @@ take() {
 }
 
 help() {
-    echo
-    if [[ "$1" == "help" ]]; then
-        echo "+----------------------------------------------------------------+"
-        echo "| Achievement unlocked: Tried to break the space-time continuum. |"
-        echo "+----------------------------------------------------------------+"
-        echo
-        return 0
-    fi
-    echo "Available actions include:"
-    echo "  - \`inventory\` (Check your current inventory)"
-    echo "  - \`questlog\` (Check on your current Quest progress)"
-    echo "  - \`whoami\` (In case of existential crisis)"
-    echo "  - \`look\` (Look around generally/see what there is to see)"
-    echo
-    echo "  - \`go <place>\` (Move to the specified place)" 
-    echo "  - \`use <thing>\` (Use an item from your inventory or the environment)"
-    echo
-    echo "  - \`exit\` (Quits the game)"
-    echo
-    echo "You can also ask for help on any specific command, for example:"
-    echo "\`look help\` to get help specific to the \`look\` command."
-    echo
-    echo "If you're ever wondering what to do next, check your \`questlog\` for ideas."
-    echo
+    bash $script_dir/../utils/PrintHelp.sh "$1"
 }
 
 use() {
     # Check if we even have the item in inventory, and if we don't, return early.
     bash $script_dir/../utils/inventory/CheckInventory.sh "$name" $1
-    if [[ "$?" == "0" ]]; then
+    if [[ "$?" == "0" && "$1" != "help" ]]; then
         return 0
     fi
 
     # Switch case for the various items that can be used in this area, including a help section.
     case $1 in
         help)
-            echo
-            echo "***** \`USE\` COMMAND HELP *****"
+            echo -e "\e[1m***** \`\e[32mUSE\e[0m\e[1m\` COMMAND HELP *****\e[0m"
             echo "Allows you to use objects in your inventory or in the environment."
             echo "For example, if you see a lever, you could do the command" 
-            echo "> use lever"
+            echo -e "> \e[1;32muse \e[31mlever\e[0m"
             ;;
 
         # Using paws will always "work" to give the player a way to explore their options a bit
@@ -90,10 +66,10 @@ look() {
     case $1 in
         help)
             echo
-            echo "***** \`LOOK\` COMMAND HELP *****"
+            echo -e "\e[1m***** \`\e[32mLOOK\e[0m\e[1m\` COMMAND HELP *****\e[0m"
             echo "Allows you to look around and see what there is to see."
             echo "For example, to look to the north, you could do the command" 
-            echo "> look north"
+            echo -e "> \e[32mlook \e[34mnorth\e[0m"
             ;;
         
         around)
@@ -101,13 +77,13 @@ look() {
                 echo "The rain is pouring down. You hear the farmer's son in the well,"
                 echo "and see the family standing around the well looking scared."
                 echo
-                echo "Maybe you should try to \`go\` to the \`well\` and see if you can help."
+                echo -e "Maybe you should try to \`\e[32mgo\e[0m\` to the \`\e[34mwell\e[0m\` and see if you can help."
             else
                 echo "This is the barnyard that you call home. There's not a lot here other"
                 echo "than an old well, but you can see all sorts of other interesting places"
                 echo "around that might be worth visiting."
                 echo
-                echo "Try looking in different directions, such as \`look east\`."
+                echo -e "Try looking in different directions, such as \`\e[32mlook\e[34m east\e[0m\`."
             fi
             ;;
 
@@ -152,12 +128,12 @@ go() {
             echo "***** \`GO\` COMMAND HELP *****"
             echo "Allows you to go to a specific direction."
             echo "For example, to go north, you could do the command" 
-            echo "> go north"
+            echo -e "> \e[32mgo \e[34mnorth\e[0m"
             echo "You can also approach a specific person or object that you see near you"
             echo "with the go command such as"
-            echo "> go farmer"
+            echo -e "> \e[32mgo \e[34mfarmer\e[0m"
             echo "Finally, you can also always return to the barnyard with the command"
-            echo "> go home"
+            echo -e "> \e[32mgo \e[34mhome\e[0m"
             ;;
 
         well)
@@ -165,7 +141,7 @@ go() {
                 echo "You approach the well, your scales glistening wet in the rain. It looks like"
                 echo "you could hook the rope from the well to your harness, but you'll need help."
                 echo
-                echo "Perhaps you could \`write in dirt\` to ask the farmer for help?"
+                echo -e "Perhaps you could \`\e[36mwrite in dirt\e[0m\` to ask the farmer for help?"
             else
                 echo "There's an old well here in the barnyard. It is deep and dark, with water"
                 echo "at the bottom. There is an old crank to raise and lower the bucket"
@@ -260,7 +236,7 @@ go() {
 
 inventory() {
     if [[ "$1" == "help" ]]; then
-        echo "Not much to know about this one. Just run \`inventory\` to see what you have."
+        echo -e "Not much to know about this one. Just run \`\e[32minventory\e[0m\` to see what you have."
         return 0
     fi
     bash $script_dir/../utils/inventory/PrintInventory.sh "$name"
@@ -268,7 +244,7 @@ inventory() {
 
 questlog() {
     if [[ "$1" == "help" ]]; then
-        echo "Not much to know about this one. Just run \`questlog\` to see what's next."
+        echo -e "Not much to know about this one. Just run \`\e[32mquestlog\e[0m\` to see what's next."
         return 0
     fi
     bash $script_dir/../utils/inventory/PrintQuestlog.sh "$name"
@@ -333,7 +309,7 @@ secretActions() {
         "write in dirt")
             bash $script_dir/../utils/animation/animate.sh $script_dir/../utils/animation/dialogue/dialogueB-writeindirt.dia 1 print
             echo
-            echo "It is time for you to once again \`go boldly\` where no dog has gone before."
+            echo -e "It is time for you to once again \`\e[36mgo boldly\e[0m\` where no dog has gone before."
             ;;
         *)
             echo "I'm not sure what you mean."
@@ -368,7 +344,7 @@ endGamePrompt() {
             ;;
 
         *)
-            echo "Sorry. This is a bit of a railroad. You must either \`go house\` or \`go barn\`."
+            echo -e "Sorry. This is a bit of a railroad. You must either \`\e[32mgo \e[34mhouse\e[0m\` or \`\e[32mgo \e[34mbarn\e[0m\`."
     esac
 }
 
@@ -390,7 +366,7 @@ while (( 1 == 1 )); do
     if [[ "$chapter" == "6" ]]; then
         echo "The rain is pouring down on you. You should find some shelter."
         echo
-        echo "Where would you like to \`go\`?"
+        echo -e "Where would you like to \`\e[32mgo\e[0m\`?"
     fi
 
     # Prompt for an action
