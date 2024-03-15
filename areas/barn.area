@@ -241,7 +241,7 @@ action() {
             ;;
         exit)
             # Allow confirmation bypass
-            if [[ "$2" == "y" || "$2" == "Y" ]]; then
+            if [[ "$2" == "-y" || "$2" == "-Y" ]]; then
                 exit 3
             fi
 
