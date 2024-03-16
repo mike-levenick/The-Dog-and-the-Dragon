@@ -94,7 +94,6 @@ use() {
                 echo "The seeds sprout incredibly quickly right before your eyes!"
                 echo -e "There is a \`\e[31mbountiful harvest\e[0m\` of seeds in front of you, ripe for the \`\e[32mtake\e[0m\`ing."
                 echo
-                echo "Questlog Updated."
                 bash $script_dir/../utils/inventory/UpdateChapter.sh "$name" "1c"
             else
                 echo "Now does not seem to be the right time to do that."
@@ -110,7 +109,6 @@ use() {
                 echo "You used the seedpouch, and planted the seeds in the ground."
                 echo "Now you need to find a way to water them."
                 echo
-                echo "Questlog Updated."
                 bash $script_dir/../utils/inventory/UpdateChapter.sh "$name" "1b"
             fi
             ;;
@@ -295,7 +293,6 @@ writeInDirt() {
         echo "Homework is correct!"
         bash $script_dir/../utils/animation/animate.sh $script_dir/../utils/animation/dialogue/dialogue6-goodhomework.dia 1 print
         sleep 1
-        echo "Questlog Updated."
         bash $script_dir/../utils/inventory/UpdateChapter.sh "$name" "3"
     else
         echo "Hmm, that's not quite right. Your homework says:"
@@ -308,7 +305,7 @@ writeInDirt() {
 
 fillCan() {
     bash $script_dir/../utils/inventory/AddInventory.sh "$name" "wateringcan-filled"
-    echo "⭒Progress saved!⭒"
+    echo -e "\e[33m⭒\e[0mProgress saved!\e[33m⭒\e[0m"
 }
 
 lookForBook() {
@@ -333,7 +330,6 @@ lookForBook() {
     echo
     bash $script_dir/../utils/inventory/AddInventory.sh "$name" "storybook"
     echo
-    echo "Questlog Updated."
     bash $script_dir/../utils/inventory/UpdateChapter.sh "$name" "2b"
 }
 
@@ -387,7 +383,6 @@ while (( 1 == 1 )); do
     if [[ "$chapter" == "2" ]]; then
         bash $script_dir/../utils/animation/animate.sh $script_dir/../utils/animation/dialogue/dialogue5-riverintro.dia 1 print
         sleep 1
-        echo "Questlog Updated."
         bash $script_dir/../utils/inventory/UpdateChapter.sh "$name" "2a"
 
         # Welcome message here for new arrivals

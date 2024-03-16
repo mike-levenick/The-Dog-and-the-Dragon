@@ -122,7 +122,6 @@ use() {
                 echo "The seeds sprout incredibly quickly right before your eyes!"
                 echo -e "There is a \`\e[31mbountiful harvest\e[0m\` of seeds in front of you, ripe for the \`\e[32mtake\e[0m\`ing."
                 echo
-                echo "Questlog Updated."
                 bash $script_dir/../utils/inventory/UpdateChapter.sh "$name" "1c"
             else
                 echo "Now does not seem to be the right time to do that."
@@ -138,7 +137,6 @@ use() {
                 echo "You used the seedpouch, and planted the seeds in the ground."
                 echo "Now you need to find a way to water them."
                 echo
-                echo "Questlog Updated."
                 bash $script_dir/../utils/inventory/UpdateChapter.sh "$name" "1b"
             fi
             ;;
@@ -228,7 +226,7 @@ go() {
 
         farmer)
             echo "As you approach the farmer, he gestures kindly towards a nearby"
-            echo "\`wateringcan\` and \`seedpouch\`. He seems like he wants you to \`take\` them."
+            echo -e "\`\e[31mwateringcan\e[0m\` and \`\e[31mseedpouch\e[0m\`. He seems like he wants you to \`\e[32mtake\e[0m\` them."
             ;;
 
         home)
@@ -308,7 +306,6 @@ secretActions() {
             bash $script_dir/../utils/inventory/AddInventory.sh "$name" "scales"
             bash $script_dir/../utils/animation/animate.sh $script_dir/../utils/animation/dialogue/dialogue4-bountifulharvest.dia 1 print
             sleep 1
-            echo "Questlog Updated."
             bash $script_dir/../utils/inventory/UpdateChapter.sh "$name" "2"
             ;;
         *)
@@ -323,7 +320,6 @@ while (( 1 == 1 )); do
     if [[ "$chapter" == "1" ]]; then
         bash $script_dir/../utils/animation/animate.sh $script_dir/../utils/animation/dialogue/dialogue3-fieldintro.dia 1 print
         sleep 1
-        echo "Questlog Updated."
         bash $script_dir/../utils/inventory/UpdateChapter.sh "$name" "1a"
         
         # Welcome message here as well for new arrivals

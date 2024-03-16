@@ -184,7 +184,6 @@ go() {
             echo
             echo -e "\e[36mPlease enter this mass in base 16\e[0m (all caps) to create a counterweight."
             echo
-            echo "Questlog Updated."
             bash $script_dir/../utils/inventory/UpdateChapter.sh "$name" "3b"
             ;;
 
@@ -266,7 +265,6 @@ secretActions() {
             echo
             echo -e "Use the secret command \`\e[36mgo boldly\e[0m\` to leap from the loft and fly."
             echo
-            echo "Questlog Updated."
             bash $script_dir/../utils/inventory/UpdateChapter.sh "$name" "3c"
             ;;
 
@@ -276,7 +274,7 @@ secretActions() {
             echo "The rain is pouring down now, as you sadly slink your way out of the barn."
             echo -e "You've failed your mission. There is nothing left for you to do but \`\e[32mgo \e[34mhome\e[0m\`."
             echo
-            echo "Questlog Updated."
+            
             bash $script_dir/../utils/inventory/UpdateChapter.sh "$name" "4"
             ;;
         *)
@@ -294,7 +292,6 @@ while (( 1 == 1 )); do
     if [[ "$chapter" == "3" ]]; then
         bash $script_dir/../utils/animation/animate.sh $script_dir/../utils/animation/dialogue/dialogue7-barnintro.dia 1 print
         sleep 1
-        echo "Questlog Updated."
         bash $script_dir/../utils/inventory/UpdateChapter.sh "$name" "3a"
 
         # Welcome message for new arrivals
@@ -315,7 +312,6 @@ while (( 1 == 1 )); do
     elif [[ "$chapter" == "4" && "$action" == "go home" ]]; then
         bash $script_dir/../utils/animation/animate.sh $script_dir/../utils/animation/dialogue/dialogueA-sonintrouble.dia 1 print
         sleep 1
-        echo "Questlog Updated"
         bash $script_dir/../utils/inventory/UpdateChapter.sh "$name" "5"
         exit 0
     else

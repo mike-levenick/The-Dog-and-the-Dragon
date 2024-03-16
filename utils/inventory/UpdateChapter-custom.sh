@@ -27,4 +27,4 @@ tail -n +2 "$savelocation" >> "$tmplocation"
 # Overwrite gamesave with temp file
 mv "$tmplocation" "$savelocation"
 
-echo "⭒Progress saved!⭒"
+echo -e "\e[33m⭒\e[0mProgress saved!\e[33m⭒\e[0m"

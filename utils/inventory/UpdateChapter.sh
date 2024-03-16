@@ -18,4 +18,6 @@ savelocation="$script_dir/../../gamesaves/$name/chapter"
 # Write new value to temp file
 echo "$newvalue" > "$savelocation"
 
-echo "⭒Progress saved!⭒"
+echo -e "\e[32mQuestlog\e[0m Updated."
+echo
+echo -e "\e[33m⭒\e[0mProgress saved!\e[33m⭒\e[0m"

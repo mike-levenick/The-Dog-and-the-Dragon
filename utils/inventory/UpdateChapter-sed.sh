@@ -18,4 +18,4 @@ savelocation="$script_dir/../../gamesaves/$name"
 sed -i '' "1s/-.*$/- $newvalue/" "$savelocation" # Old
 #sed -i "s/Current chapter.*/Current Chapter - $newvalue/g" "$savelocation"
 
-echo "⭒Progress saved!⭒"
+echo -e "\e[33m⭒\e[0mProgress saved!\e[33m⭒\e[0m"
