@@ -17,6 +17,8 @@ echo
 echo -e "  - \`\e[1;32mgo \e[34m<direction>\e[0m\` (Move in the specified direction)"
 echo -e "     can also be used to approach some \e[34mpeople\e[0m or \e[34mobjects\e[0m."
 echo
+echo -e "  - \`\e[1;32mtake \e[31m<thing>\e[0m\` (Take an item and put it into your inventory)"
+echo
 echo -e "  - \`\e[1;32muse \e[31m<thing>\e[0m\` (Use an item from your inventory or the environment)"
 echo
 echo -e "  - \`\e[1;32mexit\e[0m\` (Quits the game after confirmation. Bypass confirmation with \e[32mexit -y\e[0m)"

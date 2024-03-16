@@ -22,5 +22,5 @@ sorted_items=($(printf "%s\n" "${items[@]}" | sort))
 echo "Items that you have seen or that you currently carry:"
 # Print the sorted array as a bulleted list
 for item in "${sorted_items[@]}"; do
-    echo "  - $item"
+    echo -e "  - \e[31m$item\e[0m"
 done
