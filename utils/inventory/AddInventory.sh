@@ -16,5 +16,5 @@ savelocation="$script_dir/../../gamesaves/$name/inventory"
 
 echo "$itemname" >> $savelocation
 
-echo -e"\e[31m$itemname\e[0m added to inventory."
+echo -e "\e[31m$itemname\e[0m added to inventory."
 echo -e "\e[33m⭒\e[0mProgress saved!\e[33m⭒\e[0m"
